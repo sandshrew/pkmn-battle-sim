@@ -98,7 +98,7 @@ public class Main extends Application {
 
 	//not mvc bc lazy/testing, will change
 	public void intro(Stage primaryStage){
-		AnchorPane root = new AnchorPane();
+		final AnchorPane root = new AnchorPane();
 		Scene scene = new Scene(root,700,700);
 
 		Image profImage = new Image(getClass().getResourceAsStream("/res/profoak.png"));
@@ -108,7 +108,7 @@ public class Main extends Application {
 		root.getChildren().add(profImageView);	
 
 		Image pkmnImage = new Image(getClass().getResourceAsStream("/res/arbok.png"));
-		ImageView pkmnImageView = new ImageView(pkmnImage);
+		final ImageView pkmnImageView = new ImageView(pkmnImage);
 		pkmnImageView.setX(250);
 		pkmnImageView.setY(200);
 
@@ -128,7 +128,7 @@ public class Main extends Application {
 		Path path = new Path();
 		path.getElements().add(new MoveTo(pkmnImageView.getX(), pkmnImageView.getY()));
 		path.getElements().add(new QuadCurveTo(200, 200, 250, 350));
-		PathTransition pathTransition = new PathTransition();
+		final PathTransition pathTransition = new PathTransition();
 		pathTransition.setDuration(Duration.millis(500));
 		pathTransition.setPath(path);
 		pathTransition.setNode(pkmnImageView);
@@ -145,7 +145,7 @@ public class Main extends Application {
 //		root.getChildren().add(textboxImageView);	
 
 		
-		Label textLabel = new Label();
+		final Label textLabel = new Label();
 		changeText(textLabel);
 		textLabel.setWrapText(true);
 		textLabel.setMaxSize(400, 100);
@@ -168,12 +168,12 @@ public class Main extends Application {
 
 		primaryStage.setScene( scene ); 
 		primaryStage.setResizable(false);
-		primaryStage.setTitle( "Pokémon" );
+		primaryStage.setTitle( "Pokemon" );
 		primaryStage.show();
 	}
 
 	int introIndex = 0; 
-	String[] introText = {"Welcome to the world of Pokémon!","My name is professor Oak.","People affectionately refer to me as the pokemon professor","This world is inhabited far and wide by creatures called pokemon"};
+	String[] introText = {"Welcome to the world of Pokemon!","My name is professor Oak.","People affectionately refer to me as the pokemon professor","This world is inhabited far and wide by creatures called pokemon"};
 
 	
 	public void changeText(Label label){

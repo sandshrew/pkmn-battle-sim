@@ -1,6 +1,8 @@
 ## pkmn-battle-sim
 Installation (for FXGL)
 
+-Pull but don't open the project yet until you install maven
+
 # 1. Installing Maven (build mananger / to import fxgl)
   - Open Eclipse
   - Go to Help -> Install New Software...
@@ -10,4 +12,4 @@ Installation (for FXGL)
   - finish installation (eclipse will restart after installation)
   
 # 2. Loading FXGL
-  - WIP
+  - WIP (should be automatic after you install the maven plugin)
