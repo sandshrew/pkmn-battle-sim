@@ -112,22 +112,22 @@ public class Main extends Application {
 		pkmnImageView.setX(250);
 		pkmnImageView.setY(200);
 
-		final Timeline timeline = new Timeline();
-		timeline.setCycleCount(1);
-		final KeyValue kv = new KeyValue(profImageView.xProperty(), 250);
-		final KeyFrame kf = new KeyFrame(Duration.millis(2000), kv);
-		timeline.getKeyFrames().add(kf);
-		timeline.play();
+		final Timeline profTimeline = new Timeline();
+		profTimeline.setCycleCount(1);
+		final KeyValue profKv = new KeyValue(profImageView.xProperty(), 250);
+		final KeyFrame profKf = new KeyFrame(Duration.millis(2000), profKv);
+		profTimeline.getKeyFrames().add(profKf);
+		profTimeline.play();
 
-		final Timeline timeline2 = new Timeline();
-		timeline2.setCycleCount(1);
-		final KeyValue kv2 = new KeyValue(profImageView.xProperty(), 350);
-		final KeyFrame kf2 = new KeyFrame(Duration.millis(500), kv2);
-		timeline2.getKeyFrames().add(kf2);
+		final Timeline pkmnTimeline = new Timeline();
+		pkmnTimeline.setCycleCount(1);
+		final KeyValue pkmnKv = new KeyValue(profImageView.xProperty(), 350);
+		final KeyFrame pkmnKf = new KeyFrame(Duration.millis(500), pkmnKv);
+		pkmnTimeline.getKeyFrames().add(pkmnKf);
 
 		Path path = new Path();
 		path.getElements().add(new MoveTo(pkmnImageView.getX(), pkmnImageView.getY()));
-		path.getElements().add(new QuadCurveTo(200, 200, 250, 300));
+		path.getElements().add(new QuadCurveTo(200, 200, 250, 350));
 		PathTransition pathTransition = new PathTransition();
 		pathTransition.setDuration(Duration.millis(500));
 		pathTransition.setPath(path);
@@ -137,6 +137,14 @@ public class Main extends Application {
 		pathTransition.setAutoReverse(false);
 
 
+		//maybe just don't include
+//		Image textboxImage = new Image(getClass().getResourceAsStream("/res/textbox.png"));
+//		ImageView textboxImageView = new ImageView(textboxImage);
+//		textboxImageView.setLayoutX(185);
+//		textboxImageView.setLayoutY(585);
+//		root.getChildren().add(textboxImageView);	
+
+		
 		Label textLabel = new Label();
 		changeText(textLabel);
 		textLabel.setWrapText(true);
@@ -144,12 +152,13 @@ public class Main extends Application {
 		textLabel.setLayoutX(200);
 		textLabel.setLayoutY(600);
 		textLabel.setFont(Font.loadFont(getClass().getResourceAsStream("/res/font.ttf"), 12));
-
+		
+		
 		root.setOnMouseClicked(new EventHandler<MouseEvent>(){
 			public void handle(MouseEvent e){
 				changeText(textLabel);
-				if (textIndex == 4 && !root.getChildren().contains(pkmnImageView)){
-					timeline2.play();
+				if (introIndex == 4 && !root.getChildren().contains(pkmnImageView)){
+					pkmnTimeline.play();
 					root.getChildren().add(pkmnImageView);
 					pathTransition.play();
 				}
@@ -163,14 +172,15 @@ public class Main extends Application {
 		primaryStage.show();
 	}
 
-	int textIndex = 0; 
+	int introIndex = 0; 
+	String[] introText = {"Welcome to the world of Pokémon!","My name is professor Oak.","People affectionately refer to me as the pokemon professor","This world is inhabited far and wide by creatures called pokemon"};
 
+	
 	public void changeText(Label label){
-		String[] text = {"Welcome to the world of Pokémon!","My name is professor Oak.","People affectionately refer to me as the pokemon professor","This world is inhabited far and wide by creatures called pokemon"};
 
-		if (!(textIndex >= text.length)){
-			label.setText(text[textIndex]);
-			textIndex++;
+		if (!(introIndex >= introText.length)){
+			label.setText(introText[introIndex]);
+			introIndex++;
 		}
 
 	}
