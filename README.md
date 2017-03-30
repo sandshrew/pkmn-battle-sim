@@ -12,4 +12,11 @@ Installation (for FXGL)
   - finish installation (eclipse will restart after installation)
   
 # 2. Loading FXGL
+  - Right click on project in eclipse, click on maven->Update->Okay
+  - It should run and compile
   - WIP (should be automatic after you install the maven plugin)
+  
+# Troubleshooting
+  - Close the project and delete it (not from disk)
+  - File->Import->Maven->Existing Maven Projects->(navigate to the project folder)->Finish
+  - Go to step 2
