@@ -8,7 +8,7 @@ public class Pokemon {
 	private int baseHP;
 	private int baseAttack;
 	private int baseDefence;
-	private int level;
+	
 	//maybe?
 	//private int baseSpecialAttack;
 	//private int baseSpecialDefence;
@@ -16,28 +16,26 @@ public class Pokemon {
 	private Type type;
 	//attacks
 	//held item
-
+	
 	//maybe adding... EVs/IVs & nature
-
-
+	
 	public enum Type{
 		Normal, Fire, Fighting, Water, Flying, Grass, Poison, Eletric, Ground, Psychic, Rock, Ice, Bug, Dragon, Ghost, Dark, Steel, Fairy, Questionable
-
+		
 	}
-
+	
 	//default constructor
 	public Pokemon() {
 		this.name = "missingno";
-		this.baseHP = 25;
+		this.baseHP = 10;
 		this.baseAttack = 10;
 		this.baseDefence = 10;
 		this.speed = 10;
-		this.level = 1;
 		this.type = Type.Dragon;
 	}
-
+	
 	//constructor
-	public Pokemon(String name, int baseHP, int baseAttack,int level, int baseDefence, int speed, Type type) {
+	public Pokemon(String name, int baseHP, int baseAttack, int baseDefence, int speed, Type type) {
 		this.name = name;
 		this.baseHP = baseHP;
 		this.baseAttack = baseAttack;
@@ -45,11 +43,7 @@ public class Pokemon {
 		this.speed = speed;
 		this.type = type;
 	}
-
-	public int getAttackStat(){
-		return (((2 * baseAttack + 0 + (0/4) * level)/100) + 5);
-	}
-
+	
 	public String getName() {
 		return name;
 	}
@@ -97,12 +91,12 @@ public class Pokemon {
 	public void setType(Type type) {
 		this.type = type;
 	}
-
+	
 	public static void main(String[] args) {
 		Pokemon test = new Pokemon();
-		System.out.println(test.getAttackStat());
+		System.out.println(test.getName());
 	}
-
+	
 }
 
 
