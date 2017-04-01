@@ -1,10 +1,9 @@
 package model;
 
-
-
 public class Pokemon {
 	//pokemon attributes/stats
 	private String name;
+	private int level;
 	private int baseHP;
 	private int baseAttack;
 	private int baseDefence;
@@ -13,29 +12,27 @@ public class Pokemon {
 	//private int baseSpecialAttack;
 	//private int baseSpecialDefence;
 	private int speed;
-	private Type type;
+	private Element type;
 	//attacks
 	//held item
 	
 	//maybe adding... EVs/IVs & nature
 	
-	public enum Type{
-		Normal, Fire, Fighting, Water, Flying, Grass, Poison, Eletric, Ground, Psychic, Rock, Ice, Bug, Dragon, Ghost, Dark, Steel, Fairy, Questionable
-		
-	}
 	
 	//default constructor
 	public Pokemon() {
-		this.name = "missingno";
-		this.baseHP = 10;
-		this.baseAttack = 10;
-		this.baseDefence = 10;
-		this.speed = 10;
-		this.type = Type.Dragon;
+		//zoroark temp
+		this.name = "Zoroark";
+		this.level = 50;
+		this.baseHP = 120;
+		this.baseAttack = 110;
+		this.baseDefence = 65;
+		this.speed = 110;
+		this.type = Element.Dark;
 	}
 	
 	//constructor
-	public Pokemon(String name, int baseHP, int baseAttack, int baseDefence, int speed, Type type) {
+	public Pokemon(String name, int level, int baseHP, int baseAttack, int baseDefence, int speed, Element type) {
 		this.name = name;
 		this.baseHP = baseHP;
 		this.baseAttack = baseAttack;
@@ -84,17 +81,25 @@ public class Pokemon {
 		this.speed = speed;
 	}
 
-	public Type getType() {
+	public Element getType() {
 		return type;
 	}
 
-	public void setType(Type type) {
+	public void setType(Element type) {
 		this.type = type;
 	}
 	
 	public static void main(String[] args) {
 		Pokemon test = new Pokemon();
 		System.out.println(test.getName());
+	}
+
+	public int getLevel() {
+		return level;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
 	}
 	
 }
