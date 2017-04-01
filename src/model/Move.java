@@ -6,21 +6,28 @@ public class Move {
 	private String name;
 	private Element type;
 	private int baseDamage;
+	private boolean physical;
 	
 	//default constructor
 	public Move(){
 		this.id = -1;
 		this.name = "boogy";
 		this.type = Element.Questionable;
-		this.baseDamage = 10;
+		this.baseDamage = 70;
+		physical = true;
 	}
 	
 	//parameters constructor
-	public Move(int id, String name, Element type, int baseDamage) {
+	public Move(int id, String name, Element type, int baseDamage, boolean phys) {
 		this.id = id;
 		this.name = name;
 		this.type = type;
 		this.baseDamage = baseDamage;
+		this.physical = phys;
+	}
+	
+	public boolean isPhysical(){
+		return this.physical;
 	}
 	
 	public String getName(){
