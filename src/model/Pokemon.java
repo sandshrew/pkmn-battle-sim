@@ -60,7 +60,14 @@ public class Pokemon {
 
 	//attack method that calculates damage output 
 	public int attack(Pokemon otherPokemon, Move attack){
-		return 10;
+
+		int a = (((2 * this.level)/5) + 2);
+		int b = attack.getBaseDamage();
+		int c = this.getAttack() / otherPokemon.getDefence();
+		int d = ( a * b * c )/50;
+		
+		return (int) (d + 2 );
+
 	}
 
 	public void calculateHP(){
@@ -94,7 +101,7 @@ public class Pokemon {
 	//MAIN METHOD
 	public static void main(String[] args) {
 		Pokemon test = new Pokemon();
-		test.printStats();
+		System.out.println(test.attack(test, test.getMoves().get(0)));
 	}
 
 	public String getName() {
