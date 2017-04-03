@@ -3,6 +3,7 @@ package model;
 import java.util.Arrays;
 import java.util.List;
 
+
 public class Pokemon {
 	//pokemon attributes/stats
 	private String name;
@@ -61,15 +62,12 @@ public class Pokemon {
 
 	//attack method that calculates damage output 
 	public int attack(Pokemon otherPokemon, Move attack){
-
 //		int a = (((2 * this.level)/5) + 2);
 //		int b = attack.getBaseDamage();
 //		int c = this.getAttack() / otherPokemon.getDefence();
 //		int d = ( a * b * c )/50;
 		//(2 * this.level)
-		
 		return 10;
-
 	}
 
 	public void calculateHP(){
@@ -100,11 +98,6 @@ public class Pokemon {
 	public void printMoves(){
 	}
 
-	//MAIN METHOD
-	public static void main(String[] args) {
-		Pokemon test = new Pokemon();
-		System.out.println(test.attack(test, test.getMoves().get(0)));
-	}
 
 	public String getName() {
 		return name;
