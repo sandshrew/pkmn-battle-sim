@@ -11,6 +11,13 @@ public class Pokemon {
 	private int baseAttack;
 	private int baseDefence;
 	private int baseSpeed;
+	
+	//battle stats
+	private int hp;
+	private int attack;
+	private int defence;
+	private int speed;
+	
 	private Element type;
 	private List<Move> moves;
 	//maybe?
@@ -18,14 +25,8 @@ public class Pokemon {
 	//private int baseSpecialDefence;
 	//attacks
 	//held item
-
 	//maybe adding... EVs/IVs & nature
 
-	//battle stats
-	private int hp;
-	private int attack;
-	private int defence;
-	private int speed;
 
 
 	//default constructor
@@ -61,12 +62,13 @@ public class Pokemon {
 	//attack method that calculates damage output 
 	public int attack(Pokemon otherPokemon, Move attack){
 
-		int a = (((2 * this.level)/5) + 2);
-		int b = attack.getBaseDamage();
-		int c = this.getAttack() / otherPokemon.getDefence();
-		int d = ( a * b * c )/50;
+//		int a = (((2 * this.level)/5) + 2);
+//		int b = attack.getBaseDamage();
+//		int c = this.getAttack() / otherPokemon.getDefence();
+//		int d = ( a * b * c )/50;
+		//(2 * this.level)
 		
-		return (int) (d + 2 );
+		return 10;
 
 	}
 
