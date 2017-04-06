@@ -27,7 +27,9 @@ public class Pokemon {
 	//attacks
 	//held item
 	//maybe adding... EVs/IVs & nature
-
+	
+	//MIGHT USE FOR BATTLE?
+	private int nextAttack;
 
 
 	//default constructor
@@ -47,10 +49,12 @@ public class Pokemon {
 		this.speed = calculateStat(baseSpeed);
 		
 		this.moves = Arrays.asList(new Move(),new Move(),new Move(),new Move());
+		
+		this.setNextAttack(0);
 	}
 
 	//constructor
-	public Pokemon(String name, int level, int baseHP, int baseAttack, int baseDefence, int speed, Element type, List<Move> moves) {
+	public Pokemon(String name, int level, int baseHP, int baseAttack, int baseDefence, int speed, Element type, List<Move> moves, int nextAttack) {
 		this.name = name;
 		this.baseHP = baseHP;
 		this.baseAttack = baseAttack;
@@ -58,16 +62,17 @@ public class Pokemon {
 		this.baseSpeed = speed;
 		this.type = type;
 		this.moves = moves;
+		this.setNextAttack(nextAttack);
 	}
 
 	//attack method that calculates damage output 
-	public int attack(Pokemon otherPokemon, Move attack){
+	public void attack(Pokemon otherPokemon, Move attack){
 //		int a = (((2 * this.level)/5) + 2);
 //		int b = attack.getBaseDamage();
 //		int c = this.getAttack() / otherPokemon.getDefence();
 //		int d = ( a * b * c )/50;
 		//(2 * this.level)
-		return 10;
+		otherPokemon.setHp(otherPokemon.getHp() - 10);
 	}
 
 	public void calculateHP(){
@@ -193,6 +198,14 @@ public class Pokemon {
 
 	public void setDefence(int defence) {
 		this.defence = defence;
+	}
+
+	public int getNextAttack() {
+		return nextAttack;
+	}
+
+	public void setNextAttack(int nextAttack) {
+		this.nextAttack = nextAttack;
 	}
 }
 
