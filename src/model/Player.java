@@ -1,7 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Player 
@@ -18,7 +17,8 @@ public class Player
 	
 		this.setPlayerName("Red");
 		this.setPlayerId("red123");
-		this.pokeParty = Arrays.asList(new Pokemon(), new Pokemon(), new Pokemon(), new Pokemon(), new Pokemon(), new Pokemon());
+		this.pokeParty = new ArrayList<Pokemon>();
+		this.pokeParty.add(new Pokemon());
 		this.setMoveSelected(false);
 	
 	}
