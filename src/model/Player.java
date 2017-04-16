@@ -9,7 +9,7 @@ public class Player
 	
 	private String playerName;
 	private String playerId;
-	private List<Pokemon> pokeParty;
+	private ArrayList<Pokemon> pokeParty;
 	private static final int MAX_POKEMON_COUNT = 6;
 	private boolean moveSelected;
 	
@@ -18,16 +18,16 @@ public class Player
 	
 		this.setPlayerName("Red");
 		this.setPlayerId("red123");
-		this.pokeParty = Arrays.asList(new Pokemon(), new Pokemon(), new Pokemon(), new Pokemon(), new Pokemon(), new Pokemon());
+		this.pokeParty = new ArrayList<Pokemon>(Arrays.asList(new Pokemon(), new Pokemon(), new Pokemon(), new Pokemon(), new Pokemon(), new Pokemon()));
 		this.setMoveSelected(false);
 	
 	}
 	
-	public List<Pokemon> getPokeParty(){
+	public ArrayList<Pokemon> getPokeParty(){
 		return pokeParty;
 	}
 	
-	public void setPokeParty(List<Pokemon> pokeParty){
+	public void setPokeParty(ArrayList<Pokemon> pokeParty){
 		this.pokeParty = pokeParty;
 	}
 
