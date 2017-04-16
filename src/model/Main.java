@@ -7,7 +7,7 @@ public class Main {
 		Pokemon test = new Pokemon();
 		test.printStats();
 		System.out.println();
-		System.out.println(test.attack(test, test.getMoves().get(0)));
+		//System.out.print(test.attack(test, test.getMoves().get(0)));
 		
 		GameEngine ge = new GameEngine();
 		

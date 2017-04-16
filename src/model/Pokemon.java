@@ -75,8 +75,7 @@ public class Pokemon {
 		double g = c / d;
 		double e = ((a * b * g) / 50) + 2;
 		double mod = 1 *  ThreadLocalRandom.current().nextDouble(0.85, 1);
-		return (int) (b * mod);
-		otherPokemon.setHp(otherPokemon.getHp() - 10);
+		otherPokemon.setHp(otherPokemon.getHp() - (int) (b * mod));
 	}
 
 	public void calculateHP(){
