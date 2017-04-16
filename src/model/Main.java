@@ -8,6 +8,9 @@ public class Main {
 		test.printStats();
 		System.out.println();
 		System.out.println(test.attack(test, test.getMoves().get(0)));
+		
+		GameEngine ge = new GameEngine();
+		
 	}
 
 }
