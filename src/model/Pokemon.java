@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -21,7 +22,7 @@ public class Pokemon {
 	private int speed;
 	
 	private Element type;
-	private List<Move> moves;
+	private ArrayList<Move> moves;
 	//maybe?
 	//private int baseSpecialAttack;
 	//private int baseSpecialDefence;
@@ -49,13 +50,18 @@ public class Pokemon {
 		this.defence = calculateStat(baseDefence);
 		this.speed = calculateStat(baseSpeed);
 		
-		this.moves = Arrays.asList(new Move(),new Move(),new Move(),new Move());
-		
+		ArrayList<Move> test = new ArrayList<Move>();
+		test.add(new Move());
+		test.add(new Move(0, "Scratch", Element.Questionable, 20, true));
+		test.add(new Move(33, "Dark Pulse", Element.Bug, 65, false));
+		test.add(new Move(0, "Bite", Element.Dark, 120, true));
+	
+		this.moves = test;
 		this.setNextAttack(0);
 	}
 
 	//constructor
-	public Pokemon(String name, int level, int baseHP, int baseAttack, int baseDefence, int speed, Element type, List<Move> moves, int nextAttack) {
+	public Pokemon(String name, int level, int baseHP, int baseAttack, int baseDefence, int speed, Element type, ArrayList<Move> moves, int nextAttack) {
 		this.name = name;
 		this.baseHP = baseHP;
 		this.baseAttack = baseAttack;
@@ -75,7 +81,7 @@ public class Pokemon {
 		double g = c / d;
 		double e = ((a * b * g) / 50) + 2;
 		double mod = 1 *  ThreadLocalRandom.current().nextDouble(0.85, 1);
-		otherPokemon.setHp(otherPokemon.getHp() - (int) (b * mod));
+		otherPokemon.setHp(otherPokemon.getHp() - (int) (e * mod));
 	}
 
 	public void calculateHP(){
@@ -167,7 +173,7 @@ public class Pokemon {
 		return moves;
 	}
 
-	public void setMoves(List<Move> moves) {
+	public void setMoves(ArrayList<Move> moves) {
 		this.moves = moves;
 	}
 
