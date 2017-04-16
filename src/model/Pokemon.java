@@ -2,6 +2,7 @@ package model;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 
 public class Pokemon {
@@ -62,12 +63,14 @@ public class Pokemon {
 
 	//attack method that calculates damage output 
 	public int attack(Pokemon otherPokemon, Move attack){
-//		int a = (((2 * this.level)/5) + 2);
-//		int b = attack.getBaseDamage();
-//		int c = this.getAttack() / otherPokemon.getDefence();
-//		int d = ( a * b * c )/50;
-		//(2 * this.level)
-		return 10;
+		double a = ((2 * this.level) / 5) + 2;
+		double b = attack.getBaseDamage();
+		double c = this.attack;
+		double d = otherPokemon.defence;
+		double g = c / d;
+		double e = ((a * b * g) / 50) + 2;
+		double mod = 1 *  ThreadLocalRandom.current().nextDouble(0.85, 1);
+		return (int) (b * mod);
 	}
 
 	public void calculateHP(){

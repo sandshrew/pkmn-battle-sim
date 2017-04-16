@@ -11,8 +11,8 @@ public class Move {
 	//default constructor
 	public Move(){
 		this.id = -1;
-		this.name = "boogy";
-		this.type = Element.Questionable;
+		this.name = "U-Turn";
+		this.type = Element.Bug;
 		this.baseDamage = 70;
 		physical = true;
 	}
