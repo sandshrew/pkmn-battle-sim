@@ -99,6 +99,8 @@ public class GameEngine {
 	/* Phase to select moves or another pokemon */
 	private void SelectPhase() {
 
+		p1.setMoveSelected(true);
+		ai.setMoveSelected(true);
 		// System.out.print("Enter A to select an attack or P to select a new
 		// pokemon: ");
 		System.out.print(p1.getPlayerName() + " select a move for " + p1Pokemon.getName() + "\n" + "\t1: "
@@ -145,8 +147,9 @@ public class GameEngine {
 			// System.out.println("Fouth attack");
 			p1Pokemon.setNextAttack(3);
 			break;
+		case "p":
 		case "P":
-			System.out.println("NOOO");
+			SelectPokemon();
 			break;
 		default:
 			SelectPhase();
@@ -189,7 +192,7 @@ public class GameEngine {
 		 * kinda lazy and copied and pasted them around will work on cutting
 		 * this down later... (also commented out a lot of code)
 		 */
-
+		
 		// player's pokemon is slower than AI's pokemon
 		if (p1Pokemon.getSpeed() < aiPokemon.getSpeed() || isAIFirst) {
 			System.out.println(ai.getPlayerName() + "'s " + aiPokemon.getName() + " does a "
@@ -200,7 +203,7 @@ public class GameEngine {
 			aiAtk = AttackCalc(aiPokemon, p1Pokemon, aiPokemon.getMoves().get(aiPokemon.getNextAttack()));
 			isPlayerFirst = false;
 
-			if (p1Pokemon.getHp() >= 0) {
+			if (p1Pokemon.getHp() >= 0 && p1.isMoveSelected()) {
 				System.out.println(p1.getPlayerName() + "'s " + p1Pokemon.getName() + " does a "
 						+ p1Pokemon.getMoves().get(p1Pokemon.getNextAttack()).getName());
 				// p1Pokemon.attack(aiPokemon,
@@ -210,14 +213,15 @@ public class GameEngine {
 			}
 			// player's pokemon is faster than AI's pokemon
 		} else {
-			System.out.println(p1.getPlayerName() + "'s " + p1Pokemon.getName() + " does a "
-					+ p1Pokemon.getMoves().get(p1Pokemon.getNextAttack()).getName());
-			// p1Pokemon.attack(aiPokemon,
-			// p1Pokemon.getMoves().get(p1Pokemon.getNextAttack()));
-
-			playerAtk = AttackCalc(p1Pokemon, aiPokemon, p1Pokemon.getMoves().get(p1Pokemon.getNextAttack()));
-			isPlayerFirst = true;
-
+			if(p1.isMoveSelected()){
+				System.out.println(p1.getPlayerName() + "'s " + p1Pokemon.getName() + " does a "
+						+ p1Pokemon.getMoves().get(p1Pokemon.getNextAttack()).getName());
+				// p1Pokemon.attack(aiPokemon,
+				// p1Pokemon.getMoves().get(p1Pokemon.getNextAttack()));
+	
+				playerAtk = AttackCalc(p1Pokemon, aiPokemon, p1Pokemon.getMoves().get(p1Pokemon.getNextAttack()));
+				isPlayerFirst = true;
+			}
 			if (aiPokemon.getHp() >= 0) {
 				System.out.println(ai.getPlayerName() + "'s " + aiPokemon.getName() + " does a "
 						+ aiPokemon.getMoves().get(aiPokemon.getNextAttack()).getName());
@@ -232,27 +236,47 @@ public class GameEngine {
 		if (aiPokemon.getHp() <= 0) {
 			System.out.println(ai.getPlayerName() + "'s " + aiPokemon.getName() + " was hit for " + playerAtk
 					+ " and now has 0 HP");
-			System.out.println(ai.getPlayerName() + "'s " + aiPokemon.getName() + " has fainted!\n" + p1.getPlayerName()
-					+ " WINS!!!");
-
+			
+			
+			for(int i = 0; i<6; i++){
+				if(ai.getPokeParty().get(i).getHp() >= 0 && aiPokemon.getHp() <= 0){
+					System.out.print(ai.getPlayerName() + " returned " + aiPokemon.getName());
+					aiPokemon = ai.getPokeParty().get(i);
+					System.out.println(" and sent out " + aiPokemon.getName());
+				}
+			}
+			
+			if (aiPokemon.getHp() <= 0) {
+				System.out.println(ai.getPlayerName() + "'s " + aiPokemon.getName() + " has fainted!\n" + p1.getPlayerName()
+						+ " WINS!!!");
+				this.battling = false;
+				p1Pokemon.setNextAttack(-1);
+			}
+			
 			/*
 			 * break out of loop when pokemon dies... need to change to
 			 * accommodate party
 			 */
-			this.battling = false;
-			p1Pokemon.setNextAttack(-1);
+			
 			// if Player's pokemon faints
 		} else if (p1Pokemon.getHp() <= 0) {
 			System.out.println(
 					p1.getPlayerName() + "'s " + p1Pokemon.getName() + " was hit for " + aiAtk + " and now has 0 HP");
-			System.out.println(p1.getPlayerName() + "'s " + p1Pokemon.getName() + " has fainted!\n" + ai.getPlayerName()
-					+ " WINS!!!");
+			
+			p1.getPokeParty().remove(p1.getPokeParty().indexOf(p1Pokemon));
+			if(!p1.getPokeParty().isEmpty()){
+				SelectPokemon();
+			}else {
+				System.out.println(p1.getPlayerName() + "'s " + p1Pokemon.getName() + " has fainted!\n" + ai.getPlayerName()
+						+ " WINS!!!");
+				this.battling = false;
+				p1Pokemon.setNextAttack(-1);
+			}
 			/*
 			 * break out of loop when pokemon dies... need to change to
 			 * accommodate party
 			 */
-			this.battling = false;
-			p1Pokemon.setNextAttack(-1);
+			
 			// if both pokemon are still alive
 		} else {
 			// prints out based on who attacked first
@@ -276,24 +300,26 @@ public class GameEngine {
 	}
 
 	/* need to implement */
+	/* if moveSelected is false when it gets into the attack phase it means the person changed pokemon */
 	private void SelectPokemon() {
 		System.out.println("Select the number associated with the pokemon you want to switch out for ");
-		int count = 1;
+		int count = 0;
 		for (Pokemon pokemon : p1.getPokeParty()) {
-			if (pokemon != p1Pokemon) {
-				System.out.println(count + ": " + pokemon.getName());
+			if (pokemon != p1Pokemon && pokemon.getHp() > 0) {
+				System.out.println(p1.getPokeParty().indexOf(pokemon)+1 + ": " + pokemon.getName() + " HP: " + pokemon.getHp());
 				count++;
+				
 			}
 		}
 		int tempChosen = Integer.parseInt(reader.nextLine());
 
-		if (tempChosen < 5 || tempChosen > 1) {
-
+		if (tempChosen <= count && tempChosen > 0) {
+			p1.setMoveSelected(false);
 			System.out.print(p1.getPlayerName() + " returned " + p1Pokemon.getName());
 
-			p1Pokemon = p1.getPokeParty().get(tempChosen - 1);
+			p1Pokemon = p1.getPokeParty().get(tempChosen-1);
 
-			System.out.println(" and sent out " + p1Pokemon.getName());
+			System.out.println(" and sent out " + p1Pokemon.getName() + p1Pokemon.getHp());
 		} else {
 			SelectPokemon();
 		}
