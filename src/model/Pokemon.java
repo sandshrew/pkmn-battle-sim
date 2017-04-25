@@ -52,9 +52,9 @@ public class Pokemon {
 		
 		ArrayList<Move> test = new ArrayList<Move>();
 		test.add(new Move());
-		test.add(new Move(0, "Scratch", Element.Questionable, 20, true));
-		test.add(new Move(33, "Dark Pulse", Element.Bug, 65, false));
-		test.add(new Move(0, "Bite", Element.Dark, 120, true));
+		test.add(new Move( "Scratch", Element.Questionable, 20));
+		test.add(new Move( "Dark Pulse", Element.Bug, 65));
+		test.add(new Move( "Bite", Element.Dark, 120));
 	
 		this.moves = test;
 		this.setNextAttack(0);
@@ -70,6 +70,17 @@ public class Pokemon {
 		this.type = type;
 		this.moves = moves;
 		this.setNextAttack(nextAttack);
+	}
+	
+	//constructor without nextAttack 
+	public Pokemon(String name, int level, int baseHP, int baseAttack, int baseDefence, int speed, Element type, ArrayList<Move> moves) {
+		this.name = name;
+		this.baseHP = baseHP;
+		this.baseAttack = baseAttack;
+		this.baseDefence = baseDefence;
+		this.baseSpeed = speed;
+		this.type = type;
+		this.moves = moves;
 	}
 
 	//attack method that calculates damage output 
