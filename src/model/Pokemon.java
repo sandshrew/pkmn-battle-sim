@@ -8,6 +8,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Pokemon {
 	//pokemon attributes/stats
+	private int ID;
 	private String name;
 	private int level;
 	private int baseHP;
@@ -73,14 +74,20 @@ public class Pokemon {
 	}
 	
 	//constructor without nextAttack 
-	public Pokemon(String name, int level, int baseHP, int baseAttack, int baseDefence, int speed, Element type, ArrayList<Move> moves) {
+	public Pokemon(int ID, String name, int level, int baseHP, int baseAttack, int baseDefence, int speed, Element type, ArrayList<Move> moves) {
+		this.setID(ID);
 		this.name = name;
 		this.baseHP = baseHP;
+		this.level = level;
 		this.baseAttack = baseAttack;
 		this.baseDefence = baseDefence;
 		this.baseSpeed = speed;
 		this.type = type;
 		this.moves = moves;
+		this.calculateHP();
+		this.attack = calculateStat(baseAttack);
+		this.defence = calculateStat(baseDefence);
+		this.speed = calculateStat(speed);
 	}
 
 	//attack method that calculates damage output 
@@ -102,10 +109,9 @@ public class Pokemon {
 	}
 
 	private int calculateStat(int base){
-		int nature = 1;
-		int IV = 0;
-		int EV = 0;
-		return (int) Math.floor((Math.floor(((2 * base + IV + EV) * this.level)/100) + 5) * nature);
+	
+		int test = (int) Math.floor((Math.floor(((2 * base) * this.level)/100) + 5) * 1);
+		return test;
 	}
 	
 	public void printStats(){
@@ -115,8 +121,9 @@ public class Pokemon {
 		System.out.println("Defence " + this.defence);
 		System.out.println("Speed " + this.speed);
 		for(int i = 0; i < moves.size(); i++){
-			System.out.print(moves.get(i).getName() + " ");
+			System.out.print(moves.get(i).getName() + ", ");
 		}
+		System.out.print("\n\n");
 	}
 
 	//show moves
@@ -226,6 +233,14 @@ public class Pokemon {
 
 	public void setNextAttack(int nextAttack) {
 		this.nextAttack = nextAttack;
+	}
+
+	public int getID() {
+		return ID;
+	}
+
+	public void setID(int iD) {
+		ID = iD;
 	}
 }
 
