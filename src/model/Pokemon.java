@@ -115,13 +115,14 @@ public class Pokemon {
 	}
 	
 	public void printStats(){
+		System.out.println("ID " + this.ID);
 		System.out.println("Name " + this.name);
 		System.out.println("HP " + this.hp);
 		System.out.println("Attack " + this.attack);
 		System.out.println("Defence " + this.defence);
 		System.out.println("Speed " + this.speed);
 		for(int i = 0; i < moves.size(); i++){
-			System.out.print(moves.get(i).getName() + ", ");
+			System.out.print(moves.get(i).getName()+" "+ moves.get(i).getBaseDamage() + (( i == 3) ? " " : ", "));
 		}
 		System.out.print("\n\n");
 	}
