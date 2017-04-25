@@ -7,13 +7,24 @@ import java.util.ArrayList;
 
 public class PokemonFactory {
 
+	private static ArrayList<Pokemon> allPokemon = new ArrayList<Pokemon>();
+	public ArrayList<Pokemon> generatePokemon(){;
+		if (!allPokemon.isEmpty()){
+			return allPokemon;
+		} else{
+			return null;
+		}
+		
+	}
+	
 	public static void parseFile() {
 		try (BufferedReader reader = Files.newBufferedReader((Paths.get("PokemonData.csv")))) {
 			String line = reader.readLine();
 			while (line != null) {
 				// System.out.println(line);
-				String[] tokens = line.split(",");
-				Pokemon pokemon = createPokemon(tokens);
+				//String[] tokens = line.split(",");
+				Pokemon pokemon = createPokemon(line.split(","));
+				allPokemon.add(pokemon);
 				line = reader.readLine();
 			}
 
@@ -23,14 +34,8 @@ public class PokemonFactory {
 	}
 
 	public static Pokemon createPokemon(String[] tokens) {
-		int tempID = Integer.parseInt(tokens[0]);
-		String tempName = tokens[1];
-		int tempHP = Integer.parseInt(tokens[2]);
-		int tempAtk = Integer.parseInt(tokens[3]);
-		int tempDef = Integer.parseInt(tokens[4]);
-		int tempSpeed = Integer.parseInt(tokens[5]);
-
-		Pokemon test = new Pokemon(tempID, tempName, 50, tempHP, tempAtk, tempDef, tempSpeed,
+		Pokemon test = new Pokemon(Integer.parseInt(tokens[0]), tokens[1], 50, Integer.parseInt(tokens[2]),
+				Integer.parseInt(tokens[3]), Integer.parseInt(tokens[4]), Integer.parseInt(tokens[5]),
 				Element.valueOf(tokens[6]), createMove(tokens));
 		test.printStats();
 		return test;
@@ -46,11 +51,5 @@ public class PokemonFactory {
 			next += 3;
 		}
 		return temp;
-	}
-
-	public static void main(String[] args) {
-		parseFile();
-//		Pokemon test = new Pokemon();
-//		test.printStats();
 	}
 }
