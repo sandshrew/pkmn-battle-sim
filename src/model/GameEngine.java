@@ -159,7 +159,7 @@ public class GameEngine {
 	}
 
 	/*
-	 * attack phase Need to redo statements
+	 * attack phase
 	 */
 	private void AttackPhase() {
 		// temp formatting
@@ -172,12 +172,17 @@ public class GameEngine {
 			random = r.nextBoolean();
 		}
 
+		//variables to keep track of which player/pokemon
+		//is attacking first 
 		Player first = this.ai;
 		Pokemon firstPokemon = this.aiPokemon;
 		Player next = this.p1;
 		Pokemon nextPokemon = this.p1Pokemon;
+		
+		//variables to keep track of damage
 		int firstAtk = 0;
 		int nextAtk = 0;
+		
 		// player's pokemon is slower than AI's pokemon
 		if (p1Pokemon.getSpeed() < aiPokemon.getSpeed() || random) {
 			first = this.ai;
@@ -191,13 +196,16 @@ public class GameEngine {
 			nextPokemon = this.aiPokemon;
 		}
 
-
+		//calculate and apply first attack damage
 		firstAtk = AttackCalc(firstPokemon, nextPokemon, firstPokemon.getMoves().get(firstPokemon.getNextAttack()));
 		System.out.println(first.getPlayerName() + "'s " + firstPokemon.getName() + " used "
 				+ firstPokemon.getMoves().get(firstPokemon.getNextAttack()).getName());
 		System.out.println(next.getPlayerName() + "'s " + nextPokemon.getName() + " was hit for " + firstAtk
 				+ " and now has " + ((nextPokemon.getHp() >= 0) ? nextPokemon.getHp() : "0") + " HP");
 
+		//if attacked pokemon is still alive
+		//AND an attack has been selected then
+		//calculate and apply next attack damage
 		if (nextPokemon.getHp() > 0 && this.moveSelected) {
 			nextAtk = AttackCalc(nextPokemon, firstPokemon, nextPokemon.getMoves().get(nextPokemon.getNextAttack()));
 			System.out.println(next.getPlayerName() + "'s " + nextPokemon.getName() + " used "
@@ -206,21 +214,40 @@ public class GameEngine {
 					+ " and now has " + ((firstPokemon.getHp() >= 0) ? firstPokemon.getHp() : "0") + " HP");
 		}
 
+		
+		boolean pokemonFainted = false;
+		Pokemon faintedPokemon = null;
+		Player temp = null;
 		if (nextPokemon.getHp() <= 0) {
-			System.out.println(next.getPlayerName() + "'s " + nextPokemon.getName() + " fainted!");
-			if (!this.knockedOut(next.getPokeParty())) {
-				if (next.getPlayerName().equals("Red")) {
+			pokemonFainted = true;
+			faintedPokemon = nextPokemon;
+			temp = next;
+		}
+		
+		if (firstPokemon.getHp() <= 0) {
+			pokemonFainted = true;
+			faintedPokemon = firstPokemon;
+			temp = first;
+		}
+		
+		if(pokemonFainted){
+			pokemonFainted = false;
+			System.out.println(temp.getPlayerName() + "'s " + faintedPokemon.getName() + " fainted!");
+			if (!this.knockedOut(temp.getPokeParty())) {
+				if (temp.getPlayerName().equals(ai.getPlayerName())) {
 					aiSpawnNext();
+				} else{
+					p1.getPokeParty().remove(p1.getPokeParty().indexOf(p1Pokemon));
+					if (!p1.getPokeParty().isEmpty()) {
+						SelectPokemon();
+					}
 				}
 			} else{
-				System.out.println(next.getPlayerName() + " loses!");
+				System.out.println(temp.getPlayerName() + " loses!");
 				battling = false;
 			}
 		}
-		if (firstPokemon.getHp() <= 0) {
-			System.out.println(first.getPlayerName() + "'s " + firstPokemon.getName() + " fainted!");
-		}
-
+		
 		System.out.print("\n");
 	}
 
