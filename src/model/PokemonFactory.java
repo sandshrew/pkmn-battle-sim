@@ -8,7 +8,8 @@ import java.util.ArrayList;
 public class PokemonFactory {
 
 	private static ArrayList<Pokemon> allPokemon = new ArrayList<Pokemon>();
-	public ArrayList<Pokemon> generatePokemon(){;
+	public static ArrayList<Pokemon> generatePokemon(){;
+		parseFile();
 		if (!allPokemon.isEmpty()){
 			return allPokemon;
 		} else{
@@ -37,7 +38,7 @@ public class PokemonFactory {
 		Pokemon test = new Pokemon(Integer.parseInt(tokens[0]), tokens[1], 50, Integer.parseInt(tokens[2]),
 				Integer.parseInt(tokens[3]), Integer.parseInt(tokens[4]), Integer.parseInt(tokens[5]),
 				Element.valueOf(tokens[6]), createMove(tokens));
-		test.printStats();
+		//test.printStats();
 		return test;
 	}
 
