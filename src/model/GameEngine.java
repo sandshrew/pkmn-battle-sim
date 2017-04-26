@@ -33,7 +33,7 @@ public class GameEngine {
 	/* Default constructor */
 	public GameEngine() {
 		allPokemon = PokemonFactory.generatePokemon();
-		int[] test = { 0, 1, 2, 3, 4, 5 };
+		int[] test = { 0, 0, 2, 3, 4, 5 };
 		this.p1 = new Player("Dragon", selectPokemon(test));
 		// this.p1 = new Player();
 		this.ai = new Player();
@@ -47,11 +47,21 @@ public class GameEngine {
 		battling = true;
 		startBattleLoop();
 	}
-
+//Pokemon(int ID, String name, int level, int baseHP, int baseAttack, 
+	//int baseDefence, int speed, Element type, ArrayList<Move> moves)
 	public ArrayList<Pokemon> selectPokemon(int[] test) {
 		ArrayList<Pokemon> party = new ArrayList<Pokemon>();
+		
 		for (int i = 0; i < 6; i++) {
-			party.add(this.allPokemon.get(test[i]));
+			
+			if(party.contains(this.allPokemon.get(test[i]))){
+				Pokemon pp = new Pokemon(this.allPokemon.get(test[i]).getID(), this.allPokemon.get(test[i]).getName(), this.allPokemon.get(test[i]).getLevel(),
+						this.allPokemon.get(test[i]).getBaseHP(), this.allPokemon.get(test[i]).getBaseAttack(), this.allPokemon.get(test[i]).getBaseDefence(),
+						this.allPokemon.get(test[i]).getBaseSpeed(), this.allPokemon.get(test[i]).getType(), this.allPokemon.get(test[i]).getMoves());
+				party.add(pp);
+			}else{
+				party.add(this.allPokemon.get(test[i]));
+			}
 		}
 		return party;
 	}

@@ -188,7 +188,7 @@ public class Pokemon {
 		this.level = level;
 	}
 
-	public List<Move> getMoves() {
+	public ArrayList<Move> getMoves() {
 		return moves;
 	}
 
