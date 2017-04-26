@@ -3,18 +3,18 @@ package model;
 public class Move {
 	
 	private String name;
-	private Element type;
+	private Type type;
 	private int baseDamage;
 	
 	//default constructor
 	public Move(){
 		this.name = "U-Turn";
-		this.type = Element.Bug;
+		this.type = Type.Bug;
 		this.baseDamage = 70;
 	}
 	
 	//parameters constructor
-	public Move(String name, Element type, int baseDamage) {
+	public Move(String name, Type type, int baseDamage) {
 		this.name = name;
 		this.type = type;
 		this.baseDamage = baseDamage;
@@ -25,11 +25,11 @@ public class Move {
 	}
 
 
-	public Element getType() {
+	public Type getType() {
 		return type;
 	}
 
-	public void setType(Element type) {
+	public void setType(Type type) {
 		this.type = type;
 	}
 

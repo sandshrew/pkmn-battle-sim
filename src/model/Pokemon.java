@@ -22,7 +22,7 @@ public class Pokemon {
 	private int defence;
 	private int speed;
 	
-	private Element type;
+	private Type type;
 	private ArrayList<Move> moves;
 	//maybe?
 	//private int baseSpecialAttack;
@@ -44,7 +44,7 @@ public class Pokemon {
 		this.baseAttack = 105;
 		this.baseDefence = 60;
 		this.baseSpeed = 105;
-		this.type = Element.Dark;
+		this.type = Type.Dark;
 	
 		this.calculateHP();
 		this.attack = calculateStat(baseAttack);
@@ -53,16 +53,16 @@ public class Pokemon {
 		
 		ArrayList<Move> test = new ArrayList<Move>();
 		test.add(new Move());
-		test.add(new Move( "Scratch", Element.Questionable, 20));
-		test.add(new Move( "Dark Pulse", Element.Bug, 65));
-		test.add(new Move( "Bite", Element.Dark, 120));
+		test.add(new Move( "Scratch", Type.Questionable, 20));
+		test.add(new Move( "Dark Pulse", Type.Bug, 65));
+		test.add(new Move( "Bite", Type.Dark, 120));
 	
 		this.moves = test;
 		this.setNextAttack(0);
 	}
 
 	//constructor
-	public Pokemon(String name, int level, int baseHP, int baseAttack, int baseDefence, int speed, Element type, ArrayList<Move> moves, int nextAttack) {
+	public Pokemon(String name, int level, int baseHP, int baseAttack, int baseDefence, int speed, Type type, ArrayList<Move> moves, int nextAttack) {
 		this.name = name;
 		this.baseHP = baseHP;
 		this.baseAttack = baseAttack;
@@ -74,7 +74,7 @@ public class Pokemon {
 	}
 	
 	//constructor without nextAttack 
-	public Pokemon(int ID, String name, int level, int baseHP, int baseAttack, int baseDefence, int speed, Element type, ArrayList<Move> moves) {
+	public Pokemon(int ID, String name, int level, int baseHP, int baseAttack, int baseDefence, int speed, Type type, ArrayList<Move> moves) {
 		this.setID(ID);
 		this.name = name;
 		this.baseHP = baseHP;
@@ -172,11 +172,11 @@ public class Pokemon {
 		this.speed = speed;
 	}
 
-	public Element getType() {
+	public Type getType() {
 		return type;
 	}
 
-	public void setType(Element type) {
+	public void setType(Type type) {
 		this.type = type;
 	}
 
