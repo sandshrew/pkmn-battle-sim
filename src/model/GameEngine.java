@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
@@ -166,6 +167,20 @@ public class GameEngine {
 		double mod = 1 * ThreadLocalRandom.current().nextDouble(0.85, 1);
 		defender.setHp(defender.getHp() - (int) (e * mod));
 		return (int) (e * mod);
+	}
+	
+	private double typeEffectiveness(Type attack, Type defence){
+		if(Arrays.asList(defence.weak).contains(attack)){
+			System.out.println("Not very effective");
+			return 0.5;
+		} else if(Arrays.asList(defence.strong).contains(attack)){
+			System.out.println("Very effective");
+			return 2.0;
+		} else if(Arrays.asList(defence.noEffect).contains(attack)){
+			System.out.println("No effect");
+			return 0.0;
+		}
+		return 1.0;
 	}
 
 	/*

@@ -53,8 +53,8 @@ public class Pokemon {
 		
 		ArrayList<Move> test = new ArrayList<Move>();
 		test.add(new Move());
-		test.add(new Move( "Scratch", Type.Questionable, 20));
-		test.add(new Move( "Dark Pulse", Type.Bug, 65));
+		test.add(new Move( "Scratch", Type.Normal, 20));
+		test.add(new Move( "Dark Pulse", Type.Dark, 65));
 		test.add(new Move( "Bite", Type.Dark, 120));
 	
 		this.moves = test;
