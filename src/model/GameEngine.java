@@ -85,7 +85,7 @@ public class GameEngine {
 		// keep looping while pokemon are still battling
 		while (battling) {
 			++turnCounter;
-			System.out.println("Turn " + turnCounter);
+			System.out.println("\nTurn " + turnCounter);
 			SelectPhase();
 			if (battling) {
 				AttackPhase();
@@ -159,9 +159,6 @@ public class GameEngine {
 
 	/* attack phase */
 	private void AttackPhase() {
-		// temp formatting
-		System.out.print("\n");
-
 		// randomly picks pokemon to attack if they have the same speed
 		boolean random = false;
 		if (p1Pokemon.getSpeed() == aiPokemon.getSpeed()) {
@@ -249,13 +246,11 @@ public class GameEngine {
 				battling = false;
 			}
 		}
-
-		System.out.print("\n");
 	}
 
 	/* Switch pokemon from party or select new pokemon */
 	private void SelectPokemon() {
-		System.out.println("Select the number associated with the pokemon you want to switch out for"
+		System.out.println("\nSelect the number associated with the pokemon you want to switch out for"
 				+ ((this.p1Pokemon.getHp() <= 0) ? ": " : " (0) to go back to battle phase:"));
 		int count = 0;
 		for (Pokemon pokemon : p1.getPokeParty()) {
@@ -300,13 +295,13 @@ public class GameEngine {
 	/* Checks type effectiveness */
 	private double typeEffectiveness(Type attack, Type defence) {
 		if (Arrays.asList(defence.weak).contains(attack)) {
-			System.out.println("Very effective");
+			System.out.print("Very effective : ");
 			return 2.0;
 		} else if (Arrays.asList(defence.strong).contains(attack)) {
-			System.out.println("Not very effective");
+			System.out.print("Not very effective : ");
 			return 0.5;
 		} else if (Arrays.asList(defence.noEffect).contains(attack)) {
-			System.out.println("No effect");
+			System.out.print("No effect : ");
 			return 0.0;
 		}
 		return 1.0;
