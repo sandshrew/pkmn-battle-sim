@@ -34,10 +34,11 @@ public class GameEngine {
 	/* Default constructor */
 	public GameEngine() {
 		allPokemon = PokemonFactory.generatePokemon();
-		int[] test = { 0, 0, 2, 3, 4, 5 };
+		int[] test = { 7, 7, 7, 7, 7, 7 };
 		this.p1 = new Player("Dragon", selectPokemon(test));
 		// this.p1 = new Player();
-		this.ai = new Player();
+		int[] aiTest = { 0, 0, 0, 0, 0, 0 };
+		this.ai = new Player("Red", selectPokemon(aiTest));
 
 		this.p1Pokemon = p1.getPokeParty().get(0);
 		this.aiPokemon = ai.getPokeParty().get(0);
@@ -48,41 +49,27 @@ public class GameEngine {
 		battling = true;
 		startBattleLoop();
 	}
-//Pokemon(int ID, String name, int level, int baseHP, int baseAttack, 
-	//int baseDefence, int speed, Element type, ArrayList<Move> moves)
+
+	// Pokemon(int ID, String name, int level, int baseHP, int baseAttack,
+	// int baseDefence, int speed, Element type, ArrayList<Move> moves)
 	public ArrayList<Pokemon> selectPokemon(int[] test) {
 		ArrayList<Pokemon> party = new ArrayList<Pokemon>();
-		
+
 		for (int i = 0; i < 6; i++) {
-			
-			if(party.contains(this.allPokemon.get(test[i]))){
-				Pokemon pp = new Pokemon(this.allPokemon.get(test[i]).getID(), this.allPokemon.get(test[i]).getName(), this.allPokemon.get(test[i]).getLevel(),
-						this.allPokemon.get(test[i]).getBaseHP(), this.allPokemon.get(test[i]).getBaseAttack(), this.allPokemon.get(test[i]).getBaseDefence(),
-						this.allPokemon.get(test[i]).getBaseSpeed(), this.allPokemon.get(test[i]).getType(), this.allPokemon.get(test[i]).getMoves());
+
+			if (party.contains(this.allPokemon.get(test[i]))) {
+				Pokemon pp = new Pokemon(this.allPokemon.get(test[i]).getID(), this.allPokemon.get(test[i]).getName(),
+						this.allPokemon.get(test[i]).getLevel(), this.allPokemon.get(test[i]).getBaseHP(),
+						this.allPokemon.get(test[i]).getBaseAttack(), this.allPokemon.get(test[i]).getBaseDefence(),
+						this.allPokemon.get(test[i]).getBaseSpeed(), this.allPokemon.get(test[i]).getType(),
+						this.allPokemon.get(test[i]).getMoves());
 				party.add(pp);
-			}else{
+			} else {
 				party.add(this.allPokemon.get(test[i]));
 			}
 		}
 		return party;
 	}
-
-	/*
-	 * this seems redundant as well?? moved initializations to constructor
-	 */
-	// private void init() {
-	// this.p1 = new Player();
-	// this.ai = new Player();
-	//
-	// this.p1Pokemon = p1.getPokeParty().get(0);
-	// this.aiPokemon = ai.getPokeParty().get(0);
-	//
-	// this.p1Party = p1.getPokeParty();
-	// this.aiParty = ai.getPokeParty();
-	//
-	// battling = true;
-	// startBattleLoop();
-	// }
 
 	/* init game loop */
 	private void startBattleLoop() {
@@ -164,19 +151,20 @@ public class GameEngine {
 		double d = defender.getDefence();
 		double g = c / d;
 		double e = ((a * b * g) / 50) + 2;
-		double mod = 1 * ThreadLocalRandom.current().nextDouble(0.85, 1);
+		double mod = 1 * ThreadLocalRandom.current().nextDouble(0.85, 1)
+				* typeEffectiveness(attack.getType(), defender.getType());
 		defender.setHp(defender.getHp() - (int) (e * mod));
 		return (int) (e * mod);
 	}
-	
-	private double typeEffectiveness(Type attack, Type defence){
-		if(Arrays.asList(defence.weak).contains(attack)){
-			System.out.println("Not very effective");
-			return 0.5;
-		} else if(Arrays.asList(defence.strong).contains(attack)){
+
+	private double typeEffectiveness(Type attack, Type defence) {
+		if (Arrays.asList(defence.weak).contains(attack)) {
 			System.out.println("Very effective");
 			return 2.0;
-		} else if(Arrays.asList(defence.noEffect).contains(attack)){
+		} else if (Arrays.asList(defence.strong).contains(attack)) {
+			System.out.println("Not very effective");
+			return 0.5;
+		} else if (Arrays.asList(defence.noEffect).contains(attack)) {
 			System.out.println("No effect");
 			return 0.0;
 		}
@@ -197,17 +185,17 @@ public class GameEngine {
 			random = r.nextBoolean();
 		}
 
-		//variables to keep track of which player/pokemon
-		//is attacking first 
+		// variables to keep track of which player/pokemon
+		// is attacking first
 		Player first = this.ai;
 		Pokemon firstPokemon = this.aiPokemon;
 		Player next = this.p1;
 		Pokemon nextPokemon = this.p1Pokemon;
-		
-		//variables to keep track of damage
+
+		// variables to keep track of damage
 		int firstAtk = 0;
 		int nextAtk = 0;
-		
+
 		// player's pokemon is slower than AI's pokemon
 		if (p1Pokemon.getSpeed() < aiPokemon.getSpeed() || random) {
 			first = this.ai;
@@ -221,16 +209,16 @@ public class GameEngine {
 			nextPokemon = this.aiPokemon;
 		}
 
-		//calculate and apply first attack damage
+		// calculate and apply first attack damage
 		firstAtk = AttackCalc(firstPokemon, nextPokemon, firstPokemon.getMoves().get(firstPokemon.getNextAttack()));
 		System.out.println(first.getPlayerName() + "'s " + firstPokemon.getName() + " used "
 				+ firstPokemon.getMoves().get(firstPokemon.getNextAttack()).getName());
 		System.out.println(next.getPlayerName() + "'s " + nextPokemon.getName() + " was hit for " + firstAtk
 				+ " and now has " + ((nextPokemon.getHp() >= 0) ? nextPokemon.getHp() : "0") + " HP");
 
-		//if attacked pokemon is still alive
-		//AND an attack has been selected then
-		//calculate and apply next attack damage
+		// if attacked pokemon is still alive
+		// AND an attack has been selected then
+		// calculate and apply next attack damage
 		if (nextPokemon.getHp() > 0 && this.moveSelected) {
 			nextAtk = AttackCalc(nextPokemon, firstPokemon, nextPokemon.getMoves().get(nextPokemon.getNextAttack()));
 			System.out.println(next.getPlayerName() + "'s " + nextPokemon.getName() + " used "
@@ -239,7 +227,6 @@ public class GameEngine {
 					+ " and now has " + ((firstPokemon.getHp() >= 0) ? firstPokemon.getHp() : "0") + " HP");
 		}
 
-		
 		boolean pokemonFainted = false;
 		Pokemon faintedPokemon = null;
 		Player temp = null;
@@ -248,31 +235,31 @@ public class GameEngine {
 			faintedPokemon = nextPokemon;
 			temp = next;
 		}
-		
+
 		if (firstPokemon.getHp() <= 0) {
 			pokemonFainted = true;
 			faintedPokemon = firstPokemon;
 			temp = first;
 		}
-		
-		if(pokemonFainted){
+
+		if (pokemonFainted) {
 			pokemonFainted = false;
 			System.out.println(temp.getPlayerName() + "'s " + faintedPokemon.getName() + " fainted!");
 			if (!this.knockedOut(temp.getPokeParty())) {
 				if (temp.getPlayerName().equals(ai.getPlayerName())) {
 					aiSpawnNext();
-				} else{
+				} else {
 					p1.getPokeParty().remove(p1.getPokeParty().indexOf(p1Pokemon));
 					if (!p1.getPokeParty().isEmpty()) {
 						SelectPokemon();
 					}
 				}
-			} else{
+			} else {
 				System.out.println(temp.getPlayerName() + " loses!");
 				battling = false;
 			}
 		}
-		
+
 		System.out.print("\n");
 	}
 
@@ -295,11 +282,6 @@ public class GameEngine {
 		return true;
 	}
 
-	/* need to implement */
-	/*
-	 * if moveSelected is false when it gets into the attack phase it means the
-	 * person changed pokemon
-	 */
 	private void SelectPokemon() {
 		System.out.println("Select the number associated with the pokemon you want to switch out for"
 				+ ((this.p1Pokemon.getHp() <= 0) ? ": " : " (0) to go back to battle phase:"));
@@ -327,30 +309,4 @@ public class GameEngine {
 			SelectPokemon();
 		}
 	}
-
-	/* redundant / not needed */
-	// private void SelectAttack(int atk) {
-	// // System.out.print(p1.getPlayerName() + " select a move\n" + "\t1: " +
-	// // p1Pokemon.getMoves().get(0).getName()
-	// // + "\n" + "\t2: " + p1Pokemon.getMoves().get(1).getName() + "\n" +
-	// // "\t3: "
-	// // + p1Pokemon.getMoves().get(2).getName() + "\n" + "\t4: " +
-	// // p1Pokemon.getMoves().get(3).getName()
-	// // + "\n");
-	//
-	// // int tempTest = Integer.parseInt(reader.nextLine()) - 1;
-	// // System.out.println(tempTest);
-	// p1Pokemon.setNextAttack(atk);
-	// if (p1Pokemon.getNextAttack() > -2 && p1Pokemon.getNextAttack() < 4) {
-	// if (p1Pokemon.getNextAttack() == -1) {
-	// ai.setMoveSelected(true);
-	// // this.battling = false;
-	// }
-	// p1.setMoveSelected(true);
-	// }
-	// // else {
-	// // SelectAttack();
-	// // SelectPhase();
-	// // }
-	// }
 }
