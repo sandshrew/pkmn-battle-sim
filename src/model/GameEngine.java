@@ -19,8 +19,8 @@ public class GameEngine {
 
 	/* need to implement party functionality */
 	private ArrayList<Pokemon> allPokemon;
-	private ArrayList<Pokemon> p1Party;
-	private ArrayList<Pokemon> aiParty;
+	// private ArrayList<Pokemon> p1Party;
+	// private ArrayList<Pokemon> aiParty;
 
 	private String winner = "";
 
@@ -43,8 +43,8 @@ public class GameEngine {
 		this.p1Pokemon = p1.getPokeParty().get(0);
 		this.aiPokemon = ai.getPokeParty().get(0);
 
-		this.p1Party = p1.getPokeParty();
-		this.aiParty = ai.getPokeParty();
+		// this.p1Party = p1.getPokeParty();
+		// this.aiParty = ai.getPokeParty();
 
 		battling = true;
 		startBattleLoop();
@@ -157,9 +157,7 @@ public class GameEngine {
 		// }
 	}
 
-	/*
-	 * attack phase
-	 */
+	/* attack phase */
 	private void AttackPhase() {
 		// temp formatting
 		System.out.print("\n");
@@ -208,9 +206,11 @@ public class GameEngine {
 					+ " and now has " + ((firstPokemon.getHp() >= 0) ? firstPokemon.getHp() : "0") + " HP");
 		}
 
+		//temp variables to check if any pokemon have fainted
 		boolean pokemonFainted = false;
 		Pokemon faintedPokemon = null;
 		Player temp = null;
+		//if any pokemon have fainted then assign them to temp variables
 		if (nextPokemon.getHp() <= 0) {
 			pokemonFainted = true;
 			faintedPokemon = nextPokemon;
@@ -224,15 +224,26 @@ public class GameEngine {
 		if (pokemonFainted) {
 			pokemonFainted = false;
 			System.out.println(temp.getPlayerName() + "'s " + faintedPokemon.getName() + " fainted!");
+			//Choose another pokemon if there are some still alive in the party
 			if (!this.knockedOut(temp.getPokeParty())) {
+				//Select new pokemon for AI
 				if (temp.getPlayerName().equals(ai.getPlayerName())) {
-					aiSpawnNext();
+					// spawns next pokemon in AI party 
+					for (int i = 0; i < 6; i++) {
+						if (ai.getPokeParty().get(i).getHp() >= 0 && aiPokemon.getHp() <= 0) {
+							System.out.print(ai.getPlayerName() + " returned " + aiPokemon.getName());
+							aiPokemon = ai.getPokeParty().get(i);
+							System.out.println(" and sent out " + aiPokemon.getName());
+						}
+					}
+				//select pokemon function for user 
 				} else {
 					p1.getPokeParty().remove(p1.getPokeParty().indexOf(p1Pokemon));
 					if (!p1.getPokeParty().isEmpty()) {
 						SelectPokemon();
 					}
 				}
+			// Player with fainted pokemon loses
 			} else {
 				System.out.println(temp.getPlayerName() + " loses!");
 				battling = false;
@@ -242,6 +253,7 @@ public class GameEngine {
 		System.out.print("\n");
 	}
 
+	/* Switch pokemon from party or select new pokemon */
 	private void SelectPokemon() {
 		System.out.println("Select the number associated with the pokemon you want to switch out for"
 				+ ((this.p1Pokemon.getHp() <= 0) ? ": " : " (0) to go back to battle phase:"));
@@ -285,6 +297,7 @@ public class GameEngine {
 		return (int) (e * mod);
 	}
 
+	/* Checks type effectiveness */
 	private double typeEffectiveness(Type attack, Type defence) {
 		if (Arrays.asList(defence.weak).contains(attack)) {
 			System.out.println("Very effective");
@@ -299,16 +312,7 @@ public class GameEngine {
 		return 1.0;
 	}
 
-	private void aiSpawnNext() {
-		for (int i = 0; i < 6; i++) {
-			if (ai.getPokeParty().get(i).getHp() >= 0 && aiPokemon.getHp() <= 0) {
-				System.out.print(ai.getPlayerName() + " returned " + aiPokemon.getName());
-				aiPokemon = ai.getPokeParty().get(i);
-				System.out.println(" and sent out " + aiPokemon.getName());
-			}
-		}
-	}
-
+	/* checks if all pokemon in party are fainted */
 	private boolean knockedOut(ArrayList<Pokemon> party) {
 		for (Pokemon p : party) {
 			if (p.getHp() >= 0) {
