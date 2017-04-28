@@ -31,10 +31,6 @@ public class Pokemon {
 	//held item
 	//maybe adding... EVs/IVs & nature
 	
-	//MIGHT USE FOR BATTLE?
-	private int nextAttack;
-
-
 	//default constructor
 	public Pokemon() {
 		//zoroark temp
@@ -58,24 +54,12 @@ public class Pokemon {
 		test.add(new Move( "Bite", Type.Dark, 120));
 	
 		this.moves = test;
-		this.setNextAttack(0);
+		this.ID = -1;
 	}
 
-	//constructor
-	public Pokemon(String name, int level, int baseHP, int baseAttack, int baseDefence, int speed, Type type, ArrayList<Move> moves, int nextAttack) {
-		this.name = name;
-		this.baseHP = baseHP;
-		this.baseAttack = baseAttack;
-		this.baseDefence = baseDefence;
-		this.baseSpeed = speed;
-		this.type = type;
-		this.moves = moves;
-		this.setNextAttack(nextAttack);
-	}
-	
 	//constructor without nextAttack 
 	public Pokemon(int ID, String name, int level, int baseHP, int baseAttack, int baseDefence, int speed, Type type, ArrayList<Move> moves) {
-		this.setID(ID);
+		this.ID = ID;
 		this.name = name;
 		this.baseHP = baseHP;
 		this.level = level;
@@ -89,17 +73,21 @@ public class Pokemon {
 		this.defence = calculateStat(baseDefence);
 		this.speed = calculateStat(speed);
 	}
-
-	//attack method that calculates damage output 
-	public void attack(Pokemon otherPokemon, Move attack){
-		double a = ((2 * this.level) / 5) + 2;
-		double b = attack.getBaseDamage();
-		double c = this.attack;
-		double d = otherPokemon.defence;
-		double g = c / d;
-		double e = ((a * b * g) / 50) + 2;
-		double mod = 1 *  ThreadLocalRandom.current().nextDouble(0.85, 1);
-		otherPokemon.setHp(otherPokemon.getHp() - (int) (e * mod));
+	
+	public Pokemon(Pokemon pokemon){
+		this.ID = pokemon.getID();
+		this.name = pokemon.getName();
+		this.baseHP = pokemon.getBaseHP();
+		this.level = pokemon.getLevel();
+		this.baseAttack = pokemon.getBaseAttack();
+		this.baseDefence = pokemon.getBaseDefence();
+		this.baseSpeed = pokemon.getBaseSpeed();
+		this.type = pokemon.getType();
+		this.moves = pokemon.getMoves();
+		this.hp = pokemon.getHp();
+		this.attack = pokemon.getAttack();
+		this.defence = pokemon.getDefence();
+		this.speed = pokemon.getSpeed();
 	}
 
 	public void calculateHP(){
@@ -109,7 +97,6 @@ public class Pokemon {
 	}
 
 	private int calculateStat(int base){
-	
 		int test = (int) Math.floor((Math.floor(((2 * base) * this.level)/100) + 5) * 1);
 		return test;
 	}
@@ -226,14 +213,6 @@ public class Pokemon {
 
 	public void setDefence(int defence) {
 		this.defence = defence;
-	}
-
-	public int getNextAttack() {
-		return nextAttack;
-	}
-
-	public void setNextAttack(int nextAttack) {
-		this.nextAttack = nextAttack;
 	}
 
 	public int getID() {
