@@ -4,9 +4,11 @@ import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 
+import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.PathTransition;
+import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
@@ -24,6 +26,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
@@ -48,208 +51,229 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
+
 public class Main extends Application {
-
+	
 	MediaPlayer mediaPlayer;
-
+	
 	Button newGameButton;
 	Button continueButton;
 	Button optionsButton;
 	Button controlsButton;
 	Button creditsButton;
 	Button exitButton;
-
+	
 	Stage theStage;
-
+	
 	int[] selectionList = new int[7];
 	int globalCounter = 0;
-
+	
+	
+	private final String buttonStyle =  "-fx-background-color: linear-gradient(#686868 0%, #232723 25%, #373837 75%, #757575 100%), "
+			+ "linear-gradient(#020b02, #3a3a3a), " 
+			+ "linear-gradient(#9d9e9d 0%, #6b6a6b 20%, #343534 80%, #242424 100%), " 
+			+ "linear-gradient(#8a8a8a 0%, #6b6a6b 20%, #343534 80%, #262626 100%), " 
+			+ "linear-gradient(#777777 0%, #606060 50%, #505250 51%, #2a2b2a 100%);"
+			+ " -fx-background-insets: 0,1,4,5,6;" 
+			+ " -fx-background-radius: 9,8,5,4,3; "
+			+ " -fx-padding: 15 30 15 30; "
+			+ " -fx-font-family: \"PKMN RBYGSC\"; "
+			+ " -fx-font-size: 8px;"
+			+ " -fx-font-weight: bold;"
+			+ " -fx-text-fill: white;"
+			+ " -fx-effect: dropshadow( three-pass-box , rgba(255,255,255,0.2) , 1, 0.0 , 0 , 1);"
+			+ " -fx-effect: dropshadow( one-pass-box , black , 0, 0.0 , 0 , -1 );";
+	
 	private static final int WIDTH = 1280;
-	private static final int HEIGHT = 720;
-
+    private static final int HEIGHT = 720;
+    
 	@Override
 	public void start(Stage primaryStage) {
 		try {
 			theStage = primaryStage;
+	    	
+	        Scene scene = new Scene(createContent());
+	        primaryStage.setTitle("Pokemon Battle Sim Menu");
+	        primaryStage.setScene(scene);
+	        primaryStage.show();
 
-			Scene scene = new Scene(createContent());
-			primaryStage.setTitle("Pokemon Battle Sim Menu");
-			primaryStage.setScene(scene);
-			primaryStage.show();
-
-		} catch (Exception e) {
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
-
-	private List<Pair<String, Button>> menuData = Arrays.asList(new Pair<String, Button>("New Game", newGameButton),
-			new Pair<String, Button>("Continue", continueButton),
-			new Pair<String, Button>("Game Options", optionsButton),
-			new Pair<String, Button>("Controls", controlsButton), new Pair<String, Button>("Credits", creditsButton),
-			new Pair<String, Button>("Exit", exitButton));
-
-	private Pane root = new Pane();
-	private VBox menuBox = new VBox(-5);
-	private Line line;
-
-	private Parent createContent() {
-		addBackground();
-		addTitle();
-
-		double lineX = WIDTH / 2 - 100;
-		double lineY = HEIGHT / 3 + 50;
-
-		addLine(lineX, lineY);
-		addMenu(lineX + 5, lineY + 5);
-
-		startAnimation();
-
-		return root;
-	}
-
-	public int[] getSelectionList() {
-		return selectionList;
-	}
-
-	private void addBackground() {
-		Image image = new Image(getClass().getResourceAsStream("/res/gengar.jpg"));
-		ImageView imageView = new ImageView(image);
-		imageView.setFitWidth(WIDTH);
-		imageView.setFitHeight(HEIGHT);
-
-		root.getChildren().add(imageView);
-	}
-
-	private void addTitle() {
-		PokemonTitle title = new PokemonTitle("POKEMON");
-		title.setTranslateX(WIDTH / 2 - title.getTitleWidth() / 2);
-		title.setTranslateY(HEIGHT / 3);
-
-		root.getChildren().add(title);
-	}
-
-	private void addLine(double x, double y) {
-		line = new Line(x, y, x, y + 300);
-		line.setStrokeWidth(3);
-		line.setStroke(Color.color(1, 1, 1, 0.75));
-		line.setEffect(new DropShadow(5, Color.BLACK));
-		line.setScaleY(0);
-
-		root.getChildren().add(line);
-	}
-
-	private void startAnimation() {
-		ScaleTransition st = new ScaleTransition(Duration.seconds(1), line);
-		st.setToY(1);
-		st.setOnFinished(e -> {
-
-			for (int i = 0; i < menuBox.getChildren().size(); i++) {
-				Node n = menuBox.getChildren().get(i);
-
-				TranslateTransition tt = new TranslateTransition(Duration.seconds(1 + i * 0.15), n);
-				tt.setToX(0);
-				tt.setOnFinished(e2 -> n.setClip(null));
-				tt.play();
-			}
-		});
-		st.play();
-	}
-
-	private void addMenu(double x, double y) {
-		menuBox.setTranslateX(x);
-		menuBox.setTranslateY(y);
-
-		Rectangle clip = new Rectangle(300, 30);
-		Rectangle clip2 = new Rectangle(300, 30);
-		Rectangle clip3 = new Rectangle(300, 30);
-		Rectangle clip4 = new Rectangle(300, 30);
-		Rectangle clip5 = new Rectangle(300, 30);
-		Rectangle clip6 = new Rectangle(300, 30);
-
-		PokemonMenuItem item1 = new PokemonMenuItem(menuData.get(0).getKey());
-		item1.setTranslateX(-300);
-		item1.setId(menuData.get(0).getKey());
-		item1.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-			public void handle(MouseEvent event) {
-				intro(theStage);
-			}
-
-		});
-		clip.translateXProperty().bind(item1.translateXProperty().negate());
-		item1.setClip(clip);
-
-		PokemonMenuItem item2 = new PokemonMenuItem(menuData.get(1).getKey());
-		item2.setTranslateX(-300);
-		item2.setId(menuData.get(1).getKey());
-		item2.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-			public void handle(MouseEvent event) {
-				selectScreen(theStage);
-			}
-
-		});
-		clip2.translateXProperty().bind(item2.translateXProperty().negate());
-		item2.setClip(clip2);
-
-		PokemonMenuItem item3 = new PokemonMenuItem(menuData.get(2).getKey());
-		item3.setTranslateX(-300);
-		item3.setId(menuData.get(2).getKey());
-		item3.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-			public void handle(MouseEvent event) {
-				Platform.exit();
-			}
-
-		});
-		clip3.translateXProperty().bind(item3.translateXProperty().negate());
-		item3.setClip(clip3);
-
-		PokemonMenuItem item4 = new PokemonMenuItem(menuData.get(3).getKey());
-		item4.setTranslateX(-300);
-		item4.setId(menuData.get(3).getKey());
-		item4.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-			public void handle(MouseEvent event) {
-				Platform.exit();
-			}
-
-		});
-		clip4.translateXProperty().bind(item4.translateXProperty().negate());
-		item4.setClip(clip4);
-
-		PokemonMenuItem item5 = new PokemonMenuItem(menuData.get(4).getKey());
-		item5.setTranslateX(-300);
-		item5.setId(menuData.get(4).getKey());
-		item5.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-			public void handle(MouseEvent event) {
-				Platform.exit();
-			}
-
-		});
-		clip5.translateXProperty().bind(item5.translateXProperty().negate());
-		item5.setClip(clip5);
-
-		PokemonMenuItem item6 = new PokemonMenuItem(menuData.get(5).getKey());
-		item6.setTranslateX(-300);
-		item6.setId(menuData.get(5).getKey());
-		item6.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-			public void handle(MouseEvent event) {
-				Platform.exit();
-			}
-
-		});
-		clip6.translateXProperty().bind(item6.translateXProperty().negate());
-		item6.setClip(clip6);
-
-		menuBox.getChildren().addAll(item1, item2, item3, item4, item5, item6);
-
-		root.getChildren().add(menuBox);
-	}
 	
-	public void selectScreen(Stage theStage){
+	 private List<Pair<String, Button>> menuData = Arrays.asList(
+	            new Pair<String, Button>("New Game", newGameButton),
+	            new Pair<String, Button>("Continue", continueButton),
+	            new Pair<String, Button>("Game Options", optionsButton),
+	            new Pair<String, Button>("Controls", controlsButton),
+	            new Pair<String, Button>("Credits", creditsButton),
+	            new Pair<String, Button>("Exit", exitButton)
+	    );
+
+	    private Pane root = new Pane();
+	    private VBox menuBox = new VBox(-5);
+	    private Line line;
+
+	    private Parent createContent() {
+	        addBackground();
+	        addTitle();
+
+	        double lineX = WIDTH / 2 - 100;
+	        double lineY = HEIGHT / 3 + 50;
+
+	        addLine(lineX, lineY);
+	        addMenu(lineX + 5, lineY + 5);
+
+	        startAnimation();
+
+	        return root;
+	    }
+	    
+	    public int[] getSelectionList(){
+	    	return selectionList;
+	    }
+
+	    private void addBackground() {
+	    	Image image = new Image(getClass().getResourceAsStream("/res/gengar.jpg"));
+	        ImageView imageView = new ImageView(image);
+	        imageView.setFitWidth(WIDTH);
+	        imageView.setFitHeight(HEIGHT);
+
+	        root.getChildren().add(imageView);
+	    }
+
+	    private void addTitle() {
+	        PokemonTitle title = new PokemonTitle("POKEMON");
+	        title.setTranslateX(WIDTH / 2 - title.getTitleWidth() / 2);
+	        title.setTranslateY(HEIGHT / 3);
+
+	        root.getChildren().add(title);
+	    }
+
+	    private void addLine(double x, double y) {
+	        line = new Line(x, y, x, y + 300);
+	        line.setStrokeWidth(3);
+	        line.setStroke(Color.color(1, 1, 1, 0.75));
+	        line.setEffect(new DropShadow(5, Color.BLACK));
+	        line.setScaleY(0);
+
+	        root.getChildren().add(line);
+	    }
+
+	    private void startAnimation() {
+	        ScaleTransition st = new ScaleTransition(Duration.seconds(1), line);
+	        st.setToY(1);
+	        st.setOnFinished(e -> {
+
+	            for (int i = 0; i < menuBox.getChildren().size(); i++) {
+	                Node n = menuBox.getChildren().get(i);
+
+	                TranslateTransition tt = new TranslateTransition(Duration.seconds(1 + i * 0.15), n);
+	                tt.setToX(0);
+	                tt.setOnFinished(e2 -> n.setClip(null));
+	                tt.play();
+	            }
+	        });
+	        st.play();
+	    }
+
+	    private void addMenu(double x, double y) {
+	        menuBox.setTranslateX(x);
+	        menuBox.setTranslateY(y);
+	        
+	        Rectangle clip = new Rectangle(300, 30);
+	        Rectangle clip2 = new Rectangle(300, 30);
+	        Rectangle clip3 = new Rectangle(300, 30);
+	        Rectangle clip4 = new Rectangle(300, 30);
+	        Rectangle clip5 = new Rectangle(300, 30);
+	        Rectangle clip6 = new Rectangle(300, 30);
+	      
+	        PokemonMenuItem item1 = new PokemonMenuItem(menuData.get(0).getKey());
+	        item1.setTranslateX(-300);
+	        item1.setId(menuData.get(0).getKey());
+	        item1.setOnMouseClicked(new EventHandler<MouseEvent>() {
+				 
+	            public void handle(MouseEvent event) {
+	            	intro(theStage);
+	            }
+	            	
+	           	});
+	        clip.translateXProperty().bind(item1.translateXProperty().negate());
+	        item1.setClip(clip);
+
+	        PokemonMenuItem item2 = new PokemonMenuItem(menuData.get(1).getKey());
+	        item2.setTranslateX(-300);
+	        item2.setId(menuData.get(1).getKey());
+	        item2.setOnMouseClicked(new EventHandler<MouseEvent>() {
+					 
+		            public void handle(MouseEvent event) {
+		            	
+		            	selectScreen(theStage);
+		            }
+		            	
+		           	});
+	        clip2.translateXProperty().bind(item2.translateXProperty().negate());
+	        item2.setClip(clip2);
+	        
+	        PokemonMenuItem item3 = new PokemonMenuItem(menuData.get(2).getKey());
+	        item3.setTranslateX(-300);
+	        item3.setId(menuData.get(2).getKey());
+	        item3.setOnMouseClicked(new EventHandler<MouseEvent>() {
+				 
+	            public void handle(MouseEvent event) {
+	            	Platform.exit();
+	            }
+	            	
+	           	});
+	        clip3.translateXProperty().bind(item3.translateXProperty().negate());
+	        item3.setClip(clip3);
+	        
+	        PokemonMenuItem item4 = new PokemonMenuItem(menuData.get(3).getKey());
+	        item4.setTranslateX(-300);
+	        item4.setId(menuData.get(3).getKey());
+	        item4.setOnMouseClicked(new EventHandler<MouseEvent>() {
+				 
+	            public void handle(MouseEvent event) {
+	            	Platform.exit();
+	            }
+	            	
+	           	});
+	        clip4.translateXProperty().bind(item4.translateXProperty().negate());
+	        item4.setClip(clip4);
+	        
+	        PokemonMenuItem item5 = new PokemonMenuItem(menuData.get(4).getKey());
+	        item5.setTranslateX(-300);
+	        item5.setId(menuData.get(4).getKey());
+	        item5.setOnMouseClicked(new EventHandler<MouseEvent>() {
+				 
+	            public void handle(MouseEvent event) {
+	            	Platform.exit();
+	            }
+	            	
+	           	});
+	        clip5.translateXProperty().bind(item5.translateXProperty().negate());
+	        item5.setClip(clip5);
+	        
+	        PokemonMenuItem item6 = new PokemonMenuItem(menuData.get(5).getKey());
+	        item6.setTranslateX(-300);
+	        item6.setId(menuData.get(5).getKey());
+	        item6.setOnMouseClicked(new EventHandler<MouseEvent>() {
+				 
+	            public void handle(MouseEvent event) {
+	            	Platform.exit();
+	            }
+	            	
+	           	});
+	        clip6.translateXProperty().bind(item6.translateXProperty().negate());
+	        item6.setClip(clip6);
+	        
+	        menuBox.getChildren().addAll(item1, item2, item3, item4, item5, item6);
+	        
+	        root.getChildren().add(menuBox);
+	    }
+	    
+	    public void selectScreen(Stage theStage){
 	    	/*
         	 * 1 = Venasaur
         	 * 2 = Meganium
@@ -616,22 +640,32 @@ public class Main extends Application {
 		    theStage.show();
 	    }
 
-	// not mvc bc lazy/testing, will change
-	public void intro(Stage primaryStage) {
+	//not mvc bc lazy/testing, will change
+	public void intro(Stage primaryStage){
 		final AnchorPane root = new AnchorPane();
-		Scene scene = new Scene(root, 700, 700);
+		Scene scene = new Scene(root,700,700);
 
+		//background
+		Image background = new Image(getClass().getResourceAsStream("/res/introbackground.png"));
+		ImageView backgroundIv = new ImageView(background);
+		backgroundIv.setFitHeight(700);
+		backgroundIv.setFitWidth(700);
+		root.getChildren().add(backgroundIv);
+
+		//prof oak
 		Image profImage = new Image(getClass().getResourceAsStream("/res/profoak.png"));
 		ImageView profImageView = new ImageView(profImage);
 		profImageView.setX(-100);
 		profImageView.setY(100);
-		root.getChildren().add(profImageView);
+		root.getChildren().add(profImageView);	
 
+		//arbok
 		Image pkmnImage = new Image(getClass().getResourceAsStream("/res/arbok.png"));
 		final ImageView pkmnImageView = new ImageView(pkmnImage);
 		pkmnImageView.setX(250);
 		pkmnImageView.setY(200);
 
+		//prof slides in from left
 		final Timeline profTimeline = new Timeline();
 		profTimeline.setCycleCount(1);
 		final KeyValue profKv = new KeyValue(profImageView.xProperty(), 250);
@@ -639,72 +673,268 @@ public class Main extends Application {
 		profTimeline.getKeyFrames().add(profKf);
 		profTimeline.play();
 
+		//prof moves over for pkmn
 		final Timeline pkmnTimeline = new Timeline();
 		pkmnTimeline.setCycleCount(1);
 		final KeyValue pkmnKv = new KeyValue(profImageView.xProperty(), 350);
 		final KeyFrame pkmnKf = new KeyFrame(Duration.millis(500), pkmnKv);
 		pkmnTimeline.getKeyFrames().add(pkmnKf);
 
-		Path path = new Path();
-		path.getElements().add(new MoveTo(pkmnImageView.getX(), pkmnImageView.getY()));
-		path.getElements().add(new QuadCurveTo(200, 200, 250, 350));
-		final PathTransition pathTransition = new PathTransition();
-		pathTransition.setDuration(Duration.millis(500));
-		pathTransition.setPath(path);
-		pathTransition.setNode(pkmnImageView);
-		pathTransition.setOrientation(PathTransition.OrientationType.NONE);
-		pathTransition.setCycleCount(1);
-		pathTransition.setAutoReverse(false);
+		//arbok moving out
+		Path pkmnPath = new Path();
+		pkmnPath.getElements().add(new MoveTo(pkmnImageView.getX(), pkmnImageView.getY()));
+		pkmnPath.getElements().add(new QuadCurveTo(200, 200, 250, 350));
+		final PathTransition pkmnPathTransition = new PathTransition();
+		pkmnPathTransition.setDuration(Duration.millis(500));
+		pkmnPathTransition.setPath(pkmnPath);
+		pkmnPathTransition.setNode(pkmnImageView);
+		pkmnPathTransition.setOrientation(PathTransition.OrientationType.NONE);
+		pkmnPathTransition.setCycleCount(1);
+		pkmnPathTransition.setAutoReverse(false);
 
-		// maybe just don't include
-		// Image textboxImage = new
-		// Image(getClass().getResourceAsStream("/res/textbox.png"));
-		// ImageView textboxImageView = new ImageView(textboxImage);
-		// textboxImageView.setLayoutX(185);
-		// textboxImageView.setLayoutY(585);
-		// root.getChildren().add(textboxImageView);
-
+		//pokemon text label
 		final Label textLabel = new Label();
-		changeText(textLabel);
+		changeIntroText(textLabel);
 		textLabel.setWrapText(true);
 		textLabel.setMaxSize(400, 100);
 		textLabel.setLayoutX(200);
 		textLabel.setLayoutY(600);
 		textLabel.setFont(Font.loadFont(getClass().getResourceAsStream("/res/font.ttf"), 12));
+		root.getChildren().add(textLabel);
 
-		root.setOnMouseClicked(new EventHandler<MouseEvent>() {
-			public void handle(MouseEvent e) {
-				changeText(textLabel);
-				if (introIndex == 4 && !root.getChildren().contains(pkmnImageView)) {
+		//fading out of arbok and prof
+		final FadeTransition pkmnFt = new FadeTransition(Duration.millis(1000),pkmnImageView);
+		pkmnFt.setFromValue(1.0);
+		pkmnFt.setToValue(0.0);
+		pkmnFt.setCycleCount(1);
+		final FadeTransition profFt = new FadeTransition(Duration.millis(1000), profImageView);
+		profFt.setFromValue(1.0);
+		profFt.setToValue(0.0);
+		profFt.setCycleCount(1);
+
+		//boy button
+		final Button boyButton = new Button("Boy");
+		boyButton.setLayoutX(250);
+		boyButton.setLayoutY(500);
+		boyButton.setPrefWidth(100);
+		boyButton.setPrefHeight(50);
+		boyButton.setStyle(buttonStyle);
+
+		//boy image
+		Image boyImage = new Image(getClass().getResourceAsStream("/res/boy.png"));
+		final ImageView boyImageView = new ImageView(boyImage);
+		boyImageView.setX(250);
+		boyImageView.setY(200);
+
+		//moves boy for name entry
+		final Timeline boyTimeline = new Timeline();
+		boyTimeline.setCycleCount(1);
+		final KeyValue boyKv = new KeyValue(boyImageView.xProperty(), 375);
+		final KeyFrame boyKf = new KeyFrame(Duration.millis(500), boyKv);
+		boyTimeline.getKeyFrames().add(boyKf);
+
+		//boy fading in
+		final FadeTransition boyFt = new FadeTransition(Duration.millis(1000),boyImageView);
+		boyFt.setFromValue(0.0);
+		boyFt.setToValue(1.0);
+		boyFt.setCycleCount(1);
+
+		//boy shrinking
+		final ScaleTransition boySt = new ScaleTransition(Duration.millis(500), boyImageView);
+		boySt.setFromX(1.0);
+		boySt.setFromY(1.0);
+		boySt.setToX(0.1);
+		boySt.setToY(0.1);
+		boySt.setCycleCount(1);
+
+		//girl button
+		final Button girlButton = new Button("Girl");
+		girlButton.setLayoutX(350);
+		girlButton.setLayoutY(500);
+		girlButton.setPrefWidth(100);
+		girlButton.setPrefHeight(50);
+		girlButton.setStyle(buttonStyle);
+
+		//girl image
+		Image girlImage = new Image(getClass().getResourceAsStream("/res/girl.png"));
+		final ImageView girlImageView = new ImageView(girlImage);
+		girlImageView.setX(250);
+		girlImageView.setY(200);
+
+		//moves girl for name entry
+		final Timeline girlTimeline = new Timeline();
+		girlTimeline.setCycleCount(1);
+		final KeyValue girlKv = new KeyValue(girlImageView.xProperty(), 375);
+		final KeyFrame girlKf = new KeyFrame(Duration.millis(500), girlKv);
+		girlTimeline.getKeyFrames().add(girlKf);
+
+		//girl fading in
+		final FadeTransition girlFt = new FadeTransition(Duration.millis(1000), girlImageView);
+		girlFt.setFromValue(0.0);
+		girlFt.setToValue(1.0);
+		girlFt.setCycleCount(1);
+
+		//girl shrinking
+		final ScaleTransition girlSt = new ScaleTransition(Duration.millis(500), girlImageView);
+		girlSt.setFromX(1.0);
+		girlSt.setFromY(1.0);
+		girlSt.setToX(0.1);
+		girlSt.setToY(0.1);
+		girlSt.setCycleCount(1);
+
+		//TODO added
+		//boyButton.setOnAction(controller);
+
+		//change text to include boy
+		boyButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent e){
+				root.getChildren().remove(boyButton);
+				root.getChildren().remove(girlButton);
+				boyFt.play();
+				root.getChildren().add(boyImageView);
+				textLabel.setText(introText[introIndex] + "boy!");
+				introIndex++;
+			}
+		});
+
+		//TODO added
+		//girlButton.setOnAction(controller);
+
+		//change text to include girl
+		girlButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent e){
+				root.getChildren().remove(boyButton);
+				root.getChildren().remove(girlButton);
+				girlFt.play();
+				root.getChildren().add(girlImageView);
+				textLabel.setText(introText[introIndex] + "girl!");
+				introIndex++;
+			}
+		});
+
+		//done button
+		final Button doneButton = new Button("Done");
+		doneButton.setLayoutX(200);
+		doneButton.setLayoutY(550);
+		doneButton.setPrefWidth(170);
+		doneButton.setPrefHeight(20);
+		doneButton.setStyle(buttonStyle);
+
+		//name text field
+		final TextField nameTextField = new TextField();
+		nameTextField.setLayoutX(200);
+		nameTextField.setLayoutY(500);
+
+		//TODO added
+		//doneButton.setOnAction(controller);
+
+		//update name
+		doneButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent e){
+				name = nameTextField.getText();
+				root.getChildren().remove(doneButton);
+				root.getChildren().remove(nameTextField);
+				if (name.equalsIgnoreCase("")){
+					if (root.getChildren().contains(boyImageView)){
+						name = "Ash";
+					} else {
+						name = "Misty";
+					}
+				}
+				textLabel.setText(introText[introIndex] + name + '!');
+				introIndex++;
+			}
+		});
+
+		//wait ~1 second before removing (to show shrink) then call pokemon selection method
+		final PauseTransition pt = new PauseTransition(Duration.millis(750));
+		pt.setOnFinished( event -> {
+			if (root.getChildren().contains(boyImageView)){
+				root.getChildren().remove(boyImageView);
+			}
+			if (root.getChildren().contains(girlImageView)){
+				root.getChildren().remove(girlImageView);
+			}
+			//TODO change to pkmn selection
+			selectScreen(primaryStage);
+		});
+
+		root.setOnMouseClicked(new EventHandler<MouseEvent>(){
+			public void handle(MouseEvent e){
+				//prof moves over, arbok comes out
+				if (introIndex == 3){
 					pkmnTimeline.play();
 					root.getChildren().add(pkmnImageView);
-					pathTransition.play();
+					pkmnPathTransition.play();
+				}
+				//arbok and prof fade out, add buttons
+				if (introIndex == 6 && (!root.getChildren().contains(girlButton) || !root.getChildren().contains(boyButton))){
+					pkmnFt.play();
+					profFt.play();
+					root.getChildren().add(boyButton);
+					root.getChildren().add(girlButton);
+					changeIntroText(textLabel);
+				}
+				//character moves over, add button/textfield
+				if (introIndex == 8 && (!root.getChildren().contains(doneButton))){
+					if (root.getChildren().contains(boyImageView)){
+						boyTimeline.play();
+					} else {
+						girlTimeline.play();
+					}
+					root.getChildren().add(nameTextField);
+					root.getChildren().add(doneButton);
+					changeIntroText(textLabel);
+				}
+
+				//start pokemon selection
+				if (introIndex == introText.length){
+					if (root.getChildren().contains(textLabel)){
+						root.getChildren().remove(textLabel);
+					}
+					if (root.getChildren().contains(boyImageView)){
+						boySt.play();
+						pt.play();
+					}
+					if (root.getChildren().contains(girlImageView)){
+						girlSt.play();
+						pt.play();
+					}
+				}
+				//don't change text if buttons are on the screen - waiting for them to be pressed instead
+				if ((!root.getChildren().contains(girlButton) || !root.getChildren().contains(boyButton)) && !root.getChildren().contains(doneButton)){
+					changeIntroText(textLabel);
 				}
 			}
 		});
-		root.getChildren().add(textLabel);
 
-		primaryStage.setScene(scene);
+		//root.setOnMouseClicked(controller);
+
+		primaryStage.setScene( scene ); 
 		primaryStage.setResizable(false);
-		primaryStage.setTitle("Pokemon");
+		primaryStage.setTitle( "Pokémon" );
 		primaryStage.show();
 	}
-
-	int introIndex = 0;
-	String[] introText = { "Welcome to the world of Pokemon!", "My name is professor Oak.",
-			"People affectionately refer to me as the pokemon professor",
-			"This world is inhabited far and wide by creatures called pokemon" };
-
-	public void changeText(Label label) {
-
-		if (!(introIndex >= introText.length)) {
+	
+	public void changeIntroText(Label label){
+		if (!(introIndex >= introText.length)){
 			label.setText(introText[introIndex]);
 			introIndex++;
 		}
-
 	}
+
+	//For intro use
+		private int introIndex = 0; 
+		private final String[] introText = {"Welcome to the world of Pokémon!","My name is Professor Oak.","People affectionately refer to me as the Pokémon professor!",
+				"This world is inhabited far and wide by creatures called Pokémon!","For some people pokemon are pets, others use them for battling!",
+				"That is what you will be doing, but first tell me a little about yourself!","Now tell me, are you a boy or are you a girl?",
+				"Oh so you're a ", "Lets begin with your name! What is it?", "Right so your name is ","You will now choose your team for battle!"};
+		private String name;
+
+
 
 	public static void main(String[] args) {
 		launch(args);
 	}
 }
+
