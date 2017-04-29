@@ -104,6 +104,8 @@ public class GameEngine {
 		} else if (Integer.parseInt(read) >= 0 && Integer.parseInt(read) <= 4) {
 			this.selectedAttack = Integer.parseInt(read) - 1;
 			this.moveSelected = true;
+		} else{
+			this.SelectPhase();
 		}
 
 	}
