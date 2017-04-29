@@ -35,10 +35,10 @@ public class GameEngine {
 	public GameEngine() {
 
 		allPokemon = PokemonFactory.generatePokemon();
-		// int[] test = {3,3,3,3,3,3 };
-		// this.p1 = new Player("Dragon", selectPokemon(test));
-		this.p1 = new Player();
-		int[] aiTest = { 7, 7, 7, 7, 7, 7 };
+		int[] test = { 11, 3, 4, 7, 1, 5 };
+		this.p1 = new Player("Dragon", selectPokemon(test));
+		// this.p1 = new Player();
+		int[] aiTest = { 1, 4, 6, 2, 10, 9 };
 		this.ai = new Player("Red", selectPokemon(aiTest));
 
 		this.p1Pokemon = p1.getPokeParty().get(0);
@@ -86,7 +86,6 @@ public class GameEngine {
 		System.out.println(winner + " wins!");
 	}
 
-
 	/* Phase to select moves or another pokemon */
 	private void SelectPhase() {
 		boolean invalid;
@@ -102,7 +101,7 @@ public class GameEngine {
 				this.battling = false;
 				this.winner = ai.getPlayerName();
 			} else if (read.equals("P") || read.equals("p")) {
-				SelectPokemon();
+				invalid = SelectPokemon();
 				this.moveSelected = false;
 			} else if (Integer.parseInt(read) >= 0 && Integer.parseInt(read) <= 4) {
 				this.selectedAttack = Integer.parseInt(read) - 1;
@@ -208,7 +207,7 @@ public class GameEngine {
 	}
 
 	/* Switch pokemon from party or select new pokemon */
-	private void SelectPokemon() {
+	private boolean SelectPokemon() {
 		while (true) {
 			System.out.println("\nSelect the number associated with the pokemon you want to switch out for"
 					+ ((this.p1Pokemon.getHp() <= 0) ? ": " : " (0) to go back to battle phase:"));
@@ -231,11 +230,11 @@ public class GameEngine {
 				p1Pokemon = p1.getPokeParty().get(tempChosen - 1);
 
 				System.out.println(" and sent out " + p1Pokemon.getName() + " " + p1Pokemon.getHp());
-				break;
+				return false;
 			} else if (tempChosen == 0) {
-				break;
+				return true;
+				// break;
 			}
-
 		}
 	}
 
