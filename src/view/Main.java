@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 
+import controller.Controller;
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -21,11 +22,14 @@ import javafx.geometry.Pos;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.util.Pair;
+import model.Listener;
+import model.Model;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.InnerShadow;
@@ -52,7 +56,10 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 
-public class Main extends Application {
+public class Main extends Application implements Listener{
+	
+	private final Model model = new Model();
+	private final Controller controller = new Controller(model);
 	
 	MediaPlayer mediaPlayer;
 	
@@ -84,12 +91,62 @@ public class Main extends Application {
 			+ " -fx-effect: dropshadow( three-pass-box , rgba(255,255,255,0.2) , 1, 0.0 , 0 , 1);"
 			+ " -fx-effect: dropshadow( one-pass-box , black , 0, 0.0 , 0 , -1 );";
 	
+	private ProgressBar userHealthbar = new ProgressBar();
+	private ProgressBar rivalHealthbar = new ProgressBar();
+
+	private Button pkmnButton = new Button("Switch Pkmn");
+
+	private Button move1Button = new Button("move1");
+	private Button move2Button = new Button("move2");
+	private Button move3Button = new Button("move3");
+	private Button move4Button = new Button("move4");
+
+	private Button firstPkmnButton = new Button("pkmn1");
+	private Button secondPkmnButton = new Button("pkmn2");
+	private Button thirdPkmnButton = new Button("pkmn3");
+	private Button fourthPkmnButton = new Button("pkmn4");	
+	private Button fifthPkmnButton = new Button("pkmn5");
+	private Button sixthPkmnButton = new Button("pkmn6");
+
+	private Image alivePokeball = new Image(getClass().getResourceAsStream("/res/alivepokeball.png"));
+	private Image faintedPokeball = new Image(getClass().getResourceAsStream("/res/faintedpokeball.png"));
+
+	private ImageView firstUserPokeballImageView = new ImageView(alivePokeball);
+	private ImageView secondUserPokeballImageView = new ImageView(alivePokeball);
+	private ImageView thirdUserPokeballImageView = new ImageView(alivePokeball);
+	private ImageView fourthUserPokeballImageView = new ImageView(alivePokeball);
+	private ImageView fifthUserPokeballImageView = new ImageView(alivePokeball);
+	private ImageView sixthUserPokeballImageView = new ImageView(alivePokeball);
+
+	private ImageView firstRivalPokeballImageView = new ImageView(alivePokeball);
+	private ImageView secondRivalPokeballImageView = new ImageView(alivePokeball);
+	private ImageView thirdRivalPokeballImageView = new ImageView(alivePokeball);
+	private ImageView fourthRivalPokeballImageView = new ImageView(alivePokeball);
+	private ImageView fifthRivalPokeballImageView = new ImageView(alivePokeball);
+	private ImageView sixthRivalPokeballImageView = new ImageView(alivePokeball);
+
+	private Image userPkmn = new Image(getClass().getResourceAsStream("/res/7back.png"));
+	private Image rivalPkmn = new Image(getClass().getResourceAsStream("/res/2front.png"));
+
+	ImageView userPkmnImageView = new ImageView(userPkmn);
+	ImageView rivalPkmnImageView = new ImageView(rivalPkmn);	
+
+	private Label userPkmnNameLabel = new Label("Sceptile");
+	private Label rivalPkmnNameLabel = new Label("Blastoise");
+
+	private Label userHpFractionLabel = new Label("100/100");
+	final Label rivalHpFractionLabel = new Label("100/100");
+
+	final Label currentStateLabel = new Label("What will Sceptile do?");
+	
 	private static final int WIDTH = 1280;
     private static final int HEIGHT = 720;
     
 	@Override
 	public void start(Stage primaryStage) {
 		try {
+			Font.loadFont(getClass().getResourceAsStream("res/font.ttf"), 12);
+			
 			theStage = primaryStage;
 	    	
 	        Scene scene = new Scene(createContent());
@@ -473,6 +530,8 @@ public class Main extends Application {
 	            	System.out.println(selectionList[3]);
 	            	System.out.println(selectionList[4]);
 	            	System.out.println(selectionList[5]);
+	            	
+	            	battleUi(theStage);
 	            }
 	            	
 	           	});
@@ -916,6 +975,485 @@ public class Main extends Application {
 		primaryStage.show();
 	}
 	
+	
+	public void battleUi(Stage primaryStage){
+		final AnchorPane root = new AnchorPane();
+		Scene scene = new Scene(root, 700, 700);
+
+
+		Image battleBackground = new Image(getClass().getResourceAsStream("/res/battlebackground.jpg"));
+		Image rightBattleBox = new Image(getClass().getResourceAsStream("/res/rightbattlebox.png"));
+		Image leftBattleBox = new Image(getClass().getResourceAsStream("/res/leftbattlebox.png"));
+		Image battleTextbox = new Image(getClass().getResourceAsStream("/res/battletextbox.png"));
+
+		ImageView battleBackgroundIv = new ImageView(battleBackground);
+		battleBackgroundIv.setFitHeight(700);
+		battleBackgroundIv.setFitWidth(700);
+
+		ImageView rightBattleBoxIv = new ImageView(rightBattleBox);
+		rightBattleBoxIv.setLayoutX(0);
+		rightBattleBoxIv.setLayoutY(10);
+		rightBattleBoxIv.setFitHeight(115);
+		rightBattleBoxIv.setFitWidth(250);
+
+		ImageView leftBattleBoxIv = new ImageView(leftBattleBox);
+		leftBattleBoxIv.setLayoutX(470);
+		leftBattleBoxIv.setLayoutY(350);
+		leftBattleBoxIv.setFitHeight(115);
+		leftBattleBoxIv.setFitWidth(250);
+
+		ImageView battleTextboxIv = new ImageView(battleTextbox);
+		battleTextboxIv.setLayoutX(0);
+		battleTextboxIv.setLayoutY(575);
+		battleTextboxIv.setFitHeight(125);
+		battleTextboxIv.setFitWidth(400);
+
+		userPkmnImageView.setFitHeight(300);
+		userPkmnImageView.setFitWidth(300);
+		userPkmnImageView.setLayoutX(70);
+		userPkmnImageView.setLayoutY(300);
+
+		rivalPkmnImageView.setFitHeight(250);
+		rivalPkmnImageView.setFitWidth(250);
+		rivalPkmnImageView.setLayoutX(400);
+		rivalPkmnImageView.setLayoutY(50);
+
+		firstRivalPokeballImageView.setFitHeight(20);
+		firstRivalPokeballImageView.setFitWidth(20);
+		firstRivalPokeballImageView.setLayoutX(10);
+		firstRivalPokeballImageView.setLayoutY(110);
+
+		secondRivalPokeballImageView.setFitHeight(20);
+		secondRivalPokeballImageView.setFitWidth(20);
+		secondRivalPokeballImageView.setLayoutX(35);
+		secondRivalPokeballImageView.setLayoutY(110);
+
+		thirdRivalPokeballImageView.setFitHeight(20);
+		thirdRivalPokeballImageView.setFitWidth(20);
+		thirdRivalPokeballImageView.setLayoutX(60);
+		thirdRivalPokeballImageView.setLayoutY(110);
+
+		fourthRivalPokeballImageView.setFitHeight(20);
+		fourthRivalPokeballImageView.setFitWidth(20);
+		fourthRivalPokeballImageView.setLayoutX(85);
+		fourthRivalPokeballImageView.setLayoutY(110);
+
+		fifthRivalPokeballImageView.setFitHeight(20);
+		fifthRivalPokeballImageView.setFitWidth(20);
+		fifthRivalPokeballImageView.setLayoutX(110);
+		fifthRivalPokeballImageView.setLayoutY(110);
+
+		sixthRivalPokeballImageView.setFitHeight(20);
+		sixthRivalPokeballImageView.setFitWidth(20);
+		sixthRivalPokeballImageView.setLayoutX(135);
+		sixthRivalPokeballImageView.setLayoutY(110);
+
+		firstUserPokeballImageView.setFitHeight(20);
+		firstUserPokeballImageView.setFitWidth(20);
+		firstUserPokeballImageView.setLayoutX(545);
+		firstUserPokeballImageView.setLayoutY(450);
+
+		secondUserPokeballImageView.setFitHeight(20);
+		secondUserPokeballImageView.setFitWidth(20);
+		secondUserPokeballImageView.setLayoutX(570);
+		secondUserPokeballImageView.setLayoutY(450);
+
+		thirdUserPokeballImageView.setFitHeight(20);
+		thirdUserPokeballImageView.setFitWidth(20);
+		thirdUserPokeballImageView.setLayoutX(595);
+		thirdUserPokeballImageView.setLayoutY(450);
+
+		fourthUserPokeballImageView.setFitHeight(20);
+		fourthUserPokeballImageView.setFitWidth(20);
+		fourthUserPokeballImageView.setLayoutX(620);
+		fourthUserPokeballImageView.setLayoutY(450);
+
+		fifthUserPokeballImageView.setFitHeight(20);
+		fifthUserPokeballImageView.setFitWidth(20);
+		fifthUserPokeballImageView.setLayoutX(645);
+		fifthUserPokeballImageView.setLayoutY(450);
+
+		sixthUserPokeballImageView.setFitHeight(20);
+		sixthUserPokeballImageView.setFitWidth(20);
+		sixthUserPokeballImageView.setLayoutX(670);
+		sixthUserPokeballImageView.setLayoutY(450);
+
+		pkmnButton.setLayoutX(400);
+		pkmnButton.setLayoutY(650);
+		pkmnButton.setPrefWidth(300);
+		pkmnButton.setPrefHeight(50);
+		pkmnButton.setStyle(buttonStyle);
+		pkmnButton.setOnMouseClicked(controller);
+
+		move1Button.setLayoutX(400);
+		move1Button.setLayoutY(550);
+		move1Button.setPrefWidth(150);
+		move1Button.setPrefHeight(50);
+		move1Button.setStyle(buttonStyle);
+		move1Button.setOnAction(controller);
+
+		move2Button.setLayoutX(550);
+		move2Button.setLayoutY(550);
+		move2Button.setPrefWidth(150);
+		move2Button.setPrefHeight(50);
+		move2Button.setStyle(buttonStyle);
+		move2Button.setOnAction(controller);
+
+		move3Button.setLayoutX(400);
+		move3Button.setLayoutY(600);
+		move3Button.setPrefWidth(150);
+		move3Button.setPrefHeight(50);
+		move3Button.setStyle(buttonStyle);
+		move3Button.setOnAction(controller);
+
+		move4Button.setLayoutX(550);
+		move4Button.setLayoutY(600);
+		move4Button.setPrefWidth(150);
+		move4Button.setPrefHeight(50);
+		move4Button.setStyle(buttonStyle);
+		move4Button.setOnAction(controller);
+
+		firstPkmnButton.setLayoutX(400);
+		firstPkmnButton.setLayoutY(550);
+		firstPkmnButton.setPrefWidth(150);
+		firstPkmnButton.setPrefHeight(50);
+		firstPkmnButton.setStyle(buttonStyle);
+		firstPkmnButton.setOnAction(controller);
+
+		secondPkmnButton.setLayoutX(550);
+		secondPkmnButton.setLayoutY(550);
+		secondPkmnButton.setPrefWidth(150);
+		secondPkmnButton.setPrefHeight(50);
+		secondPkmnButton.setStyle(buttonStyle);
+		secondPkmnButton.setOnAction(controller);
+
+		thirdPkmnButton.setLayoutX(400);
+		thirdPkmnButton.setLayoutY(600);
+		thirdPkmnButton.setPrefWidth(150);
+		thirdPkmnButton.setPrefHeight(50);
+		thirdPkmnButton.setStyle(buttonStyle);
+		thirdPkmnButton.setOnAction(controller);
+
+		fourthPkmnButton.setLayoutX(550);
+		fourthPkmnButton.setLayoutY(600);
+		fourthPkmnButton.setPrefWidth(150);
+		fourthPkmnButton.setPrefHeight(50);
+		fourthPkmnButton.setStyle(buttonStyle);
+		fourthPkmnButton.setOnAction(controller);
+
+		fifthPkmnButton.setLayoutX(400);
+		fifthPkmnButton.setLayoutY(650);
+		fifthPkmnButton.setPrefWidth(150);
+		fifthPkmnButton.setPrefHeight(50);
+		fifthPkmnButton.setStyle(buttonStyle);
+		fifthPkmnButton.setOnAction(controller);
+
+		sixthPkmnButton.setLayoutX(550);
+		sixthPkmnButton.setLayoutY(650);
+		sixthPkmnButton.setPrefWidth(150);
+		sixthPkmnButton.setPrefHeight(50);
+		sixthPkmnButton.setStyle(buttonStyle);
+		sixthPkmnButton.setOnAction(controller);
+
+		rivalHealthbar.setProgress(1);
+		rivalHealthbar.setLayoutX(40);
+		rivalHealthbar.setLayoutY(60);
+		rivalHealthbar.setMinWidth(165);
+		if (rivalHealthbar.getProgress() <= 0.3){
+			rivalHealthbar.setStyle("-fx-accent: red;");
+		} else if (rivalHealthbar.getProgress() <= 0.7) {
+			rivalHealthbar.setStyle("-fx-accent: orange;"); 
+		} else {
+			rivalHealthbar.setStyle("-fx-accent: green;");
+		}
+
+		userHealthbar.setProgress(1);
+		userHealthbar.setLayoutX(530);
+		userHealthbar.setLayoutY(400);
+		userHealthbar.setMinWidth(165);
+		if (userHealthbar.getProgress() <= 0.3){
+			userHealthbar.setStyle("-fx-accent: red;");
+		} else if (userHealthbar.getProgress() <= 0.7) {
+			userHealthbar.setStyle("-fx-accent: orange;"); 
+		} else {
+			userHealthbar.setStyle("-fx-accent: green;");
+		}
+
+		rivalPkmnNameLabel.setMaxSize(400, 100);
+		rivalPkmnNameLabel.setLayoutX(15);
+		rivalPkmnNameLabel.setLayoutY(35);
+		rivalPkmnNameLabel.setFont(Font.font("PKMN RBYGSC", 12));
+
+		userPkmnNameLabel.setMaxSize(400, 100);
+		userPkmnNameLabel.setLayoutX(515);
+		userPkmnNameLabel.setLayoutY(375);
+		userPkmnNameLabel.setFont(Font.font("PKMN RBYGSC", 12));
+
+		final Label userHpLabel = new Label("Hp:");
+		userHpLabel.setMaxSize(400, 100);
+		userHpLabel.setLayoutX(500);
+		userHpLabel.setLayoutY(400);
+		userHpLabel.setFont(Font.font("PKMN RBYGSC", 12));
+
+		final Label rivalHpLabel = new Label("Hp:");
+		rivalHpLabel.setMaxSize(400, 100);
+		rivalHpLabel.setLayoutX(10);
+		rivalHpLabel.setLayoutY(60);
+		rivalHpLabel.setFont(Font.font("PKMN RBYGSC", 12));
+
+		userHpFractionLabel.setMaxSize(400, 100);
+		userHpFractionLabel.setLayoutX(530);
+		userHpFractionLabel.setLayoutY(425);
+		userHpFractionLabel.setFont(Font.font("PKMN RBYGSC", 12));
+
+		rivalHpFractionLabel.setMaxSize(400, 100);
+		rivalHpFractionLabel.setLayoutX(45);
+		rivalHpFractionLabel.setLayoutY(85);
+		rivalHpFractionLabel.setFont(Font.font("PKMN RBYGSC", 12));
+
+		currentStateLabel.setWrapText(true);
+		currentStateLabel.setMaxSize(335, 85);
+		currentStateLabel.setLayoutX(18);
+		currentStateLabel.setLayoutY(595);
+		currentStateLabel.setFont(Font.font("PKMN RBYGSC", 12));
+
+		//Add background first
+		root.getChildren().add(battleBackgroundIv);
+
+		//left and right description box thing
+		root.getChildren().add(leftBattleBoxIv);
+		root.getChildren().add(rightBattleBoxIv);
+
+		//battle textbox
+		root.getChildren().add(battleTextboxIv);
+
+		//pokemon images
+		root.getChildren().add(rivalPkmnImageView);
+		root.getChildren().add(userPkmnImageView);
+
+		//Hp bar
+		root.getChildren().add(rivalHealthbar);
+		root.getChildren().add(userHealthbar);
+
+		//name label
+		root.getChildren().add(rivalPkmnNameLabel);
+		root.getChildren().add(userPkmnNameLabel);
+
+		//hp label
+		root.getChildren().add(rivalHpLabel);
+		root.getChildren().add(userHpLabel);
+
+		//hp fraction label
+		root.getChildren().add(userHpFractionLabel);
+		root.getChildren().add(rivalHpFractionLabel);
+
+		//current state
+		root.getChildren().add(currentStateLabel);
+
+		//		root.getChildren().add(firstPkmnButton);
+		//		root.getChildren().add(secondPkmnButton);
+		//		root.getChildren().add(thirdPkmnButton);
+		//		root.getChildren().add(fourthPkmnButton);
+		//		root.getChildren().add(fifthPkmnButton);
+		//		root.getChildren().add(sixthPkmnButton);
+
+		root.getChildren().add(move1Button);
+		root.getChildren().add(move2Button);
+		root.getChildren().add(move3Button);
+		root.getChildren().add(move4Button);
+		root.getChildren().add(pkmnButton);		
+
+		root.getChildren().add(firstRivalPokeballImageView);
+		root.getChildren().add(secondRivalPokeballImageView);
+		root.getChildren().add(thirdRivalPokeballImageView);
+		root.getChildren().add(fourthRivalPokeballImageView);
+		root.getChildren().add(fifthRivalPokeballImageView);
+		root.getChildren().add(sixthRivalPokeballImageView);
+
+		root.getChildren().add(firstUserPokeballImageView);
+		root.getChildren().add(secondUserPokeballImageView);
+		root.getChildren().add(thirdUserPokeballImageView);
+		root.getChildren().add(fourthUserPokeballImageView);
+		root.getChildren().add(fifthUserPokeballImageView);
+		root.getChildren().add(sixthUserPokeballImageView);
+
+		primaryStage.setScene( scene ); 
+		primaryStage.setResizable(false);
+		primaryStage.setTitle( "Pokémon" );
+		primaryStage.show();
+	}
+	
+	@Override
+	public void updated() {
+		updatePkmnImages();
+		updatePkmnNames();
+		updateHealthbars();
+		updateHpFractions();
+		updatePokeballs();
+		updateStateText();
+		updateMoveButtons();
+		updatePkmnButtons();
+	}
+	
+	private void updatePkmnNames(){
+//		userPkmnNameLabel.setText(model.getCurrentUserPkmnName());
+//		rivalPkmnNameLabel.setText(model.getCurrentRivalPkmnName());
+	}
+	
+	private void updatePkmnImages(){
+		//userPkmnImageView.setImage(new Image(getClass().getResourceAsStream("/res/"+model.getUserPokemonId()+"back.png")));
+		//rivalPkmnImageView.setImage(new Image(getClass().getResourceAsStream("/res/"+model.getRivalPokemonId()+"front.png")));
+	}
+
+	private void updatePokeballs(){
+//		for (int i = 0; i < model.getUserTeam().size(); ++i){ 
+//			boolean alive = true;
+//			if (!model.getUserTeam().get(i).isAlive()){
+//				alive = false;
+//			}
+//			switch (i) {
+//			case 0:
+//				if (alive) {
+//					firstUserPokeballImageView.setImage(alivePokeball);
+//				} else {
+//					firstUserPokeballImageView.setImage(faintedPokeball);
+//				}
+//				break;
+//			case 1:
+//				if (alive) {
+//					secondUserPokeballImageView.setImage(alivePokeball);
+//				} else {
+//					secondUserPokeballImageView.setImage(faintedPokeball);
+//				}
+//				break;
+//			case 2:
+//				if (alive) {
+//					thirdUserPokeballImageView.setImage(alivePokeball);
+//				} else {
+//					thirdUserPokeballImageView.setImage(faintedPokeball);
+//				}
+//				break;
+//			case 3: 
+//				if (alive) {
+//					fourthUserPokeballImageView.setImage(alivePokeball);
+//				} else {
+//					fourthUserPokeballImageView.setImage(faintedPokeball);
+//				}
+//				break;
+//			case 4:
+//				if (alive) {
+//					fifthUserPokeballImageView.setImage(alivePokeball);
+//				} else {
+//					fifthUserPokeballImageView.setImage(faintedPokeball);
+//				}				
+//				break;
+//			case 5:
+//				if (alive) {
+//					sixthUserPokeballImageView.setImage(alivePokeball);
+//				} else {
+//					sixthUserPokeballImageView.setImage(faintedPokeball);
+//				}				
+//				break;
+//			}
+//		}
+//		
+//		for (int i = 0; i < model.getRivalTeam().size(); ++i){ 
+//			boolean alive = true;
+//			if (!model.getRivalTeam().get(i).isAlive()){
+//				alive = false;
+//			}
+//			switch (i) {
+//			case 0:
+//				if (alive) {
+//					firstRivalPokeballImageView.setImage(alivePokeball);
+//				} else {
+//					firstRivalPokeballImageView.setImage(faintedPokeball);
+//				}
+//				break;
+//			case 1:
+//				if (alive) {
+//					secondRivalPokeballImageView.setImage(alivePokeball);
+//				} else {
+//					secondRivalPokeballImageView.setImage(faintedPokeball);
+//				}
+//				break;
+//			case 2:
+//				if (alive) {
+//					thirdRivalPokeballImageView.setImage(alivePokeball);
+//				} else {
+//					thirdRivalPokeballImageView.setImage(faintedPokeball);
+//				}
+//				break;
+//			case 3: 
+//				if (alive) {
+//					fourthRivalPokeballImageView.setImage(alivePokeball);
+//				} else {
+//					fourthRivalPokeballImageView.setImage(faintedPokeball);
+//				}
+//				break;
+//			case 4:
+//				if (alive) {
+//					fifthRivalPokeballImageView.setImage(alivePokeball);
+//				} else {
+//					fifthRivalPokeballImageView.setImage(faintedPokeball);
+//				}				
+//				break;
+//			case 5:
+//				if (alive) {
+//					sixthRivalPokeballImageView.setImage(alivePokeball);
+//				} else {
+//					sixthRivalPokeballImageView.setImage(faintedPokeball);
+//				}				
+//				break;
+//			}
+//		}
+	}
+
+	private void updateHealthbars(){
+		//userHealthbar.setProgress(model.getCurrentUserPkmnHp()/model.getCurrentUserPkmnTotalHp());
+		if (userHealthbar.getProgress() <= 0.3){
+			userHealthbar.setStyle("-fx-accent: red;");
+		} else if (userHealthbar.getProgress() <= 0.7) {
+			userHealthbar.setStyle("-fx-accent: orange;"); 
+		} else {
+			userHealthbar.setStyle("-fx-accent: green;");
+		}
+		//rivalHealthbar.setProgress(model.getCurrentRivalPkmnHp()/model.getCurrentRivalPkmnTotalHp());
+		if (userHealthbar.getProgress() <= 0.3){
+			userHealthbar.setStyle("-fx-accent: red;");
+		} else if (userHealthbar.getProgress() <= 0.7) {
+			userHealthbar.setStyle("-fx-accent: orange;"); 
+		} else {
+			userHealthbar.setStyle("-fx-accent: green;");
+		}
+	}
+	
+	private void updateHpFractions(){
+//		userHpFractionLabel.setText(model.getCurrentUserPkmnHp()+"/"+model.getCurrentUserPkmnTotalHp());
+//		rivalHpFractionLabel.setText(model.getCurrentRivalPkmnHp()+"/"+model.getCurrentRivalPkmnTotalHp());
+	}
+
+	private void updateStateText(){
+//		currentStateLabel.setText(model.getCurrentState());
+	}
+
+	private void updateMoveButtons(){
+//		move1Button.setText(model.getCurrentPokemonFirstMove());
+//		move2Button.setText(model.getCurrentPokemonSecondMove());
+//		move3Button.setText(model.getCurrentPokemonThirdMove());
+//		move4Button.setText(model.getCurrentPokemonFourthMove());
+	}
+
+	private void updatePkmnButtons(){
+		//probably need to check the size of the team instead (or make them always choose 6 pkmn)
+//		firstPkmnButton.setText(model.getCurrentTeam().get(0).getName());
+//		secondPkmnButton.setText(model.getCurrentTeam().get(1).getName());
+//		thirdPkmnButton.setText(model.getCurrentTeam().get(2).getName());
+//		fourthPkmnButton.setText(model.getCurrentTeam().get(3).getName());
+//		fifthPkmnButton.setText(model.getCurrentTeam().get(4).getName());
+//		sixthPkmnButton.setText(model.getCurrentTeam().get(5).getName());
+	}
+	
 	public void changeIntroText(Label label){
 		if (!(introIndex >= introText.length)){
 			label.setText(introText[introIndex]);
@@ -937,4 +1475,5 @@ public class Main extends Application {
 		launch(args);
 	}
 }
+
 
