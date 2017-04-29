@@ -86,12 +86,12 @@ public class GameEngine {
 		System.out.println(winner + " wins!");
 	}
 
-	boolean valid;
 
 	/* Phase to select moves or another pokemon */
 	private void SelectPhase() {
+		boolean invalid;
 		do {
-			valid = false;
+			invalid = false;
 			System.out.print(p1.getPlayerName() + " select a move for " + p1Pokemon.getName() + " " + p1Pokemon.getHp()
 					+ " " + p1Pokemon.getSpeed() + " \n" + "\t1: " + p1Pokemon.getMoves().get(0).getName() + "\n"
 					+ "\t2: " + p1Pokemon.getMoves().get(1).getName() + "\n" + "\t3: "
@@ -108,9 +108,9 @@ public class GameEngine {
 				this.selectedAttack = Integer.parseInt(read) - 1;
 				this.moveSelected = true;
 			} else {
-				this.valid = true;
+				invalid = true;
 			}
-		} while (valid);
+		} while (invalid);
 
 	}
 
@@ -209,8 +209,7 @@ public class GameEngine {
 
 	/* Switch pokemon from party or select new pokemon */
 	private void SelectPokemon() {
-		boolean test = true;
-		while (test) {
+		while (true) {
 			System.out.println("\nSelect the number associated with the pokemon you want to switch out for"
 					+ ((this.p1Pokemon.getHp() <= 0) ? ": " : " (0) to go back to battle phase:"));
 			int count = 0;
@@ -238,12 +237,6 @@ public class GameEngine {
 			}
 
 		}
-
-		// else if (tempChosen == 0) {
-		// SelectPhase();
-		// } else {
-		// SelectPokemon();
-		// }
 	}
 
 	/* attack calculations have been moved to game engine */
