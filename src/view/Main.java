@@ -294,7 +294,6 @@ public class Main extends Application {
 				            	
 				           	});
 						
-						Button pokemon7 = new Button();
 						pokemon7.setShape(new Polygon(new Hexagon(100d).getPoints()));
 						pokemon7.setMinSize(100, 90);
 						pokemon7.setId(buttonIds[1]);
@@ -420,16 +419,16 @@ public class Main extends Application {
 				            	
 				           	});
 		
-						Media videoFile = new Media("file:///C:/Users/Ramon/workspace/SelectScreen/src/res/selectscreen.mp3");
-						mediaPlayer = new MediaPlayer(videoFile);
-						//mediaPlayer.setAutoPlay(true);
-						mediaPlayer.setVolume(0.1);
-						mediaPlayer.setOnEndOfMedia(new Runnable() {
-						       public void run() {
-						         mediaPlayer.seek(Duration.ZERO);
-						       }
-						   });
-						  mediaPlayer.play();
+				// Media videoFile = new Media("/res/selectscreen.mp3");
+				// mediaPlayer = new MediaPlayer(videoFile);
+				// //mediaPlayer.setAutoPlay(true);
+				// mediaPlayer.setVolume(0.1);
+				// mediaPlayer.setOnEndOfMedia(new Runnable() {
+				// public void run() {
+				// mediaPlayer.seek(Duration.ZERO);
+				// }
+				// });
+				// mediaPlayer.play();
 						
 						Image pokemonImage1 = new Image(getClass().getResourceAsStream("/res/venasaur.png"));
 						ImageView imageView1 = new ImageView(pokemonImage1);
