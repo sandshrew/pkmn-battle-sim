@@ -18,6 +18,7 @@ public class Pokemon {
 	
 	//battle stats
 	private int hp;
+	private int totalHP;
 	private int attack;
 	private int defence;
 	private int speed;
@@ -94,6 +95,7 @@ public class Pokemon {
 		int IV = 0;
 		int EV = 0;
 		this.hp = (int) Math.floor(((2 * this.baseHP + IV + Math.floor(EV/4)) * this.level) / 100) + this.level + 10;
+		this.totalHP = this.hp;
 	}
 
 	private int calculateStat(int base){
@@ -221,6 +223,14 @@ public class Pokemon {
 
 	public void setID(int iD) {
 		ID = iD;
+	}
+
+	public int getTotalHP() {
+		return totalHP;
+	}
+
+	public void setTotalHP(int totalHP) {
+		this.totalHP = totalHP;
 	}
 }
 

@@ -131,9 +131,9 @@ public class Main extends Application implements Listener {
 	private Label rivalPkmnNameLabel = new Label("Blastoise");
 
 	private Label userHpFractionLabel = new Label("100/100");
-	final Label rivalHpFractionLabel = new Label("100/100");
+	private final Label rivalHpFractionLabel = new Label("100/100");
 
-	final Label currentStateLabel = new Label("What will Sceptile do?");
+	private Label currentStateLabel = new Label("What will Sceptile do?");
 
 	private static final int WIDTH = 1280;
 	private static final int HEIGHT = 720;
@@ -235,16 +235,16 @@ public class Main extends Application implements Listener {
 			if (track != 0) {
 				filePath = "file:/" + System.getProperty("user.dir") + "/src/res/battle.mp3";
 			}
-				Media videoFile = new Media(filePath.replace('\\', '/'));
-				mediaPlayer = new MediaPlayer(videoFile);
-				// mediaPlayer.setAutoPlay(true);
-				mediaPlayer.setVolume(0.1);
-				mediaPlayer.setOnEndOfMedia(new Runnable() {
-					public void run() {
-						mediaPlayer.seek(Duration.ZERO);
-					}
-				});
-				mediaPlayer.play();
+			Media videoFile = new Media(filePath.replace('\\', '/'));
+			mediaPlayer = new MediaPlayer(videoFile);
+			// mediaPlayer.setAutoPlay(true);
+			mediaPlayer.setVolume(0.1);
+			mediaPlayer.setOnEndOfMedia(new Runnable() {
+				public void run() {
+					mediaPlayer.seek(Duration.ZERO);
+				}
+			});
+			mediaPlayer.play();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -970,10 +970,9 @@ public class Main extends Application implements Listener {
 	}
 
 	public void battleUi(Stage primaryStage) {
-		this.ge.startBattleLoop();
 		final AnchorPane root = new AnchorPane();
-		Scene scene = new Scene(root, 700, 700);
 
+		Scene scene = new Scene(root, 700, 700);
 		Image battleBackground = new Image(getClass().getResourceAsStream("/res/battlebackground.jpg"));
 		Image rightBattleBox = new Image(getClass().getResourceAsStream("/res/rightbattlebox.png"));
 		Image leftBattleBox = new Image(getClass().getResourceAsStream("/res/leftbattlebox.png"));
@@ -1000,6 +999,16 @@ public class Main extends Application implements Listener {
 		battleTextboxIv.setLayoutY(575);
 		battleTextboxIv.setFitHeight(125);
 		battleTextboxIv.setFitWidth(400);
+
+		this.userPkmn = new Image(getClass().getResourceAsStream("/res/" + ge.getP1Pokemon().getID() + "back.png"));
+		this.userPkmnImageView = new ImageView(userPkmn);
+		this.userPkmnNameLabel = new Label(ge.getP1Pokemon().getName());
+		this.userHpFractionLabel = new Label(ge.getP1Pokemon().getHp() + " \\ "  + ge.getP1Pokemon().getHp());
+		this.currentStateLabel = new Label("What will "+ ge.getP1Pokemon().getName() +" do?");
+		this.move1Button = new Button(ge.getP1Pokemon().getMoves().get(0).getName());
+		this.move2Button = new Button(ge.getP1Pokemon().getMoves().get(1).getName());
+		this.move3Button = new Button(ge.getP1Pokemon().getMoves().get(2).getName());
+		this.move4Button = new Button(ge.getP1Pokemon().getMoves().get(3).getName());
 
 		userPkmnImageView.setFitHeight(300);
 		userPkmnImageView.setFitWidth(300);

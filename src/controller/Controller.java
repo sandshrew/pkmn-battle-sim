@@ -31,7 +31,7 @@ private final Model model;
 			case "Done":
 				System.out.println("done");
 			default:
-				System.out.println(eString);
+				//System.out.println(eString);
 				System.out.println(eSub);
 				break;
 			}
