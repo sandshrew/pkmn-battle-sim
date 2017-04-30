@@ -183,7 +183,7 @@ public class Main extends Application implements Listener {
 	}
 
 	private void addBackground() {
-		Image image = new Image(getClass().getResourceAsStream("/res/gengar.jpg"));
+		Image image = new Image(getClass().getResourceAsStream("/res/pikachunight.jpg"));
 		ImageView imageView = new ImageView(image);
 		imageView.setFitWidth(WIDTH);
 		imageView.setFitHeight(HEIGHT);
