@@ -226,6 +226,25 @@ public class Main extends Application implements Listener {
 		st.play();
 	}
 
+	private void playMusic() {
+		try {
+			String filePath = "file:/" + System.getProperty("user.dir") + "/src/res/pokemonopening.mp3";
+			Media videoFile = new Media(filePath.replace('\\', '/'));
+			mediaPlayer = new MediaPlayer(videoFile);
+			// mediaPlayer.setAutoPlay(true);
+			mediaPlayer.setVolume(0.1);
+			mediaPlayer.setOnEndOfMedia(new Runnable() {
+				public void run() {
+					mediaPlayer.seek(Duration.ZERO);
+				}
+			});
+			mediaPlayer.play();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
 	private void addMenu(double x, double y) {
 		menuBox.setTranslateX(x);
 		menuBox.setTranslateY(y);
@@ -243,6 +262,7 @@ public class Main extends Application implements Listener {
 		item1.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
 			public void handle(MouseEvent event) {
+				playMusic();
 				intro(theStage);
 			}
 
@@ -543,18 +563,6 @@ public class Main extends Application implements Listener {
 
 		});
 
-		// Media videoFile = new
-		// Media("file:///C:/Users/Ramon/workspace/SelectScreen/src/res/selectscreen.mp3");
-		// mediaPlayer = new MediaPlayer(videoFile);
-		// //mediaPlayer.setAutoPlay(true);
-		// mediaPlayer.setVolume(0.1);
-		// mediaPlayer.setOnEndOfMedia(new Runnable() {
-		// public void run() {
-		// mediaPlayer.seek(Duration.ZERO);
-		// }
-		// });
-		// mediaPlayer.play();
-
 		Image pokemonImage1 = new Image(getClass().getResourceAsStream("/res/venasaur.png"));
 		ImageView imageView1 = new ImageView(pokemonImage1);
 		pokemon1.setGraphic(imageView1);
@@ -673,7 +681,7 @@ public class Main extends Application implements Listener {
 		gridPane.getChildren().addAll(pokemon1, pokemon2, pokemon3, pokemon4, pokemon5, pokemon6, pokemon7, pokemon8,
 				pokemon9, pokemon10, pokemon11, pokemon12, battle, clear);
 
-		Scene scene = new Scene(gridPane,700, 700);
+		Scene scene = new Scene(gridPane, 700, 700);
 		theStage.setScene(scene);
 		theStage.setTitle("Pokemon Selector");
 		theStage.show();
@@ -682,7 +690,7 @@ public class Main extends Application implements Listener {
 	// not mvc bc lazy/testing, will change
 	public void intro(Stage primaryStage) {
 		final AnchorPane root = new AnchorPane();
-		Scene scene = new Scene(root, 690, 690);
+		Scene scene = new Scene(root, 688, 688);
 
 		// background
 		Image background = new Image(getClass().getResourceAsStream("/res/introbackground.png"));
