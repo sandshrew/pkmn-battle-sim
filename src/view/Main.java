@@ -154,10 +154,10 @@ public class Main extends Application implements Listener {
 	}
 
 	private List<Pair<String, Button>> menuData = Arrays.asList(new Pair<String, Button>("New Game", newGameButton),
-			new Pair<String, Button>("Continue", continueButton),
 			new Pair<String, Button>("Game Options", optionsButton),
 			new Pair<String, Button>("Controls", controlsButton), new Pair<String, Button>("Credits", creditsButton),
 			new Pair<String, Button>("Exit", exitButton));
+	// new Pair<String, Button>("Continue", continueButton),
 
 	private Pane root = new Pane();
 	private VBox menuBox = new VBox(-5);
@@ -200,7 +200,7 @@ public class Main extends Application implements Listener {
 	}
 
 	private void addLine(double x, double y) {
-		line = new Line(x, y, x, y + 300);
+		line = new Line(x, y, x, y + 250);
 		line.setStrokeWidth(3);
 		line.setStroke(Color.color(1, 1, 1, 0.75));
 		line.setEffect(new DropShadow(5, Color.BLACK));
@@ -323,20 +323,22 @@ public class Main extends Application implements Listener {
 		clip5.translateXProperty().bind(item5.translateXProperty().negate());
 		item5.setClip(clip5);
 
-		PokemonMenuItem item6 = new PokemonMenuItem(menuData.get(5).getKey());
-		item6.setTranslateX(-300);
-		item6.setId(menuData.get(5).getKey());
-		item6.setOnMouseClicked(new EventHandler<MouseEvent>() {
+		// PokemonMenuItem item6 = new
+		// PokemonMenuItem(menuData.get(5).getKey());
+		// item6.setTranslateX(-300);
+		// item6.setId(menuData.get(5).getKey());
+		// item6.setOnMouseClicked(new EventHandler<MouseEvent>() {
+		//
+		// public void handle(MouseEvent event) {
+		// Platform.exit();
+		// }
+		//
+		// });
+		// clip6.translateXProperty().bind(item6.translateXProperty().negate());
+		// item6.setClip(clip6);
 
-			public void handle(MouseEvent event) {
-				Platform.exit();
-			}
-
-		});
-		clip6.translateXProperty().bind(item6.translateXProperty().negate());
-		item6.setClip(clip6);
-
-		menuBox.getChildren().addAll(item1, item2, item3, item4, item5, item6);
+		 menuBox.getChildren().addAll(item1, item2, item3, item4, item5);
+		// item6);
 
 		root.getChildren().add(menuBox);
 	}
@@ -963,7 +965,7 @@ public class Main extends Application implements Listener {
 
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
-		primaryStage.setTitle("Pokémon");
+		primaryStage.setTitle("Pokemon");
 		primaryStage.show();
 	}
 
@@ -1269,7 +1271,7 @@ public class Main extends Application implements Listener {
 
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
-		primaryStage.setTitle("Pokémon");
+		primaryStage.setTitle("Pokemon");
 		primaryStage.show();
 	}
 
@@ -1456,9 +1458,9 @@ public class Main extends Application implements Listener {
 
 	// For intro use
 	private int introIndex = 0;
-	private final String[] introText = { "Welcome to the world of Pokémon!", "My name is Professor Oak.",
-			"People affectionately refer to me as the Pokémon professor!",
-			"This world is inhabited far and wide by creatures called Pokémon!",
+	private final String[] introText = { "Welcome to the world of Pokemon!", "My name is Professor Oak.",
+			"People affectionately refer to me as the Pokemon professor!",
+			"This world is inhabited far and wide by creatures called Pokemon!",
 			"For some people pokemon are pets, others use them for battling!",
 			"That is what you will be doing, but first tell me a little about yourself!",
 			"Now tell me, are you a boy or are you a girl?", "Oh so you're a ",
