@@ -343,352 +343,363 @@ public class Main extends Application implements Listener {
 		root.getChildren().add(menuBox);
 	}
 
-	public void selectScreen(Stage theStage) {
-		/*
-		 * 1 = Venasaur 2 = Meganium 3 = Sceptile 4 = Torterra 5 = Charizard 6 =
-		 * Typhlosion 7 = Blaziken 8 = Infernape 9 = Blastoise 10 = Feraligatr
-		 * 11 = Swampert 12 = Empoleon
-		 */
-		String[] buttonIds = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" };
-
-		InnerShadow shadow = new InnerShadow();
-
-		Button pokemon1 = new Button();
-		pokemon1.setShape(new Polygon(new Hexagon(100d).getPoints()));
-		pokemon1.setMinSize(100, 90);
-		pokemon1.setId(buttonIds[0]);
-		pokemon1.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-			public void handle(MouseEvent event) {
-				pokemon1.setEffect(shadow);
-				selectionList[globalCounter] = Integer.parseInt(pokemon1.getId());
-				globalCounter++;
-			}
-
-		});
-
-		Button pokemon2 = new Button();
-		pokemon2.setShape(new Polygon(new Hexagon(100d).getPoints()));
-		pokemon2.setMinSize(100, 90);
-		pokemon2.setId(buttonIds[2]);
-		pokemon2.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-			public void handle(MouseEvent event) {
-				pokemon2.setEffect(shadow);
-				selectionList[globalCounter] = Integer.parseInt(pokemon2.getId());
-				globalCounter++;
-			}
-
-		});
-
-		Button pokemon3 = new Button();
-		pokemon3.setShape(new Polygon(new Hexagon(100d).getPoints()));
-		pokemon3.setMinSize(100, 90);
-		pokemon3.setId(buttonIds[4]);
-		pokemon3.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-			public void handle(MouseEvent event) {
-				pokemon3.setEffect(shadow);
-				selectionList[globalCounter] = Integer.parseInt(pokemon3.getId());
-				globalCounter++;
-			}
-
-		});
-
-		Button pokemon4 = new Button();
-		pokemon4.setShape(new Polygon(new Hexagon(100d).getPoints()));
-		pokemon4.setMinSize(100, 90);
-		pokemon4.setId(buttonIds[6]);
-		pokemon4.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-			public void handle(MouseEvent event) {
-				pokemon4.setEffect(shadow);
-				selectionList[globalCounter] = Integer.parseInt(pokemon4.getId());
-				globalCounter++;
-			}
-
-		});
-
-		Button pokemon5 = new Button();
-		pokemon5.setShape(new Polygon(new Hexagon(100d).getPoints()));
-		pokemon5.setMinSize(100, 90);
-		pokemon5.setId(buttonIds[8]);
-		pokemon5.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-			public void handle(MouseEvent event) {
-				pokemon5.setEffect(shadow);
-				selectionList[globalCounter] = Integer.parseInt(pokemon5.getId());
-				globalCounter++;
-			}
-
-		});
-
-		Button pokemon6 = new Button();
-		pokemon6.setShape(new Polygon(new Hexagon(100d).getPoints()));
-		pokemon6.setMinSize(100, 90);
-		pokemon6.setId(buttonIds[10]);
-		pokemon6.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-			public void handle(MouseEvent event) {
-				pokemon6.setEffect(shadow);
-				selectionList[globalCounter] = Integer.parseInt(pokemon6.getId());
-				globalCounter++;
-			}
-
-		});
-
-		Button pokemon7 = new Button();
-		pokemon7.setShape(new Polygon(new Hexagon(100d).getPoints()));
-		pokemon7.setMinSize(100, 90);
-		pokemon7.setId(buttonIds[1]);
-		pokemon7.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-			public void handle(MouseEvent event) {
-				pokemon7.setEffect(shadow);
-				selectionList[globalCounter] = Integer.parseInt(pokemon7.getId());
-				globalCounter++;
-			}
-
-		});
-
-		Button pokemon8 = new Button();
-		pokemon8.setShape(new Polygon(new Hexagon(100d).getPoints()));
-		pokemon8.setMinSize(100, 90);
-		pokemon8.setId(buttonIds[3]);
-		pokemon8.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-			public void handle(MouseEvent event) {
-				pokemon8.setEffect(shadow);
-				selectionList[globalCounter] = Integer.parseInt(pokemon8.getId());
-				globalCounter++;
-			}
-
-		});
-
-		Button pokemon9 = new Button();
-		pokemon9.setShape(new Polygon(new Hexagon(100d).getPoints()));
-		pokemon9.setMinSize(100, 90);
-		pokemon9.setId(buttonIds[5]);
-		pokemon9.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-			public void handle(MouseEvent event) {
-				pokemon9.setEffect(shadow);
-				selectionList[globalCounter] = Integer.parseInt(pokemon9.getId());
-				globalCounter++;
-			}
-
-		});
-
-		Button pokemon10 = new Button();
-		pokemon10.setShape(new Polygon(new Hexagon(100d).getPoints()));
-		pokemon10.setMinSize(100, 90);
-		pokemon10.setId(buttonIds[7]);
-		pokemon10.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-			public void handle(MouseEvent event) {
-				pokemon10.setEffect(shadow);
-				selectionList[globalCounter] = Integer.parseInt(pokemon10.getId());
-				globalCounter++;
-			}
-
-		});
-
-		Button pokemon11 = new Button();
-		pokemon11.setShape(new Polygon(new Hexagon(100d).getPoints()));
-		pokemon11.setMinSize(100, 90);
-		pokemon11.setId(buttonIds[9]);
-		pokemon11.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-			public void handle(MouseEvent event) {
-				pokemon11.setEffect(shadow);
-				selectionList[globalCounter] = Integer.parseInt(pokemon11.getId());
-				globalCounter++;
-			}
-
-		});
-
-		Button pokemon12 = new Button();
-		pokemon12.setShape(new Polygon(new Hexagon(100d).getPoints()));
-		pokemon12.setMinSize(100, 90);
-		pokemon12.setId(buttonIds[11]);
-		pokemon12.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-			public void handle(MouseEvent event) {
-				pokemon12.setEffect(shadow);
-				selectionList[globalCounter] = Integer.parseInt(pokemon12.getId());
-				globalCounter++;
-			}
-
-		});
-
-		Button battle = new Button("BATTLE!");
-		battle.setMinSize(500, 180);
-		battle.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-			public void handle(MouseEvent event) {
-				System.out.println(selectionList[0]);
-				System.out.println(selectionList[1]);
-				System.out.println(selectionList[2]);
-				System.out.println(selectionList[3]);
-				System.out.println(selectionList[4]);
-				System.out.println(selectionList[5]);
-
-				battleUi(theStage);
-			}
-
-		});
-
-		Button clear = new Button("CLEAR");
-		clear.setShape(new Polygon(new Hexagon(100d).getPoints()));
-		clear.setMinSize(100, 90);
-		clear.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-			public void handle(MouseEvent event) {
-				for (int i = 0; i < selectionList.length; i++) {
-					selectionList[i] = 0;
-				}
-				globalCounter = 0;
-
-				pokemon1.setEffect(null);
-				pokemon2.setEffect(null);
-				pokemon3.setEffect(null);
-				pokemon4.setEffect(null);
-				pokemon5.setEffect(null);
-				pokemon6.setEffect(null);
-				pokemon7.setEffect(null);
-				pokemon8.setEffect(null);
-				pokemon9.setEffect(null);
-				pokemon10.setEffect(null);
-				pokemon11.setEffect(null);
-				pokemon12.setEffect(null);
-			}
-
-		});
-
-		Image pokemonImage1 = new Image(getClass().getResourceAsStream("/res/venasaur.png"));
-		ImageView imageView1 = new ImageView(pokemonImage1);
-		pokemon1.setGraphic(imageView1);
-		imageView1.setFitHeight(90);
-		imageView1.setFitWidth(100);
-
-		Image pokemonImage2 = new Image(getClass().getResourceAsStream("/res/sceptile.png"));
-		ImageView imageView2 = new ImageView(pokemonImage2);
-		pokemon2.setGraphic(imageView2);
-		imageView2.setFitHeight(90);
-		imageView2.setFitWidth(100);
-
-		Image pokemonImage3 = new Image(getClass().getResourceAsStream("/res/charizard.png"));
-		ImageView imageView3 = new ImageView(pokemonImage3);
-		pokemon3.setGraphic(imageView3);
-		imageView3.setFitHeight(90);
-		imageView3.setFitWidth(100);
-
-		Image pokemonImage4 = new Image(getClass().getResourceAsStream("/res/blaziken.png"));
-		ImageView imageView4 = new ImageView(pokemonImage4);
-		pokemon4.setGraphic(imageView4);
-		imageView4.setFitHeight(90);
-		imageView4.setFitWidth(100);
-
-		Image pokemonImage5 = new Image(getClass().getResourceAsStream("/res/blastoise.png"));
-		ImageView imageView5 = new ImageView(pokemonImage5);
-		pokemon5.setGraphic(imageView5);
-		imageView5.setFitHeight(90);
-		imageView5.setFitWidth(100);
-
-		Image pokemonImage6 = new Image(getClass().getResourceAsStream("/res/swampert.png"));
-		ImageView imageView6 = new ImageView(pokemonImage6);
-		pokemon6.setGraphic(imageView6);
-		imageView6.setFitHeight(90);
-		imageView6.setFitWidth(100);
-
-		Image pokemonImage7 = new Image(getClass().getResourceAsStream("/res/meganium.png"));
-		ImageView imageView7 = new ImageView(pokemonImage7);
-		pokemon7.setGraphic(imageView7);
-		imageView7.setFitHeight(90);
-		imageView7.setFitWidth(100);
-
-		Image pokemonImage8 = new Image(getClass().getResourceAsStream("/res/torterra.png"));
-		ImageView imageView8 = new ImageView(pokemonImage8);
-		pokemon8.setGraphic(imageView8);
-		imageView8.setFitHeight(90);
-		imageView8.setFitWidth(100);
-
-		Image pokemonImage9 = new Image(getClass().getResourceAsStream("/res/typhlosion.png"));
-		ImageView imageView9 = new ImageView(pokemonImage9);
-		pokemon9.setGraphic(imageView9);
-		imageView9.setFitHeight(90);
-		imageView9.setFitWidth(100);
-
-		Image pokemonImage10 = new Image(getClass().getResourceAsStream("/res/infernape.png"));
-		ImageView imageView10 = new ImageView(pokemonImage10);
-		pokemon10.setGraphic(imageView10);
-		imageView10.setFitHeight(90);
-		imageView10.setFitWidth(100);
-
-		Image pokemonImage11 = new Image(getClass().getResourceAsStream("/res/gator.png"));
-		ImageView imageView11 = new ImageView(pokemonImage11);
-		pokemon11.setGraphic(imageView11);
-		imageView11.setFitHeight(90);
-		imageView11.setFitWidth(100);
-
-		Image pokemonImage12 = new Image(getClass().getResourceAsStream("/res/empoleon.png"));
-		ImageView imageView12 = new ImageView(pokemonImage12);
-		pokemon12.setGraphic(imageView12);
-		imageView12.setFitHeight(90);
-		imageView12.setFitWidth(100);
-
-		GridPane gridPane = new GridPane();
-
-		GridPane.setConstraints(battle, 2, 4, 2, 2);
-
-		GridPane.setRowIndex(pokemon1, 0);
-		GridPane.setColumnIndex(pokemon1, 0);
-
-		GridPane.setRowIndex(pokemon2, 1);
-		GridPane.setColumnIndex(pokemon2, 0);
-
-		GridPane.setRowIndex(pokemon3, 2);
-		GridPane.setColumnIndex(pokemon3, 0);
-
-		GridPane.setRowIndex(pokemon4, 3);
-		GridPane.setColumnIndex(pokemon4, 0);
-
-		GridPane.setRowIndex(pokemon5, 4);
-		GridPane.setColumnIndex(pokemon5, 0);
-
-		GridPane.setRowIndex(pokemon6, 5);
-		GridPane.setColumnIndex(pokemon6, 0);
-
-		GridPane.setRowIndex(pokemon7, 0);
-		GridPane.setColumnIndex(pokemon7, 1);
-
-		GridPane.setRowIndex(pokemon8, 1);
-		GridPane.setColumnIndex(pokemon8, 1);
-
-		GridPane.setRowIndex(pokemon9, 2);
-		GridPane.setColumnIndex(pokemon9, 1);
-
-		GridPane.setRowIndex(pokemon10, 3);
-		GridPane.setColumnIndex(pokemon10, 1);
-
-		GridPane.setRowIndex(pokemon11, 4);
-		GridPane.setColumnIndex(pokemon11, 1);
-
-		GridPane.setRowIndex(pokemon12, 5);
-		GridPane.setColumnIndex(pokemon12, 1);
-
-		GridPane.setRowIndex(clear, 1);
-		GridPane.setColumnIndex(clear, 3);
-
-		gridPane.getChildren().addAll(pokemon1, pokemon2, pokemon3, pokemon4, pokemon5, pokemon6, pokemon7, pokemon8,
-				pokemon9, pokemon10, pokemon11, pokemon12, battle, clear);
-
-		Scene scene = new Scene(gridPane, 700, 700);
-		theStage.setScene(scene);
-		theStage.setTitle("Pokemon Selector");
-		theStage.show();
-	}
-
+	public void selectScreen(Stage theStage){
+	    	/*
+        	 * 1 = Venasaur
+        	 * 2 = Blastoise
+        	 * 3 = Charizard
+        	 * 4 = Feraligatr
+        	 * 5 = Meganium
+        	 * 6 = Typhlosion
+        	 * 7 = Sceptile
+        	 * 8 = Blaziken
+        	 * 9 = Swampert
+        	 * 10 = Empoleon
+        	 * 11 = Torterra
+        	 * 12 = Infernape*/
+        	String[] buttonIds = {"1", "2", "3", "4",
+					"5", "6", "7", "8",
+					"9", "10", "11", "12"};
+        	
+        	
+			InnerShadow shadow = new InnerShadow();
+
+			Button pokemon1 = new Button();
+			pokemon1.setShape(new Polygon(new Hexagon(100d).getPoints()));
+			pokemon1.setMinSize(100, 90);
+			pokemon1.setId(buttonIds[0]);
+			pokemon1.setOnMouseClicked(new EventHandler<MouseEvent>() {
+				 
+	            public void handle(MouseEvent event) {
+	            	pokemon1.setEffect(shadow);
+	            	selectionList[globalCounter] = Integer.parseInt(pokemon1.getId());
+	            	globalCounter++;
+	            }
+	            	
+	           	});
+
+			Button pokemon2 = new Button();
+			pokemon2.setShape(new Polygon(new Hexagon(100d).getPoints()));
+			pokemon2.setMinSize(100, 90);
+			pokemon2.setId(buttonIds[6]);
+			pokemon2.setOnMouseClicked(new EventHandler<MouseEvent>() {
+				 
+	            public void handle(MouseEvent event) {
+	            	pokemon2.setEffect(shadow);
+	            	selectionList[globalCounter] = Integer.parseInt(pokemon2.getId());
+	            	globalCounter++;
+	            }
+	            	
+	           	});
+			
+			Button pokemon3 = new Button();
+			pokemon3.setShape(new Polygon(new Hexagon(100d).getPoints()));
+			pokemon3.setMinSize(100, 90);
+			pokemon3.setId(buttonIds[2]);
+			pokemon3.setOnMouseClicked(new EventHandler<MouseEvent>() {
+				 
+	            public void handle(MouseEvent event) {
+	            	pokemon3.setEffect(shadow);
+	            	selectionList[globalCounter] = Integer.parseInt(pokemon3.getId());
+	            	globalCounter++;
+	            }
+	            	
+	           	});
+			
+			Button pokemon4 = new Button();
+			pokemon4.setShape(new Polygon(new Hexagon(100d).getPoints()));
+			pokemon4.setMinSize(100, 90);
+			pokemon4.setId(buttonIds[7]);
+			pokemon4.setOnMouseClicked(new EventHandler<MouseEvent>() {
+				 
+	            public void handle(MouseEvent event) {
+	            	pokemon4.setEffect(shadow);
+	            	selectionList[globalCounter] = Integer.parseInt(pokemon4.getId());
+	            	globalCounter++;
+	            }
+	            	
+	           	});
+
+			Button pokemon5 = new Button();
+			pokemon5.setShape(new Polygon(new Hexagon(100d).getPoints()));
+			pokemon5.setMinSize(100, 90);
+			pokemon5.setId(buttonIds[1]);
+			pokemon5.setOnMouseClicked(new EventHandler<MouseEvent>() {
+				 
+	            public void handle(MouseEvent event) {
+	            	pokemon5.setEffect(shadow);
+	            	selectionList[globalCounter] = Integer.parseInt(pokemon5.getId());
+	            	globalCounter++;
+	            }
+	            	
+	           	});
+			
+			Button pokemon6 = new Button();
+			pokemon6.setShape(new Polygon(new Hexagon(100d).getPoints()));
+			pokemon6.setMinSize(100, 90);
+			pokemon6.setId(buttonIds[8]);
+			pokemon6.setOnMouseClicked(new EventHandler<MouseEvent>() {
+				 
+	            public void handle(MouseEvent event) {
+	            	pokemon6.setEffect(shadow);
+	            	selectionList[globalCounter] = Integer.parseInt(pokemon6.getId());
+	            	globalCounter++;
+	            }
+	            	
+	           	});
+			
+			Button pokemon7 = new Button();
+			pokemon7.setShape(new Polygon(new Hexagon(100d).getPoints()));
+			pokemon7.setMinSize(100, 90);
+			pokemon7.setId(buttonIds[4]);
+			pokemon7.setOnMouseClicked(new EventHandler<MouseEvent>() {
+				 
+	            public void handle(MouseEvent event) {
+	            	pokemon7.setEffect(shadow);
+	            	selectionList[globalCounter] = Integer.parseInt(pokemon7.getId());
+	            	globalCounter++;
+	            }
+	            	
+	           	});
+			
+			Button pokemon8 = new Button();
+			pokemon8.setShape(new Polygon(new Hexagon(100d).getPoints()));
+			pokemon8.setMinSize(100, 90);
+			pokemon8.setId(buttonIds[10]);
+			pokemon8.setOnMouseClicked(new EventHandler<MouseEvent>() {
+				 
+	            public void handle(MouseEvent event) {
+	            	pokemon8.setEffect(shadow);
+	            	selectionList[globalCounter] = Integer.parseInt(pokemon8.getId());
+	            	globalCounter++;
+	            }
+	            	
+	           	});
+			
+			Button pokemon9 = new Button();
+			pokemon9.setShape(new Polygon(new Hexagon(100d).getPoints()));
+			pokemon9.setMinSize(100, 90);
+			pokemon9.setId(buttonIds[5]);
+			pokemon9.setOnMouseClicked(new EventHandler<MouseEvent>() {
+				 
+	            public void handle(MouseEvent event) {
+	            	pokemon9.setEffect(shadow);
+	            	selectionList[globalCounter] = Integer.parseInt(pokemon9.getId());
+	            	globalCounter++;
+	            }
+	            	
+	           	});
+
+			Button pokemon10 = new Button();
+			pokemon10.setShape(new Polygon(new Hexagon(100d).getPoints()));
+			pokemon10.setMinSize(100, 90);
+			pokemon10.setId(buttonIds[11]);
+			pokemon10.setOnMouseClicked(new EventHandler<MouseEvent>() {
+				 
+	            public void handle(MouseEvent event) {
+	            	pokemon10.setEffect(shadow);
+	            	selectionList[globalCounter] = Integer.parseInt(pokemon10.getId());
+	            	globalCounter++;
+	            }
+	            	
+	           	});
+			
+			Button pokemon11 = new Button();
+			pokemon11.setShape(new Polygon(new Hexagon(100d).getPoints()));
+			pokemon11.setMinSize(100, 90);
+			pokemon11.setId(buttonIds[3]);
+			pokemon11.setOnMouseClicked(new EventHandler<MouseEvent>() {
+				 
+	            public void handle(MouseEvent event) {
+	            	pokemon11.setEffect(shadow);
+	            	selectionList[globalCounter] = Integer.parseInt(pokemon11.getId());
+	            	globalCounter++;
+	            }
+	            	
+	           	});
+			
+			Button pokemon12 = new Button();
+			pokemon12.setShape(new Polygon(new Hexagon(100d).getPoints()));
+			pokemon12.setMinSize(100, 90);
+			pokemon12.setId(buttonIds[9]);
+			pokemon12.setOnMouseClicked(new EventHandler<MouseEvent>() {
+				 
+	            public void handle(MouseEvent event) {
+	            	pokemon12.setEffect(shadow);
+	            	selectionList[globalCounter] = Integer.parseInt(pokemon12.getId());
+	            	globalCounter++;
+	            }
+	            	
+	           	});
+			
+			Button battle = new Button("BATTLE!");
+			battle.setMinSize(500, 180);
+			battle.setOnMouseClicked(new EventHandler<MouseEvent>() {
+				 
+	            public void handle(MouseEvent event) {
+	            	System.out.println(selectionList[0]);
+	            	System.out.println(selectionList[1]);
+	            	System.out.println(selectionList[2]);
+	            	System.out.println(selectionList[3]);
+	            	System.out.println(selectionList[4]);
+	            	System.out.println(selectionList[5]);
+	            	
+	            	battleUi(theStage);
+	            }
+	            	
+	           	});
+			
+			Button clear = new Button("CLEAR");
+			clear.setMinSize(500, 180);
+			clear.setOnMouseClicked(new EventHandler<MouseEvent>() {
+				 
+	            public void handle(MouseEvent event) {
+	            	for(int i = 0; i < selectionList.length; i++){
+	            		selectionList[i] = 0;
+	            	}
+	            	globalCounter = 0;
+	            	
+	            	pokemon1.setEffect(null);
+	            	pokemon2.setEffect(null);
+	            	pokemon3.setEffect(null);
+	            	pokemon4.setEffect(null);
+	            	pokemon5.setEffect(null);
+	            	pokemon6.setEffect(null);
+	            	pokemon7.setEffect(null);
+	            	pokemon8.setEffect(null);
+	            	pokemon9.setEffect(null);
+	            	pokemon10.setEffect(null);
+	            	pokemon11.setEffect(null);
+	            	pokemon12.setEffect(null);
+	            }
+	            	
+	           	});
+			
+			Image pokemonImage1 = new Image(getClass().getResourceAsStream("/res/venasaur.png"));
+			ImageView imageView1 = new ImageView(pokemonImage1);
+			pokemon1.setGraphic(imageView1);
+			imageView1.setFitHeight(90);
+			imageView1.setFitWidth(100);
+			
+			Image pokemonImage2 = new Image(getClass().getResourceAsStream("/res/sceptile.png"));
+			ImageView imageView2 = new ImageView(pokemonImage2);
+			pokemon2.setGraphic(imageView2);
+			imageView2.setFitHeight(90);
+			imageView2.setFitWidth(100);
+
+			Image pokemonImage3 = new Image(getClass().getResourceAsStream("/res/charizard.png"));
+			ImageView imageView3 = new ImageView(pokemonImage3);
+			pokemon3.setGraphic(imageView3);
+			imageView3.setFitHeight(90);
+			imageView3.setFitWidth(100);
+			
+			Image pokemonImage4 = new Image(getClass().getResourceAsStream("/res/blaziken.png"));
+			ImageView imageView4 = new ImageView(pokemonImage4);
+			pokemon4.setGraphic(imageView4);
+			imageView4.setFitHeight(90);
+			imageView4.setFitWidth(100);
+			
+			Image pokemonImage5 = new Image(getClass().getResourceAsStream("/res/blastoise.png"));
+			ImageView imageView5 = new ImageView(pokemonImage5);
+			pokemon5.setGraphic(imageView5);
+			imageView5.setFitHeight(90);
+			imageView5.setFitWidth(100);
+			
+			Image pokemonImage6 = new Image(getClass().getResourceAsStream("/res/swampert.png"));
+			ImageView imageView6 = new ImageView(pokemonImage6);
+			pokemon6.setGraphic(imageView6);
+			imageView6.setFitHeight(90);
+			imageView6.setFitWidth(100);
+
+			Image pokemonImage7 = new Image(getClass().getResourceAsStream("/res/meganium.png"));
+			ImageView imageView7 = new ImageView(pokemonImage7);
+			pokemon7.setGraphic(imageView7);
+			imageView7.setFitHeight(90);
+			imageView7.setFitWidth(100);
+			
+			Image pokemonImage8 = new Image(getClass().getResourceAsStream("/res/torterra.png"));
+			ImageView imageView8 = new ImageView(pokemonImage8);
+			pokemon8.setGraphic(imageView8);
+			imageView8.setFitHeight(90);
+			imageView8.setFitWidth(100);
+			
+			Image pokemonImage9 = new Image(getClass().getResourceAsStream("/res/typhlosion.png"));
+			ImageView imageView9 = new ImageView(pokemonImage9);
+			pokemon9.setGraphic(imageView9);
+			imageView9.setFitHeight(90);
+			imageView9.setFitWidth(100);
+			
+			Image pokemonImage10 = new Image(getClass().getResourceAsStream("/res/infernape.png"));
+			ImageView imageView10 = new ImageView(pokemonImage10);
+			pokemon10.setGraphic(imageView10);
+			imageView10.setFitHeight(90);
+			imageView10.setFitWidth(100);
+
+			Image pokemonImage11 = new Image(getClass().getResourceAsStream("/res/gator.png"));
+			ImageView imageView11 = new ImageView(pokemonImage11);
+			pokemon11.setGraphic(imageView11);
+			imageView11.setFitHeight(90);
+			imageView11.setFitWidth(100);
+			
+			Image pokemonImage12 = new Image(getClass().getResourceAsStream("/res/empoleon.png"));
+			ImageView imageView12 = new ImageView(pokemonImage12);
+			pokemon12.setGraphic(imageView12);
+			imageView12.setFitHeight(90);
+			imageView12.setFitWidth(100);
+		    
+		    GridPane gridPane = new GridPane();
+		    
+		    GridPane.setConstraints(battle, 2, 4, 2, 2);
+		    GridPane.setConstraints(clear, 2, 0, 1, 2);
+		    
+		    GridPane.setRowIndex(pokemon1, 0);
+		    GridPane.setColumnIndex(pokemon1, 0);
+		    
+		    GridPane.setRowIndex(pokemon2, 1);
+		    GridPane.setColumnIndex(pokemon2, 0);
+		    
+		    GridPane.setRowIndex(pokemon3, 2);
+		    GridPane.setColumnIndex(pokemon3, 0);
+		    
+		    GridPane.setRowIndex(pokemon4, 3);
+		    GridPane.setColumnIndex(pokemon4, 0);
+		    
+		    GridPane.setRowIndex(pokemon5, 4);
+		    GridPane.setColumnIndex(pokemon5, 0);
+		    
+		    GridPane.setRowIndex(pokemon6, 5);
+		    GridPane.setColumnIndex(pokemon6, 0);
+		    
+		    GridPane.setRowIndex(pokemon7, 0);
+		    GridPane.setColumnIndex(pokemon7, 1);
+		    
+		    GridPane.setRowIndex(pokemon8, 1);
+		    GridPane.setColumnIndex(pokemon8, 1);
+
+		    GridPane.setRowIndex(pokemon9, 2);
+		    GridPane.setColumnIndex(pokemon9, 1);
+		    
+		    GridPane.setRowIndex(pokemon10, 3);
+		    GridPane.setColumnIndex(pokemon10, 1);
+		    
+		    GridPane.setRowIndex(pokemon11, 4);
+		    GridPane.setColumnIndex(pokemon11, 1);
+		    
+		    GridPane.setRowIndex(pokemon12, 5);
+		    GridPane.setColumnIndex(pokemon12, 1);
+    
+		    GridPane.setRowIndex(clear, 1);
+		    GridPane.setColumnIndex(clear, 3);
+		    
+		    gridPane.getChildren().addAll(pokemon1, pokemon2, pokemon3, 
+		    		pokemon4, pokemon5, pokemon6, pokemon7, pokemon8, pokemon9, 
+		    		pokemon10, pokemon11, pokemon12, battle, clear);
+		
+		    Scene scene = new Scene(gridPane);
+		    theStage.setScene(scene);
+		    theStage.setTitle("Pokemon Selector");
+		    theStage.show();
+	    }
 	// not mvc bc lazy/testing, will change
 	public void intro(Stage primaryStage) {
 		final AnchorPane root = new AnchorPane();
