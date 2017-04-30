@@ -28,6 +28,8 @@ import model.Model;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
@@ -73,7 +75,7 @@ public class Main extends Application implements Listener {
 
 	Stage theStage;
 
-	int[] selectionList = new int[7];
+	int[] selectionList = new int[6];
 	int globalCounter = 0;
 
 	private final String buttonStyle = "-fx-background-color: linear-gradient(#686868 0%, #232723 25%, #373837 75%, #757575 100%), "
@@ -131,7 +133,7 @@ public class Main extends Application implements Listener {
 	private Label rivalPkmnNameLabel = new Label("Blastoise");
 
 	private Label userHpFractionLabel = new Label("100/100");
-	private final Label rivalHpFractionLabel = new Label("100/100");
+	private Label rivalHpFractionLabel = new Label("100/100");
 
 	private Label currentStateLabel = new Label("What will Sceptile do?");
 
@@ -530,10 +532,19 @@ public class Main extends Application implements Listener {
 		battle.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
 			public void handle(MouseEvent event) {
-				ge.playerInit(name, selectionList);
-				mediaPlayer.stop();
-				playMusic(1);
-				battleUi(theStage);
+				if (globalCounter >= 6) {
+					ge.playerInit(name, selectionList);
+					mediaPlayer.stop();
+					playMusic(1);
+					battleUi(theStage);
+				} else {
+					Alert alert = new Alert(AlertType.ERROR);
+					alert.setTitle("Error!");
+					alert.setHeaderText("Not enough Pokemon to battle with!");
+					alert.setContentText("You must select 6 Pokemon!");
+
+					alert.showAndWait();
+				}
 			}
 
 		});
@@ -1003,12 +1014,17 @@ public class Main extends Application implements Listener {
 		this.userPkmn = new Image(getClass().getResourceAsStream("/res/" + ge.getP1Pokemon().getID() + "back.png"));
 		this.userPkmnImageView = new ImageView(userPkmn);
 		this.userPkmnNameLabel = new Label(ge.getP1Pokemon().getName());
-		this.userHpFractionLabel = new Label(ge.getP1Pokemon().getHp() + " \\ "  + ge.getP1Pokemon().getHp());
-		this.currentStateLabel = new Label("What will "+ ge.getP1Pokemon().getName() +" do?");
+		this.userHpFractionLabel = new Label(ge.getP1Pokemon().getHp() + " \\ " + ge.getP1Pokemon().getHp());
+		this.currentStateLabel = new Label("What will " + ge.getP1Pokemon().getName() + " do?");
 		this.move1Button = new Button(ge.getP1Pokemon().getMoves().get(0).getName());
 		this.move2Button = new Button(ge.getP1Pokemon().getMoves().get(1).getName());
 		this.move3Button = new Button(ge.getP1Pokemon().getMoves().get(2).getName());
 		this.move4Button = new Button(ge.getP1Pokemon().getMoves().get(3).getName());
+		System.out.println("/res/"+  ge.getAIPokemon().getID() +"front.png");
+		this.rivalPkmn = new Image(getClass().getResourceAsStream("/res/"+  ge.getAIPokemon().getID() +"front.png"));
+		this.rivalPkmnImageView = new ImageView(rivalPkmn);
+		this.rivalPkmnNameLabel = new Label(ge.getAIPokemon().getName());
+		this.rivalHpFractionLabel = new Label(ge.getAIPokemon().getHp() + " \\ " + ge.getAIPokemon().getHp());
 
 		userPkmnImageView.setFitHeight(300);
 		userPkmnImageView.setFitWidth(300);

@@ -17,7 +17,6 @@ private final Model model;
 		String eString = e.getSource().toString();
 		if (eString.contains("Button")){
 			String eSub = eString.substring(eString.indexOf("'",0)+1, eString.lastIndexOf("'",eString.length()));
-			
 			switch (eSub){
 			case "Switch Pkmn":
 				System.out.println("switch pokemon");
