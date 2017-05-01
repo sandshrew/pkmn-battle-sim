@@ -528,7 +528,7 @@ public class Main extends Application implements Listener {
 		});
 
 		Button battle = new Button("BATTLE!");
-		battle.setMinSize(500, 180);
+		battle.setMinSize(200, 100);
 		battle.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
 			public void handle(MouseEvent event) {
@@ -550,9 +550,8 @@ public class Main extends Application implements Listener {
 		});
 
 		Button clear = new Button("CLEAR");
-		clear.setMinSize(500, 180);
+		clear.setMinSize(200, 100);
 		clear.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
 			public void handle(MouseEvent event) {
 				for (int i = 0; i < selectionList.length; i++) {
 					selectionList[i] = 0;
@@ -649,9 +648,6 @@ public class Main extends Application implements Listener {
 
 		GridPane gridPane = new GridPane();
 
-		GridPane.setConstraints(battle, 2, 4, 2, 2);
-		GridPane.setConstraints(clear, 2, 0, 1, 2);
-
 		GridPane.setRowIndex(pokemon1, 0);
 		GridPane.setColumnIndex(pokemon1, 0);
 
@@ -688,13 +684,28 @@ public class Main extends Application implements Listener {
 		GridPane.setRowIndex(pokemon12, 5);
 		GridPane.setColumnIndex(pokemon12, 1);
 
-		GridPane.setRowIndex(clear, 1);
-		GridPane.setColumnIndex(clear, 3);
+		HBox hbox = new HBox();
+		hbox.getChildren().addAll(clear,battle);
+		GridPane.setRowIndex(hbox, 1);
+		GridPane.setColumnIndex(hbox, 3);
+
 
 		gridPane.getChildren().addAll(pokemon1, pokemon2, pokemon3, pokemon4, pokemon5, pokemon6, pokemon7, pokemon8,
-				pokemon9, pokemon10, pokemon11, pokemon12, battle, clear);
+				pokemon9, pokemon10, pokemon11, pokemon12,hbox);
+		
 
-		Scene scene = new Scene(gridPane);
+		final AnchorPane root = new AnchorPane();
+		Image background = new Image(getClass().getResourceAsStream("/res/selectWallpaper.png"));
+		ImageView backgroundIv = new ImageView(background);
+		backgroundIv.setFitHeight(700);
+		backgroundIv.setFitWidth(700);
+		root.getChildren().add(backgroundIv);
+		
+		root.getChildren().add(gridPane);
+
+		
+		
+		Scene scene = new Scene(root,700,700);
 		theStage.setScene(scene);
 		theStage.setTitle("Pokemon Selector");
 		theStage.show();
