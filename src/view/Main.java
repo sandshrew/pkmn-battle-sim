@@ -93,6 +93,7 @@ public class Main extends Application implements Listener {
 	private ProgressBar rivalHealthbar = new ProgressBar();
 
 	private Button pkmnButton = new Button("Switch Pkmn");
+	private Button forfeitButton = new Button("Forfeit");
 
 	private Button move1Button = new Button("move1");
 	private Button move2Button = new Button("move2");
@@ -685,14 +686,12 @@ public class Main extends Application implements Listener {
 		GridPane.setColumnIndex(pokemon12, 1);
 
 		HBox hbox = new HBox();
-		hbox.getChildren().addAll(clear,battle);
+		hbox.getChildren().addAll(clear, battle);
 		GridPane.setRowIndex(hbox, 1);
 		GridPane.setColumnIndex(hbox, 3);
 
-
 		gridPane.getChildren().addAll(pokemon1, pokemon2, pokemon3, pokemon4, pokemon5, pokemon6, pokemon7, pokemon8,
-				pokemon9, pokemon10, pokemon11, pokemon12,hbox);
-		
+				pokemon9, pokemon10, pokemon11, pokemon12, hbox);
 
 		final AnchorPane root = new AnchorPane();
 		Image background = new Image(getClass().getResourceAsStream("/res/selectWallpaper.png"));
@@ -700,12 +699,10 @@ public class Main extends Application implements Listener {
 		backgroundIv.setFitHeight(700);
 		backgroundIv.setFitWidth(700);
 		root.getChildren().add(backgroundIv);
-		
+
 		root.getChildren().add(gridPane);
 
-		
-		
-		Scene scene = new Scene(root,700,700);
+		Scene scene = new Scene(root, 700, 700);
 		theStage.setScene(scene);
 		theStage.setTitle("Pokemon Selector");
 		theStage.show();
@@ -1031,8 +1028,8 @@ public class Main extends Application implements Listener {
 		this.move2Button = new Button(ge.getP1Pokemon().getMoves().get(1).getName());
 		this.move3Button = new Button(ge.getP1Pokemon().getMoves().get(2).getName());
 		this.move4Button = new Button(ge.getP1Pokemon().getMoves().get(3).getName());
-		System.out.println("/res/"+  ge.getAIPokemon().getID() +"front.png");
-		this.rivalPkmn = new Image(getClass().getResourceAsStream("/res/"+  ge.getAIPokemon().getID() +"front.png"));
+		System.out.println("/res/" + ge.getAIPokemon().getID() + "front.png");
+		this.rivalPkmn = new Image(getClass().getResourceAsStream("/res/" + ge.getAIPokemon().getID() + "front.png"));
 		this.rivalPkmnImageView = new ImageView(rivalPkmn);
 		this.rivalPkmnNameLabel = new Label(ge.getAIPokemon().getName());
 		this.rivalHpFractionLabel = new Label(ge.getAIPokemon().getHp() + " \\ " + ge.getAIPokemon().getHp());
@@ -1109,10 +1106,17 @@ public class Main extends Application implements Listener {
 
 		pkmnButton.setLayoutX(400);
 		pkmnButton.setLayoutY(650);
-		pkmnButton.setPrefWidth(300);
+		pkmnButton.setPrefWidth(150);
 		pkmnButton.setPrefHeight(50);
 		pkmnButton.setStyle(buttonStyle);
 		pkmnButton.setOnMouseClicked(controller);
+
+		forfeitButton.setLayoutX(550);
+		forfeitButton.setLayoutY(650);
+		forfeitButton.setPrefWidth(150);
+		forfeitButton.setPrefHeight(50);
+		forfeitButton.setStyle(buttonStyle);
+		forfeitButton.setOnMouseClicked(controller);
 
 		move1Button.setLayoutX(400);
 		move1Button.setLayoutY(550);
@@ -1291,6 +1295,7 @@ public class Main extends Application implements Listener {
 		root.getChildren().add(move3Button);
 		root.getChildren().add(move4Button);
 		root.getChildren().add(pkmnButton);
+		root.getChildren().add(forfeitButton);
 
 		root.getChildren().add(firstRivalPokeballImageView);
 		root.getChildren().add(secondRivalPokeballImageView);
