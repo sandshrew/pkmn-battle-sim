@@ -6,6 +6,8 @@ import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 
+import com.sun.javafx.PlatformUtil;
+
 import controller.Controller;
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
@@ -85,6 +87,24 @@ public class Main extends Application implements Listener {
 			+ "linear-gradient(#9d9e9d 0%, #6b6a6b 20%, #343534 80%, #242424 100%), "
 			+ "linear-gradient(#8a8a8a 0%, #6b6a6b 20%, #343534 80%, #262626 100%), "
 			+ "linear-gradient(#777777 0%, #606060 50%, #505250 51%, #2a2b2a 100%);"
+			+ " -fx-background-insets: 0,1,4,5,6;" + " -fx-background-radius: 9,8,5,4,3; "
+			+ " -fx-padding: 15 30 15 30; " + " -fx-font-family: \"PKMN RBYGSC\"; " + " -fx-font-size: 8px;"
+			+ " -fx-font-weight: bold;" + " -fx-text-fill: white;"
+			+ " -fx-effect: dropshadow( three-pass-box , rgba(255,255,255,0.2) , 1, 0.0 , 0 , 1);"
+			+ " -fx-effect: dropshadow( one-pass-box , black , 0, 0.0 , 0 , -1 );";
+	
+	private final String buttonStyle2 = "-fx-background-color: linear-gradient(#686868 0%, #232723 25%, #373837 75%, #757575 100%),"
+			+ "linear-gradient(#020b02, #3a3a3a), "
+			+ "linear-gradient(#ed3d3d 0%, #bf2424 25%, #8c1212 75%, #ed3d3d 100%);"
+			+ " -fx-background-insets: 0,1,4,5,6;" + " -fx-background-radius: 9,8,5,4,3; "
+			+ " -fx-padding: 15 30 15 30; " + " -fx-font-family: \"PKMN RBYGSC\"; " + " -fx-font-size: 8px;"
+			+ " -fx-font-weight: bold;" + " -fx-text-fill: white;"
+			+ " -fx-effect: dropshadow( three-pass-box , rgba(255,255,255,0.2) , 1, 0.0 , 0 , 1);"
+			+ " -fx-effect: dropshadow( one-pass-box , black , 0, 0.0 , 0 , -1 );";
+	
+	private final String buttonStyle3 = "-fx-background-color: linear-gradient(#686868 0%, #232723 25%, #373837 75%, #757575 100%),"
+			+ "linear-gradient(#020b02, #3a3a3a), "
+			+ "linear-gradient(#82d11b 0%, #63a013 25%, #4a770e 75%, #58871b 100%);"
 			+ " -fx-background-insets: 0,1,4,5,6;" + " -fx-background-radius: 9,8,5,4,3; "
 			+ " -fx-padding: 15 30 15 30; " + " -fx-font-family: \"PKMN RBYGSC\"; " + " -fx-font-size: 8px;"
 			+ " -fx-font-weight: bold;" + " -fx-text-fill: white;"
@@ -298,7 +318,8 @@ public class Main extends Application implements Listener {
 
 			public void handle(MouseEvent event) {
 
-				selectScreen(theStage);
+				//selectScreen(theStage);
+				Platform.exit();
 			}
 
 		});
@@ -1597,6 +1618,13 @@ public class Main extends Application implements Listener {
 		this.move4Button.setText("" + this.ge.getP1Pokemon().getMoves().get(3).getName());
 		this.pkmnButton.setText("Switch Pkmn");
 		this.forfeitButton.setText("Forfeit");
+		
+		this.move1Button.setStyle(buttonStyle);
+		this.move2Button.setStyle(buttonStyle);
+		this.move3Button.setStyle(buttonStyle);
+		this.move4Button.setStyle(buttonStyle);
+		this.pkmnButton.setStyle(buttonStyle);
+		this.forfeitButton.setStyle(buttonStyle);
 
 	}
 
@@ -1642,6 +1670,13 @@ public class Main extends Application implements Listener {
 			this.move4Button.setText(this.ge.availablePoke.get(3));
 			this.pkmnButton.setText(this.ge.availablePoke.get(4));
 			this.forfeitButton.setText("Cancel");
+
+			this.move1Button.setStyle(buttonStyle3);
+			this.move2Button.setStyle(buttonStyle3);
+			this.move3Button.setStyle(buttonStyle3);
+			this.move4Button.setStyle(buttonStyle3);
+			this.pkmnButton.setStyle(buttonStyle3);
+			this.forfeitButton.setStyle(buttonStyle2);
 		} catch (Exception e) {
 
 		}
@@ -1656,7 +1691,7 @@ public class Main extends Application implements Listener {
 			sixthRivalPokeballImageView.setImage(faintedPokeball);
 		} else {
 			userPkmnImageView.setImage(null);
-			updated();
+			//updated();
 		}
 		this.mediaPlayer.stop();
 		playMusic(2);
@@ -1666,6 +1701,13 @@ public class Main extends Application implements Listener {
 		this.move4Button.setText("Main Menu");
 		this.pkmnButton.setText("Quit");
 		this.forfeitButton.setText("Quit");
+		
+		this.move1Button.setStyle(buttonStyle3);
+		this.move2Button.setStyle(buttonStyle3);
+		this.move3Button.setStyle(buttonStyle3);
+		this.move4Button.setStyle(buttonStyle3);
+		this.pkmnButton.setStyle(buttonStyle2);
+		this.forfeitButton.setStyle(buttonStyle2);
 	}
 	
 	@Override
@@ -1677,6 +1719,8 @@ public class Main extends Application implements Listener {
 	@Override
 	public void returnMain(){
 		alreadyPlayed = true;
+		this.mediaPlayer.stop();
+		playMusic(0);
 		theStage.setScene(mainScene);
 		
 	}
