@@ -64,11 +64,12 @@ public class GameEngine {
 
 	/* SET NAMES // AND INIT PARTIES?! */
 	public void playerInit(String name, int[] party) {
-//		int[] aiTest = new int[6];
-//		for (int i = 0; i < 6; i++) {
-//			aiTest[i] = ThreadLocalRandom.current().nextInt(1, 12 + 1);
-//		}
-		int[] aiTest = {1,1,1,1,1,1};
+		int[] aiTest = new int[6];
+		for (int i = 0; i < 6; i++) {
+			aiTest[i] = ThreadLocalRandom.current().nextInt(1, 12 + 1);
+		}
+		//int[] aiTest = {1,1,1,1,1,1};
+		
 		this.ai = new Player("Red", selectPokemon(aiTest));
 		this.ai.setPlayerId("AI");
 		this.p1 = new Player(name, selectPokemon(party));

@@ -6,6 +6,8 @@ import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 
+import com.sun.javafx.PlatformUtil;
+
 import controller.Controller;
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
@@ -316,7 +318,8 @@ public class Main extends Application implements Listener {
 
 			public void handle(MouseEvent event) {
 
-				selectScreen(theStage);
+				//selectScreen(theStage);
+				Platform.exit();
 			}
 
 		});
@@ -1688,7 +1691,7 @@ public class Main extends Application implements Listener {
 			sixthRivalPokeballImageView.setImage(faintedPokeball);
 		} else {
 			userPkmnImageView.setImage(null);
-			updated();
+			//updated();
 		}
 		this.mediaPlayer.stop();
 		playMusic(2);
@@ -1716,6 +1719,8 @@ public class Main extends Application implements Listener {
 	@Override
 	public void returnMain(){
 		alreadyPlayed = true;
+		this.mediaPlayer.stop();
+		playMusic(0);
 		theStage.setScene(mainScene);
 		
 	}
