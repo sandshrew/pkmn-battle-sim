@@ -261,11 +261,14 @@ public class Main extends Application implements Listener {
 
 	private void playMusic(int track) {
 		try {
-			String filePath = "file:/" + System.getProperty("user.dir") + "/src/res/pokemonopening.mp3";
+			
+
+			String filePath = getClass().getResource("/res/pokemonopening.mp3").toString();
 			if (track == 1) {
-				filePath = "file:/" + System.getProperty("user.dir") + "/src/res/battle.mp3";
+				filePath = getClass().getResource("/res/battle.mp3").toString();
 			} else if (track == 2){
 				filePath = "file:/" + System.getProperty("user.dir") + "/src/res/victory.mp3";
+				filePath = getClass().getResource("/res/victory.mp3").toString();
 			}
 			Media videoFile = new Media(filePath.replace('\\', '/'));
 			mediaPlayer = new MediaPlayer(videoFile);
