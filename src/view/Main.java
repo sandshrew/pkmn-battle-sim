@@ -1,6 +1,7 @@
 package view;
 
 import model.GameEngine;
+
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
@@ -33,6 +34,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.InnerShadow;
@@ -137,9 +139,14 @@ public class Main extends Application implements Listener {
 	private Label rivalHpFractionLabel = new Label("100/100");
 
 	private Label currentStateLabel = new Label("What will Sceptile do?");
+	private ScrollPane scrollPane = new ScrollPane();
 
 	private static final int WIDTH = 1280;
 	private static final int HEIGHT = 720;
+	
+	private boolean alreadyPlayed = false;
+	
+	private Scene mainScene;
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -148,9 +155,9 @@ public class Main extends Application implements Listener {
 
 			theStage = primaryStage;
 
-			Scene scene = new Scene(createContent());
+			mainScene = new Scene(createContent());
 			primaryStage.setTitle("Pokemon Battle Sim Menu");
-			primaryStage.setScene(scene);
+			primaryStage.setScene(mainScene);
 			primaryStage.show();
 			playMusic(0);
 
@@ -235,8 +242,10 @@ public class Main extends Application implements Listener {
 	private void playMusic(int track) {
 		try {
 			String filePath = "file:/" + System.getProperty("user.dir") + "/src/res/pokemonopening.mp3";
-			if (track != 0) {
+			if (track == 1) {
 				filePath = "file:/" + System.getProperty("user.dir") + "/src/res/battle.mp3";
+			} else if (track == 2){
+				filePath = "file:/" + System.getProperty("user.dir") + "/src/res/victory.mp3";
 			}
 			Media videoFile = new Media(filePath.replace('\\', '/'));
 			mediaPlayer = new MediaPlayer(videoFile);
@@ -271,7 +280,11 @@ public class Main extends Application implements Listener {
 		item1.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
 			public void handle(MouseEvent event) {
-				intro(theStage);
+				if(!alreadyPlayed){
+					intro(theStage);
+				} else {
+					selectScreen(theStage);
+				}
 			}
 
 		});
@@ -708,6 +721,26 @@ public class Main extends Application implements Listener {
 		theStage.setScene(scene);
 		theStage.setTitle("Pokemon Selector");
 		theStage.show();
+		
+		if(alreadyPlayed){
+			for (int i = 0; i < selectionList.length; i++) {
+				selectionList[i] = 0;
+			}
+			globalCounter = 0;
+
+			pokemon1.setEffect(null);
+			pokemon2.setEffect(null);
+			pokemon3.setEffect(null);
+			pokemon4.setEffect(null);
+			pokemon5.setEffect(null);
+			pokemon6.setEffect(null);
+			pokemon7.setEffect(null);
+			pokemon8.setEffect(null);
+			pokemon9.setEffect(null);
+			pokemon10.setEffect(null);
+			pokemon11.setEffect(null);
+			pokemon12.setEffect(null);
+		}
 	}
 
 	// not mvc bc lazy/testing, will change
@@ -1027,10 +1060,8 @@ public class Main extends Application implements Listener {
 
 			@Override
 			public void handle(MouseEvent event) {
-				if (textBoxIndex >= 0 && (ge.outputStrings != null)) {
-					textBoxIndex = textBoxIndex + 2;
-					updateStateText();
-				}
+
+				updateStateText();
 			}
 		});
 
@@ -1254,15 +1285,26 @@ public class Main extends Application implements Listener {
 		userHpFractionLabel.setLayoutY(425);
 		userHpFractionLabel.setFont(Font.font("PKMN RBYGSC", 12));
 
-		rivalHpFractionLabel.setMaxSize(400, 100);
+		rivalHpFractionLabel.setMaxSize(400, 120);
 		rivalHpFractionLabel.setLayoutX(45);
 		rivalHpFractionLabel.setLayoutY(85);
 		rivalHpFractionLabel.setFont(Font.font("PKMN RBYGSC", 12));
 
 		currentStateLabel.setWrapText(true);
-		currentStateLabel.setMaxSize(335, 85);
-		currentStateLabel.setLayoutX(18);
-		currentStateLabel.setLayoutY(595);
+		currentStateLabel.setPrefWidth(350);
+
+//		currentStateLabel.setMaxSize(335, 100);
+//		currentStateLabel.setLayoutX(18);
+//		currentStateLabel.setLayoutY(590);
+		
+		scrollPane.setContent(currentStateLabel);
+		scrollPane.setFitToWidth(true);
+		scrollPane.setMaxSize(350, 95);
+		scrollPane.setPrefHeight(95);
+		scrollPane.setLayoutX(15);
+		scrollPane.setLayoutY(590);
+
+	
 		currentStateLabel.setFont(Font.font("PKMN RBYGSC", 12));
 
 		// Add background first
@@ -1296,7 +1338,8 @@ public class Main extends Application implements Listener {
 		root.getChildren().add(rivalHpFractionLabel);
 
 		// current state
-		root.getChildren().add(currentStateLabel);
+		//root.getChildren().add(currentStateLabel);
+		root.getChildren().add(scrollPane);
 
 		// root.getChildren().add(firstPkmnButton);
 		// root.getChildren().add(secondPkmnButton);
@@ -1330,6 +1373,7 @@ public class Main extends Application implements Listener {
 		primaryStage.setResizable(false);
 		primaryStage.setTitle("Pokemon");
 		primaryStage.show();
+		updated();
 
 	}
 
@@ -1346,15 +1390,17 @@ public class Main extends Application implements Listener {
 	}
 
 	private void updatePkmnNames() {
-		// userPkmnNameLabel.setText(model.getCurrentUserPkmnName());
-		// rivalPkmnNameLabel.setText(model.getCurrentRivalPkmnName());
+		userPkmnNameLabel.setText(this.ge.getP1Pokemon().getName());
+		rivalPkmnNameLabel.setText(this.ge.getAIPokemon().getName());
+
 	}
 
 	private void updatePkmnImages() {
-		// userPkmnImageView.setImage(new
-		// Image(getClass().getResourceAsStream("/res/"+model.getUserPokemonId()+"back.png")));
-		// rivalPkmnImageView.setImage(new
-		// Image(getClass().getResourceAsStream("/res/"+model.getRivalPokemonId()+"front.png")));
+		userPkmnImageView.setImage(
+				new Image(getClass().getResourceAsStream("/res/" + this.ge.getP1Pokemon().getID() + "back.png")));
+		rivalPkmnImageView.setImage(
+				new Image(getClass().getResourceAsStream("/res/" + this.ge.getAIPokemon().getID() + "front.png")));
+
 	}
 
 	private void updatePokeballs() {
@@ -1409,56 +1455,107 @@ public class Main extends Application implements Listener {
 		// }
 		// }
 		//
-		// for (int i = 0; i < model.getRivalTeam().size(); ++i){
-		// boolean alive = true;
-		// if (!model.getRivalTeam().get(i).isAlive()){
-		// alive = false;
-		// }
-		// switch (i) {
-		// case 0:
-		// if (alive) {
-		// firstRivalPokeballImageView.setImage(alivePokeball);
-		// } else {
-		// firstRivalPokeballImageView.setImage(faintedPokeball);
-		// }
-		// break;
-		// case 1:
-		// if (alive) {
-		// secondRivalPokeballImageView.setImage(alivePokeball);
-		// } else {
-		// secondRivalPokeballImageView.setImage(faintedPokeball);
-		// }
-		// break;
-		// case 2:
-		// if (alive) {
-		// thirdRivalPokeballImageView.setImage(alivePokeball);
-		// } else {
-		// thirdRivalPokeballImageView.setImage(faintedPokeball);
-		// }
-		// break;
-		// case 3:
-		// if (alive) {
-		// fourthRivalPokeballImageView.setImage(alivePokeball);
-		// } else {
-		// fourthRivalPokeballImageView.setImage(faintedPokeball);
-		// }
-		// break;
-		// case 4:
-		// if (alive) {
-		// fifthRivalPokeballImageView.setImage(alivePokeball);
-		// } else {
-		// fifthRivalPokeballImageView.setImage(faintedPokeball);
-		// }
-		// break;
-		// case 5:
-		// if (alive) {
-		// sixthRivalPokeballImageView.setImage(alivePokeball);
-		// } else {
-		// sixthRivalPokeballImageView.setImage(faintedPokeball);
-		// }
-		// break;
-		// }
-		// }
+		for (int i = 0; i < ge.getAI().getPokeParty().size(); ++i) {
+			boolean alive = true;
+			if (ge.getAI().getPokeParty().get(i).isFainted()) {
+				alive = false;
+			}
+			switch (i) {
+			case 0:
+				if (alive) {
+					firstRivalPokeballImageView.setImage(alivePokeball);
+				} else {
+					firstRivalPokeballImageView.setImage(faintedPokeball);
+				}
+				break;
+			case 1:
+				if (alive) {
+					secondRivalPokeballImageView.setImage(alivePokeball);
+				} else {
+					secondRivalPokeballImageView.setImage(faintedPokeball);
+				}
+				break;
+			case 2:
+				if (alive) {
+					thirdRivalPokeballImageView.setImage(alivePokeball);
+				} else {
+					thirdRivalPokeballImageView.setImage(faintedPokeball);
+				}
+				break;
+			case 3:
+				if (alive) {
+					fourthRivalPokeballImageView.setImage(alivePokeball);
+				} else {
+					fourthRivalPokeballImageView.setImage(faintedPokeball);
+				}
+				break;
+			case 4:
+				if (alive) {
+					fifthRivalPokeballImageView.setImage(alivePokeball);
+				} else {
+					fifthRivalPokeballImageView.setImage(faintedPokeball);
+				}
+				break;
+			case 5:
+				if (alive) {
+					sixthRivalPokeballImageView.setImage(alivePokeball);
+				} else {
+					sixthRivalPokeballImageView.setImage(faintedPokeball);
+				}
+				break;
+			}
+		}
+		
+		for (int i = 0; i < ge.getP1().getPokeParty().size(); ++i) {
+			boolean alive = true;
+			if (ge.getP1().getPokeParty().get(i).isFainted()) {
+				alive = false;
+			}
+			switch (i) {
+			case 0:
+				if (alive) {
+					firstUserPokeballImageView.setImage(alivePokeball);
+				} else {
+					firstUserPokeballImageView.setImage(faintedPokeball);
+				}
+				break;
+			case 1:
+				if (alive) {
+					secondUserPokeballImageView.setImage(alivePokeball);
+				} else {
+					secondUserPokeballImageView.setImage(faintedPokeball);
+				}
+				break;
+			case 2:
+				if (alive) {
+					thirdUserPokeballImageView.setImage(alivePokeball);
+				} else {
+					thirdUserPokeballImageView.setImage(faintedPokeball);
+				}
+				break;
+			case 3:
+				if (alive) {
+					fourthUserPokeballImageView.setImage(alivePokeball);
+				} else {
+					fourthUserPokeballImageView.setImage(faintedPokeball);
+				}
+				break;
+			case 4:
+				if (alive) {
+					fifthUserPokeballImageView.setImage(alivePokeball);
+				} else {
+					fifthUserPokeballImageView.setImage(faintedPokeball);
+				}
+				break;
+			case 5:
+				if (alive) {
+					sixthUserPokeballImageView.setImage(alivePokeball);
+				} else {
+					sixthUserPokeballImageView.setImage(faintedPokeball);
+				}
+				break;
+			}
+		}
 	}
 
 	private void updateHealthbars() {
@@ -1491,14 +1588,16 @@ public class Main extends Application implements Listener {
 	}
 
 	private void updateStateText() {
-		System.out.println("Okay");
 	}
 
 	private void updateMoveButtons() {
-		// move1Button.setText(model.getCurrentPokemonFirstMove());
-		// move2Button.setText(model.getCurrentPokemonSecondMove());
-		// move3Button.setText(model.getCurrentPokemonThirdMove());
-		// move4Button.setText(model.getCurrentPokemonFourthMove());
+		this.move1Button.setText("" + this.ge.getP1Pokemon().getMoves().get(0).getName());
+		this.move2Button.setText("" + this.ge.getP1Pokemon().getMoves().get(1).getName());
+		this.move3Button.setText("" + this.ge.getP1Pokemon().getMoves().get(2).getName());
+		this.move4Button.setText("" + this.ge.getP1Pokemon().getMoves().get(3).getName());
+		this.pkmnButton.setText("Switch Pkmn");
+		this.forfeitButton.setText("Forfeit");
+
 	}
 
 	private void updatePkmnButtons() {
@@ -1524,23 +1623,91 @@ public class Main extends Application implements Listener {
 		StringBuilder stringBuilder = new StringBuilder();
 		for (int i = 0; i < ge.outputStrings.size(); i++) {
 			stringBuilder.append(this.ge.outputStrings.get(i) + "\n");
-			this.textBoxIndex++;
+			System.out.println(this.ge.outputStrings.get(i));
 		}
+		System.out.println();
 
 		this.currentStateLabel.setText(stringBuilder.toString());
+		scrollPane.setVvalue(1.0);   
 		this.updateHealthbars();
 		this.updateHpFractions();
+	}
+
+	@Override
+	public void switchPhase() {
+		try {
+			this.move1Button.setText(this.ge.availablePoke.get(0));
+			this.move2Button.setText(this.ge.availablePoke.get(1));
+			this.move3Button.setText(this.ge.availablePoke.get(2));
+			this.move4Button.setText(this.ge.availablePoke.get(3));
+			this.pkmnButton.setText(this.ge.availablePoke.get(4));
+			this.forfeitButton.setText("Cancel");
+		} catch (Exception e) {
+
+		}
 	}
 
 	@Override
 	public void gameOver() {
 		// TODO Auto-generated method stub
 		this.currentStateLabel.setText("Winner is " + this.ge.getWinner() + "!");
+		if (this.ge.getWinner().equals(this.ge.getP1().getPlayerName())) {
+			rivalPkmnImageView.setImage(null);
+			sixthRivalPokeballImageView.setImage(faintedPokeball);
+		} else {
+			userPkmnImageView.setImage(null);
+			updated();
+		}
+		this.mediaPlayer.stop();
+		playMusic(2);
+		this.move1Button.setText("Main Menu");
+		this.move2Button.setText("Main Menu");
+		this.move3Button.setText("Main Menu");
+		this.move4Button.setText("Main Menu");
+		this.pkmnButton.setText("Quit");
+		this.forfeitButton.setText("Quit");
+	}
+	
+	@Override
+	public void quitIt(){
+		theStage.close();
+		
+	}
+	
+	@Override
+	public void returnMain(){
+		alreadyPlayed = true;
+		theStage.setScene(mainScene);
+		
 	}
 
 	@Override
 	public void faintedPhase() {
 		// TODO Auto-generated method stub
+		StringBuilder stringBuilder = new StringBuilder();
+		for (int i = 0; i < ge.outputStrings.size(); i++) {
+			stringBuilder.append(this.ge.outputStrings.get(i) + "\n");
+			System.out.println(this.ge.outputStrings.get(i));
+		}
+		System.out.println();
+
+		this.currentStateLabel.setText(stringBuilder.toString());
+		scrollPane.setVvalue(1.0);   
+	}
+	
+	@Override
+	public void switchPokemon(){
+		
+	}
+
+	@Override
+	public void updateAIImage() {
+		rivalPkmnImageView
+				.setImage(new Image(getClass().getResourceAsStream("/res/" + ge.getAIPokemon().getID() + "front.png")));
+		rivalPkmnNameLabel.setText(ge.getAIPokemon().getName());
+		this.updateHealthbars();
+		this.updateHpFractions();
+		this.updatePokeballs();
 
 	}
 

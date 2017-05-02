@@ -234,6 +234,10 @@ public class Pokemon {
 		this.totalHP = totalHP;
 	}
 	
+	public boolean isFainted(){
+		return (this.hp <= 0) ? true : false;
+	}
+	
 }
 
 

@@ -6,4 +6,9 @@ public interface Listener {
 	void attackPhase();
 	void faintedPhase();
 	void gameOver();
+	void switchPhase();
+	void updateAIImage();
+	void quitIt();
+	void returnMain();
+	void switchPokemon();
 }
