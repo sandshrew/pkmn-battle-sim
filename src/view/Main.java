@@ -1609,6 +1609,9 @@ public class Main extends Application implements Listener {
 		if (this.ge.getWinner().equals(this.ge.getP1().getPlayerName())) {
 			rivalPkmnImageView.setImage(null);
 			sixthRivalPokeballImageView.setImage(faintedPokeball);
+		} else {
+			userPkmnImageView.setImage(null);
+			sixthUserPokeballImageView.setImage(faintedPokeball);
 		}
 		this.mediaPlayer.stop();
 		playMusic(2);
