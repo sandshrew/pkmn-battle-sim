@@ -8,4 +8,6 @@ public interface Listener {
 	void gameOver();
 	void switchPhase();
 	void updateAIImage();
+	void quitIt();
+	void returnMain();
 }

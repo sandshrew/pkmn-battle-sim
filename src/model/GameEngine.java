@@ -400,6 +400,18 @@ public class GameEngine {
 			listener.switchPhase();
 		}
 	}
+		
+		public void QuitView(){
+			if (listener != null) {
+				listener.quitIt();
+			}
+		}
+		
+		public void MainView(){
+			if(listener != null){
+				listener.returnMain();
+			}
+		}
 
 		/* Switch pokemon from party or select new pokemon */
 	public void SelectPokemon(char chosen) {

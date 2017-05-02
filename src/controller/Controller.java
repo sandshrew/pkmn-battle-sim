@@ -57,6 +57,12 @@ public class Controller implements EventHandler {
 			case "Cancel":
 				this.ge.CancelSwitch();
 				break;
+			case "Quit":
+				this.ge.QuitView();
+				break;
+			case "Main Menu":
+				this.ge.MainView();
+				break;
 			default:
 				// System.out.println(eSub);
 				break;
