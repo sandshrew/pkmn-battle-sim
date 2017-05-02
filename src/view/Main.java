@@ -1074,7 +1074,7 @@ public class Main extends Application implements Listener {
 		this.move2Button = new Button(ge.getP1Pokemon().getMoves().get(1).getName());
 		this.move3Button = new Button(ge.getP1Pokemon().getMoves().get(2).getName());
 		this.move4Button = new Button(ge.getP1Pokemon().getMoves().get(3).getName());
-		System.out.println("/res/" + ge.getAIPokemon().getID() + "front.png");
+		//System.out.println("/res/" + ge.getAIPokemon().getID() + "front.png");
 		this.rivalPkmn = new Image(getClass().getResourceAsStream("/res/" + ge.getAIPokemon().getID() + "front.png"));
 		this.rivalPkmnImageView = new ImageView(rivalPkmn);
 		this.rivalPkmnNameLabel = new Label(ge.getAIPokemon().getName());
@@ -1623,9 +1623,9 @@ public class Main extends Application implements Listener {
 		StringBuilder stringBuilder = new StringBuilder();
 		for (int i = 0; i < ge.outputStrings.size(); i++) {
 			stringBuilder.append(this.ge.outputStrings.get(i) + "\n");
-			System.out.println(this.ge.outputStrings.get(i));
+			//System.out.println(this.ge.outputStrings.get(i));
 		}
-		System.out.println();
+		//System.out.println();
 
 		this.currentStateLabel.setText(stringBuilder.toString());
 		scrollPane.setVvalue(1.0);   
@@ -1687,9 +1687,9 @@ public class Main extends Application implements Listener {
 		StringBuilder stringBuilder = new StringBuilder();
 		for (int i = 0; i < ge.outputStrings.size(); i++) {
 			stringBuilder.append(this.ge.outputStrings.get(i) + "\n");
-			System.out.println(this.ge.outputStrings.get(i));
+			//System.out.println(this.ge.outputStrings.get(i));
 		}
-		System.out.println();
+		//System.out.println();
 
 		this.currentStateLabel.setText(stringBuilder.toString());
 		scrollPane.setVvalue(1.0);   

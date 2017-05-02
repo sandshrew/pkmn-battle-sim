@@ -36,7 +36,7 @@ public class GameEngine {
 	/* Default constructor */
 	public GameEngine() {
 		allPokemon = PokemonFactory.generatePokemon();
-		System.out.println("POKEMON GENERATED");
+		//System.out.println("POKEMON GENERATED");
 		// newBattleLoop();
 	}
 
@@ -73,10 +73,8 @@ public class GameEngine {
 		this.ai.setPlayerId("AI");
 		this.p1 = new Player(name, selectPokemon(party));
 		this.p1.setPlayerId("player");
-		System.out.println(p1.getPlayerName());
-		for (Pokemon p : p1.getPokeParty()) {
-			p.printStats();
-		}
+		//System.out.println(p1.getPlayerName());
+
 
 		this.p1Pokemon = p1.getPokeParty().get(0);
 		this.aiPokemon = ai.getPokeParty().get(0);
@@ -139,7 +137,7 @@ public class GameEngine {
 		// } while (invalid);
 
 		if (input.equals("0")) {
-			System.out.println("Need to implement game over forfeit thing");
+			//System.out.println("Need to implement game over forfeit thing");
 		} else if (Integer.parseInt(input) >= 0 && Integer.parseInt(input) <= 4) {
 			this.selectedAttack = Integer.parseInt(input) - 1;
 			this.moveSelected = true;
@@ -298,10 +296,10 @@ public class GameEngine {
 				// spawns next pokemon in AI party
 				for (int i = 0; i < 6; i++) {
 					if (ai.getPokeParty().get(i).getHp() >= 0 && aiPokemon.getHp() <= 0) {
-						System.out.print(ai.getPlayerName() + " returned " + aiPokemon.getName());
+						//System.out.print(ai.getPlayerName() + " returned " + aiPokemon.getName());
 						this.outputStrings.add(ai.getPlayerName() + " returned " + aiPokemon.getName());
 						aiPokemon = ai.getPokeParty().get(i);
-						System.out.println(" and sent out " + aiPokemon.getName());
+						//System.out.println(" and sent out " + aiPokemon.getName());
 						this.outputStrings.add(" and sent out " + aiPokemon.getName());
 						if(listener != null){
 							listener.updateAIImage();
@@ -422,9 +420,9 @@ public class GameEngine {
 	public void SelectPokemon(char chosen) {
 		outputStrings = new ArrayList<String>();
 		p1Pokemon = p1.getPokeParty().get(Character.getNumericValue(chosen) - 1);
-		System.out.print(p1.getPlayerName() + " returned " + p1Pokemon.getName());
+		//System.out.print(p1.getPlayerName() + " returned " + p1Pokemon.getName());
 		this.outputStrings.add(p1.getPlayerName() + " returned " + p1Pokemon.getName());
-		System.out.println(" and sent out " + p1Pokemon.getName());
+		//System.out.println(" and sent out " + p1Pokemon.getName());
 		this.outputStrings.add(" and sent out " + p1Pokemon.getName());
 		moveSelected = false;
 		if (listener != null) {

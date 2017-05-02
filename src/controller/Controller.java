@@ -38,20 +38,20 @@ public class Controller implements EventHandler {
 			String eSub = eString.substring(eString.indexOf("'", 0) + 1, eString.lastIndexOf("'", eString.length()));
 			switch (eSub) {
 			case "Switch Pkmn":
-				System.out.println("switch pokemon");
+				//System.out.println("switch pokemon");
 				this.ge.SelectPokemonView();
 				break;
 			case "Boy":
-				System.out.println("boy");
+				//System.out.println("boy");
 				break;
 			case "Girl":
-				System.out.println("girl");
+				//System.out.println("girl");
 				break;
 			case "Done":
-				System.out.println("done");
+				//System.out.println("done");
 				break;
 			case "Forfeit":
-				System.out.println("Forfeit");
+				//System.out.println("Forfeit");
 				this.ge.setWinner("Red");
 				break;
 			case "Cancel":
@@ -94,7 +94,7 @@ public class Controller implements EventHandler {
 			}
 
 		} else if (eString.contains("AnchorPane")) {
-			System.out.println(eString);
+			//System.out.println(eString);
 		}
 	}
 }
