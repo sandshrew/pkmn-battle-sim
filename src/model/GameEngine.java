@@ -378,6 +378,7 @@ public class GameEngine {
 		// }
 	}
 
+	public ArrayList<String> availablePoke = new ArrayList<String>();
 	public void CancelSwitch() {
 		if (listener != null) {
 			listener.updated();
