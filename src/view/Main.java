@@ -416,7 +416,6 @@ public class Main extends Application implements Listener {
 		InnerShadow shadow = new InnerShadow();
 		Button pokemon1 = new Button();
 		pokemon1.setShape(new Polygon(new Hexagon(100d).getPoints()));
-		pokemon1.setStyle(buttonStyle);
 		pokemon1.setMinSize(100, 90);
 		pokemon1.setId(buttonIds[0]);
 		pokemon1.setOnMouseClicked(new EventHandler<MouseEvent>() {
