@@ -187,8 +187,8 @@ public class Main extends Application implements Listener {
 	}
 
 	private List<Pair<String, Button>> menuData = Arrays.asList(new Pair<String, Button>("New Game", newGameButton),
-			new Pair<String, Button>("Game Options", optionsButton),
-			new Pair<String, Button>("Controls", controlsButton), new Pair<String, Button>("Credits", creditsButton),
+			new Pair<String, Button>("Instructions", optionsButton),
+			new Pair<String, Button>("Credits", creditsButton),
 			new Pair<String, Button>("Exit", exitButton));
 	// new Pair<String, Button>("Continue", continueButton),
 
@@ -233,7 +233,7 @@ public class Main extends Application implements Listener {
 	}
 
 	private void addLine(double x, double y) {
-		line = new Line(x, y, x, y + 250);
+		line = new Line(x, y, x, y + 175);
 		line.setStrokeWidth(3);
 		line.setStroke(Color.color(1, 1, 1, 0.75));
 		line.setEffect(new DropShadow(5, Color.BLACK));
@@ -322,7 +322,15 @@ public class Main extends Application implements Listener {
 			public void handle(MouseEvent event) {
 
 				//selectScreen(theStage);
-				Platform.exit();
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Instructions");
+				alert.setHeaderText("How to get started:");
+				alert.setContentText("1. Select New Game\n"
+						+ "2. Type in your Name\n"
+						+ "3. Select 6 Pokemon\n"
+						+ "4. Battle!");
+
+				alert.showAndWait();
 			}
 
 		});
@@ -335,7 +343,15 @@ public class Main extends Application implements Listener {
 		item3.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
 			public void handle(MouseEvent event) {
-				Platform.exit();
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Credits");
+				alert.setHeaderText("Credits!");
+				alert.setContentText("Pokemon Battle Simulator\n"
+						+ " Dragon Tran\n"
+						+ " Dillon Harper\n"
+						+ " Andrew Shaffer\n"
+						+ " Ramon Valenzuela\n");
+				alert.showAndWait();
 			}
 
 		});
@@ -355,18 +371,19 @@ public class Main extends Application implements Listener {
 		clip4.translateXProperty().bind(item4.translateXProperty().negate());
 		item4.setClip(clip4);
 
-		PokemonMenuItem item5 = new PokemonMenuItem(menuData.get(4).getKey());
-		item5.setTranslateX(-300);
-		item5.setId(menuData.get(4).getKey());
-		item5.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-			public void handle(MouseEvent event) {
-				Platform.exit();
-			}
-
-		});
-		clip5.translateXProperty().bind(item5.translateXProperty().negate());
-		item5.setClip(clip5);
+		// PokemonMenuItem item5 = new
+		// PokemonMenuItem(menuData.get(4).getKey());
+		// item5.setTranslateX(-300);
+		// item5.setId(menuData.get(4).getKey());
+		// item5.setOnMouseClicked(new EventHandler<MouseEvent>() {
+		//
+		// public void handle(MouseEvent event) {
+		// Platform.exit();
+		// }
+		//
+		// });
+		// clip5.translateXProperty().bind(item5.translateXProperty().negate());
+		// item5.setClip(clip5);
 
 		// PokemonMenuItem item6 = new
 		// PokemonMenuItem(menuData.get(5).getKey());
@@ -382,7 +399,7 @@ public class Main extends Application implements Listener {
 		// clip6.translateXProperty().bind(item6.translateXProperty().negate());
 		// item6.setClip(clip6);
 
-		menuBox.getChildren().addAll(item1, item2, item3, item4, item5);
+		menuBox.getChildren().addAll(item1, item2, item3, item4);
 		// item6);
 
 		root.getChildren().add(menuBox);
@@ -399,6 +416,7 @@ public class Main extends Application implements Listener {
 		InnerShadow shadow = new InnerShadow();
 		Button pokemon1 = new Button();
 		pokemon1.setShape(new Polygon(new Hexagon(100d).getPoints()));
+		pokemon1.setStyle(buttonStyle);
 		pokemon1.setMinSize(100, 90);
 		pokemon1.setId(buttonIds[0]);
 		pokemon1.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -414,6 +432,7 @@ public class Main extends Application implements Listener {
 		Button pokemon2 = new Button();
 		pokemon2.setShape(new Polygon(new Hexagon(100d).getPoints()));
 		pokemon2.setMinSize(100, 90);
+
 		pokemon2.setId(buttonIds[6]);
 		pokemon2.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
