@@ -143,6 +143,10 @@ public class Main extends Application implements Listener {
 
 	private static final int WIDTH = 1280;
 	private static final int HEIGHT = 720;
+	
+	private boolean alreadyPlayed = false;
+	
+	private Scene mainScene;
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -151,9 +155,9 @@ public class Main extends Application implements Listener {
 
 			theStage = primaryStage;
 
-			Scene scene = new Scene(createContent());
+			mainScene = new Scene(createContent());
 			primaryStage.setTitle("Pokemon Battle Sim Menu");
-			primaryStage.setScene(scene);
+			primaryStage.setScene(mainScene);
 			primaryStage.show();
 			playMusic(0);
 
@@ -276,7 +280,11 @@ public class Main extends Application implements Listener {
 		item1.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
 			public void handle(MouseEvent event) {
-				intro(theStage);
+				if(!alreadyPlayed){
+					intro(theStage);
+				} else {
+					selectScreen(theStage);
+				}
 			}
 
 		});
@@ -713,6 +721,26 @@ public class Main extends Application implements Listener {
 		theStage.setScene(scene);
 		theStage.setTitle("Pokemon Selector");
 		theStage.show();
+		
+		if(alreadyPlayed){
+			for (int i = 0; i < selectionList.length; i++) {
+				selectionList[i] = 0;
+			}
+			globalCounter = 0;
+
+			pokemon1.setEffect(null);
+			pokemon2.setEffect(null);
+			pokemon3.setEffect(null);
+			pokemon4.setEffect(null);
+			pokemon5.setEffect(null);
+			pokemon6.setEffect(null);
+			pokemon7.setEffect(null);
+			pokemon8.setEffect(null);
+			pokemon9.setEffect(null);
+			pokemon10.setEffect(null);
+			pokemon11.setEffect(null);
+			pokemon12.setEffect(null);
+		}
 	}
 
 	// not mvc bc lazy/testing, will change
@@ -1345,6 +1373,7 @@ public class Main extends Application implements Listener {
 		primaryStage.setResizable(false);
 		primaryStage.setTitle("Pokemon");
 		primaryStage.show();
+		updated();
 
 	}
 
@@ -1631,6 +1660,25 @@ public class Main extends Application implements Listener {
 		}
 		this.mediaPlayer.stop();
 		playMusic(2);
+		this.move1Button.setText("Main Menu");
+		this.move2Button.setText("Main Menu");
+		this.move3Button.setText("Main Menu");
+		this.move4Button.setText("Main Menu");
+		this.pkmnButton.setText("Quit");
+		this.forfeitButton.setText("Quit");
+	}
+	
+	@Override
+	public void quitIt(){
+		theStage.close();
+		
+	}
+	
+	@Override
+	public void returnMain(){
+		alreadyPlayed = true;
+		theStage.setScene(mainScene);
+		
 	}
 
 	@Override
