@@ -1,6 +1,7 @@
 package view;
 
 import model.GameEngine;
+
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
@@ -33,6 +34,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.InnerShadow;
@@ -137,6 +139,7 @@ public class Main extends Application implements Listener {
 	private Label rivalHpFractionLabel = new Label("100/100");
 
 	private Label currentStateLabel = new Label("What will Sceptile do?");
+	private ScrollPane scrollPane = new ScrollPane();
 
 	private static final int WIDTH = 1280;
 	private static final int HEIGHT = 720;
@@ -1254,15 +1257,26 @@ public class Main extends Application implements Listener {
 		userHpFractionLabel.setLayoutY(425);
 		userHpFractionLabel.setFont(Font.font("PKMN RBYGSC", 12));
 
-		rivalHpFractionLabel.setMaxSize(400, 100);
+		rivalHpFractionLabel.setMaxSize(400, 120);
 		rivalHpFractionLabel.setLayoutX(45);
 		rivalHpFractionLabel.setLayoutY(85);
 		rivalHpFractionLabel.setFont(Font.font("PKMN RBYGSC", 12));
 
 		currentStateLabel.setWrapText(true);
-		currentStateLabel.setMaxSize(335, 85);
-		currentStateLabel.setLayoutX(18);
-		currentStateLabel.setLayoutY(595);
+		currentStateLabel.setPrefWidth(350);
+
+//		currentStateLabel.setMaxSize(335, 100);
+//		currentStateLabel.setLayoutX(18);
+//		currentStateLabel.setLayoutY(590);
+		
+		scrollPane.setContent(currentStateLabel);
+		scrollPane.setFitToWidth(true);
+		scrollPane.setMaxSize(350, 95);
+		scrollPane.setPrefHeight(95);
+		scrollPane.setLayoutX(18);
+		scrollPane.setLayoutY(590);
+
+	
 		currentStateLabel.setFont(Font.font("PKMN RBYGSC", 12));
 
 		// Add background first
@@ -1296,7 +1310,8 @@ public class Main extends Application implements Listener {
 		root.getChildren().add(rivalHpFractionLabel);
 
 		// current state
-		root.getChildren().add(currentStateLabel);
+		//root.getChildren().add(currentStateLabel);
+		root.getChildren().add(scrollPane);
 
 		// root.getChildren().add(firstPkmnButton);
 		// root.getChildren().add(secondPkmnButton);
@@ -1584,6 +1599,7 @@ public class Main extends Application implements Listener {
 		System.out.println();
 
 		this.currentStateLabel.setText(stringBuilder.toString());
+		scrollPane.setVvalue(1.0);   
 		this.updateHealthbars();
 		this.updateHpFractions();
 	}
@@ -1611,7 +1627,7 @@ public class Main extends Application implements Listener {
 			sixthRivalPokeballImageView.setImage(faintedPokeball);
 		} else {
 			userPkmnImageView.setImage(null);
-			sixthUserPokeballImageView.setImage(faintedPokeball);
+			updated();
 		}
 		this.mediaPlayer.stop();
 		playMusic(2);
@@ -1620,7 +1636,20 @@ public class Main extends Application implements Listener {
 	@Override
 	public void faintedPhase() {
 		// TODO Auto-generated method stub
+		StringBuilder stringBuilder = new StringBuilder();
+		for (int i = 0; i < ge.outputStrings.size(); i++) {
+			stringBuilder.append(this.ge.outputStrings.get(i) + "\n");
+			System.out.println(this.ge.outputStrings.get(i));
+		}
+		System.out.println();
 
+		this.currentStateLabel.setText(stringBuilder.toString());
+		scrollPane.setVvalue(1.0);   
+	}
+	
+	@Override
+	public void switchPokemon(){
+		
 	}
 
 	@Override
