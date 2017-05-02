@@ -1346,15 +1346,17 @@ public class Main extends Application implements Listener {
 	}
 
 	private void updatePkmnNames() {
-		// userPkmnNameLabel.setText(model.getCurrentUserPkmnName());
-		// rivalPkmnNameLabel.setText(model.getCurrentRivalPkmnName());
+		userPkmnNameLabel.setText(this.ge.getP1Pokemon().getName());
+		rivalPkmnNameLabel.setText(this.ge.getAIPokemon().getName());
+
 	}
 
 	private void updatePkmnImages() {
-		// userPkmnImageView.setImage(new
-		// Image(getClass().getResourceAsStream("/res/"+model.getUserPokemonId()+"back.png")));
-		// rivalPkmnImageView.setImage(new
-		// Image(getClass().getResourceAsStream("/res/"+model.getRivalPokemonId()+"front.png")));
+		userPkmnImageView.setImage(
+				new Image(getClass().getResourceAsStream("/res/" + this.ge.getP1Pokemon().getID() + "back.png")));
+		rivalPkmnImageView.setImage(
+				new Image(getClass().getResourceAsStream("/res/" + this.ge.getAIPokemon().getID() + "front.png")));
+
 	}
 
 	private void updatePokeballs() {
@@ -1495,10 +1497,13 @@ public class Main extends Application implements Listener {
 	}
 
 	private void updateMoveButtons() {
-		// move1Button.setText(model.getCurrentPokemonFirstMove());
-		// move2Button.setText(model.getCurrentPokemonSecondMove());
-		// move3Button.setText(model.getCurrentPokemonThirdMove());
-		// move4Button.setText(model.getCurrentPokemonFourthMove());
+		this.move1Button.setText("" + this.ge.getP1Pokemon().getMoves().get(0).getName());
+		this.move2Button.setText("" + this.ge.getP1Pokemon().getMoves().get(1).getName());
+		this.move3Button.setText("" + this.ge.getP1Pokemon().getMoves().get(2).getName());
+		this.move4Button.setText("" + this.ge.getP1Pokemon().getMoves().get(3).getName());
+		this.pkmnButton.setText("Switch Pkmn");
+		this.forfeitButton.setText("Forfeit");
+
 	}
 
 	private void updatePkmnButtons() {
@@ -1530,6 +1535,20 @@ public class Main extends Application implements Listener {
 		this.currentStateLabel.setText(stringBuilder.toString());
 		this.updateHealthbars();
 		this.updateHpFractions();
+	}
+
+	@Override
+	public void switchPhase() {
+		try {
+			this.move1Button.setText(this.ge.availablePoke.get(0));
+			this.move2Button.setText(this.ge.availablePoke.get(1));
+			this.move3Button.setText(this.ge.availablePoke.get(2));
+			this.move4Button.setText(this.ge.availablePoke.get(3));
+			this.pkmnButton.setText(this.ge.availablePoke.get(4));
+			this.forfeitButton.setText("Cancel");
+		} catch (Exception e) {
+
+		}
 	}
 
 	@Override

@@ -6,4 +6,5 @@ public interface Listener {
 	void attackPhase();
 	void faintedPhase();
 	void gameOver();
+	void switchPhase();
 }
