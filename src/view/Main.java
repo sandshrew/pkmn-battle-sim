@@ -235,8 +235,10 @@ public class Main extends Application implements Listener {
 	private void playMusic(int track) {
 		try {
 			String filePath = "file:/" + System.getProperty("user.dir") + "/src/res/pokemonopening.mp3";
-			if (track != 0) {
+			if (track == 1) {
 				filePath = "file:/" + System.getProperty("user.dir") + "/src/res/battle.mp3";
+			} else if (track == 2){
+				filePath = "file:/" + System.getProperty("user.dir") + "/src/res/victory.mp3";
 			}
 			Media videoFile = new Media(filePath.replace('\\', '/'));
 			mediaPlayer = new MediaPlayer(videoFile);
@@ -1557,6 +1559,8 @@ public class Main extends Application implements Listener {
 			rivalPkmnImageView.setImage(null);
 			sixthRivalPokeballImageView.setImage(faintedPokeball);
 		}
+		this.mediaPlayer.stop();
+		playMusic(2);
 	}
 
 	@Override
