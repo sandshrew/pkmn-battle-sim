@@ -62,7 +62,7 @@ public class Main extends Application implements Listener {
 
 	private final Model model = new Model();
 	private final GameEngine ge = new GameEngine();
-	private final Controller controller = new Controller(model);
+	private final Controller controller = new Controller(ge);
 
 	MediaPlayer mediaPlayer;
 
@@ -686,6 +686,8 @@ public class Main extends Application implements Listener {
 		GridPane.setColumnIndex(pokemon12, 1);
 
 		HBox hbox = new HBox();
+		clear.setStyle(buttonStyle);
+		battle.setStyle(buttonStyle);
 		hbox.getChildren().addAll(clear, battle);
 		GridPane.setRowIndex(hbox, 1);
 		GridPane.setColumnIndex(hbox, 3);
@@ -988,9 +990,12 @@ public class Main extends Application implements Listener {
 		primaryStage.show();
 	}
 
+	private int textBoxIndex = 0;
+
 	public void battleUi(Stage primaryStage) {
 		final AnchorPane root = new AnchorPane();
 
+		this.ge.setListener(this);
 		Scene scene = new Scene(root, 700, 700);
 		Image battleBackground = new Image(getClass().getResourceAsStream("/res/battlebackground.jpg"));
 		Image rightBattleBox = new Image(getClass().getResourceAsStream("/res/rightbattlebox.png"));
@@ -1018,6 +1023,16 @@ public class Main extends Application implements Listener {
 		battleTextboxIv.setLayoutY(575);
 		battleTextboxIv.setFitHeight(125);
 		battleTextboxIv.setFitWidth(400);
+		battleTextboxIv.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent event) {
+				if (textBoxIndex >= 0 && (ge.outputStrings != null)) {
+					textBoxIndex = textBoxIndex + 2;
+					updateStateText();
+				}
+			}
+		});
 
 		this.userPkmn = new Image(getClass().getResourceAsStream("/res/" + ge.getP1Pokemon().getID() + "back.png"));
 		this.userPkmnImageView = new ImageView(userPkmn);
@@ -1315,6 +1330,7 @@ public class Main extends Application implements Listener {
 		primaryStage.setResizable(false);
 		primaryStage.setTitle("Pokemon");
 		primaryStage.show();
+
 	}
 
 	@Override
@@ -1446,7 +1462,8 @@ public class Main extends Application implements Listener {
 	}
 
 	private void updateHealthbars() {
-		// userHealthbar.setProgress(model.getCurrentUserPkmnHp()/model.getCurrentUserPkmnTotalHp());
+
+		userHealthbar.setProgress(((float) this.ge.getP1Pokemon().getHp()) / (this.ge.getP1Pokemon().getTotalHP()));
 		if (userHealthbar.getProgress() <= 0.3) {
 			userHealthbar.setStyle("-fx-accent: red;");
 		} else if (userHealthbar.getProgress() <= 0.7) {
@@ -1454,23 +1471,23 @@ public class Main extends Application implements Listener {
 		} else {
 			userHealthbar.setStyle("-fx-accent: green;");
 		}
-		// rivalHealthbar.setProgress(model.getCurrentRivalPkmnHp()/model.getCurrentRivalPkmnTotalHp());
-		if (userHealthbar.getProgress() <= 0.3) {
-			userHealthbar.setStyle("-fx-accent: red;");
-		} else if (userHealthbar.getProgress() <= 0.7) {
-			userHealthbar.setStyle("-fx-accent: orange;");
+		rivalHealthbar.setProgress(((float) this.ge.getAIPokemon().getHp()) / this.ge.getAIPokemon().getTotalHP());
+		if (rivalHealthbar.getProgress() <= 0.3) {
+			rivalHealthbar.setStyle("-fx-accent: red;");
+		} else if (rivalHealthbar.getProgress() <= 0.7) {
+			rivalHealthbar.setStyle("-fx-accent: orange;");
 		} else {
-			userHealthbar.setStyle("-fx-accent: green;");
+			rivalHealthbar.setStyle("-fx-accent: green;");
 		}
 	}
 
 	private void updateHpFractions() {
-		// userHpFractionLabel.setText(model.getCurrentUserPkmnHp()+"/"+model.getCurrentUserPkmnTotalHp());
-		// rivalHpFractionLabel.setText(model.getCurrentRivalPkmnHp()+"/"+model.getCurrentRivalPkmnTotalHp());
+		this.userHpFractionLabel.setText(this.ge.getP1Pokemon().getHp() + "/" + this.ge.getP1Pokemon().getTotalHP());
+		this.rivalHpFractionLabel.setText(this.ge.getAIPokemon().getHp() + "/" + this.ge.getAIPokemon().getTotalHP());
 	}
 
 	private void updateStateText() {
-		// currentStateLabel.setText(model.getCurrentState());
+		System.out.println("Okay");
 	}
 
 	private void updateMoveButtons() {
@@ -1498,6 +1515,31 @@ public class Main extends Application implements Listener {
 		}
 	}
 
+	@Override
+	public void attackPhase() {
+		StringBuilder stringBuilder = new StringBuilder();
+		for (int i = 0; i < ge.outputStrings.size(); i++) {
+			stringBuilder.append(this.ge.outputStrings.get(i) + "\n");
+			this.textBoxIndex++;
+		}
+
+		this.currentStateLabel.setText(stringBuilder.toString());
+		this.updateHealthbars();
+		this.updateHpFractions();
+	}
+
+	@Override
+	public void gameOver() {
+		// TODO Auto-generated method stub
+		this.currentStateLabel.setText("Winner is " + this.ge.getWinner() + "!");
+	}
+
+	@Override
+	public void faintedPhase() {
+		// TODO Auto-generated method stub
+
+	}
+
 	// For intro use
 	private int introIndex = 0;
 	private final String[] introText = { "Welcome to the world of Pokemon!", "My name is Professor Oak.",
@@ -1513,4 +1555,5 @@ public class Main extends Application implements Listener {
 	public static void main(String[] args) {
 		launch(args);
 	}
+
 }

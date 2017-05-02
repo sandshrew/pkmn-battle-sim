@@ -89,6 +89,7 @@ public class Pokemon {
 		this.attack = pokemon.getAttack();
 		this.defence = pokemon.getDefence();
 		this.speed = pokemon.getSpeed();
+		this.totalHP = pokemon.getHp();
 	}
 
 	public void calculateHP(){
@@ -232,6 +233,7 @@ public class Pokemon {
 	public void setTotalHP(int totalHP) {
 		this.totalHP = totalHP;
 	}
+	
 }
 
 
