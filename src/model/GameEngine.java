@@ -299,8 +299,10 @@ public class GameEngine {
 				for (int i = 0; i < 6; i++) {
 					if (ai.getPokeParty().get(i).getHp() >= 0 && aiPokemon.getHp() <= 0) {
 						System.out.print(ai.getPlayerName() + " returned " + aiPokemon.getName());
+						this.outputStrings.add(ai.getPlayerName() + " returned " + aiPokemon.getName());
 						aiPokemon = ai.getPokeParty().get(i);
 						System.out.println(" and sent out " + aiPokemon.getName());
+						this.outputStrings.add(" and sent out " + aiPokemon.getName());
 						if(listener != null){
 							listener.updateAIImage();
 						}
@@ -311,6 +313,9 @@ public class GameEngine {
 			else{
 				selectFaint = true;
 				SelectPokemonView();
+			}
+			if(listener != null){
+				listener.faintedPhase();
 			}
 		} else{
 			 this.winner = (player.getPlayerId() == "AI") ? p1.getPlayerName() : ai.getPlayerName();
@@ -403,10 +408,16 @@ public class GameEngine {
 
 		/* Switch pokemon from party or select new pokemon */
 	public void SelectPokemon(char chosen) {
+		outputStrings = new ArrayList<String>();
 		p1Pokemon = p1.getPokeParty().get(Character.getNumericValue(chosen) - 1);
+		System.out.print(p1.getPlayerName() + " returned " + p1Pokemon.getName());
+		this.outputStrings.add(p1.getPlayerName() + " returned " + p1Pokemon.getName());
+		System.out.println(" and sent out " + p1Pokemon.getName());
+		this.outputStrings.add(" and sent out " + p1Pokemon.getName());
 		moveSelected = false;
 		if (listener != null) {
 			listener.updated();
+			listener.faintedPhase();
 		}
 		if(!selectFaint){
 			AttackPhase();
