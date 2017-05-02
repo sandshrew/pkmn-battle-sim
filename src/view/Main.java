@@ -1301,7 +1301,7 @@ public class Main extends Application implements Listener {
 		scrollPane.setFitToWidth(true);
 		scrollPane.setMaxSize(350, 95);
 		scrollPane.setPrefHeight(95);
-		scrollPane.setLayoutX(18);
+		scrollPane.setLayoutX(15);
 		scrollPane.setLayoutY(590);
 
 	
