@@ -71,18 +71,20 @@ public class Controller implements EventHandler {
 			} else if (eSub.equals(this.ge.getP1Pokemon().getMoves().get(3).getName())) {
 				this.ge.SelectPhase("4");
 			}
-			switch (eSub.charAt(0)) {
-			case '0':
-			case '1':
-			case '2':
-			case '3':
-			case '4':
-			case '5':
-			case '6':
-				this.ge.SelectPokemon(eSub.charAt(0));
-				break;
-			default:
-				break;
+			if (!eSub.isEmpty()) {
+				switch (eSub.charAt(0)) {
+				case '0':
+				case '1':
+				case '2':
+				case '3':
+				case '4':
+				case '5':
+				case '6':
+					this.ge.SelectPokemon(eSub.charAt(0));
+					break;
+				default:
+					break;
+				}
 			}
 
 		} else if (eString.contains("AnchorPane")) {
