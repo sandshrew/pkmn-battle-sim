@@ -1,22 +1,11 @@
-## pkmn-battle-sim
-Installation (for FXGL)
+# pkmn-battle-sim
+by Dragon Tran, Dillon Harper, Andrew Shaffer, Ramon Valenzuela
 
--Pull but don't open the project yet until you install maven
+## Instructions
+1. Select New Game
+2. Input your name
+3. Select your Pokemon
+4. Battle!
 
-# 1. Installing Maven (build mananger / to import fxgl)
-  - Open Eclipse
-  - Go to Help -> Install New Software...
-  - input 'http://download.eclipse.org/technology/m2e/releases' in the Work with: textbox
-  - Hit enter
-  - Check on Maven Integration with for Eclipse
-  - finish installation (eclipse will restart after installation)
-  
-# 2. Loading FXGL
-  - Right click on project in eclipse, click on maven->Update->Okay
-  - It should run and compile
-  - WIP (should be automatic after you install the maven plugin)
-  
-# Troubleshooting
-  - Close the project and delete it (not from disk)
-  - File->Import->Maven->Existing Maven Projects->(navigate to the project folder)->Finish
-  - Go to step 2
+ 
+
