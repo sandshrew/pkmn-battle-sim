@@ -12,7 +12,8 @@ public class GameEngine {
 	private Scanner reader = new Scanner(System.in);
 	private Player p1;
 	private Player ai;
-
+	private boolean selectFaint = false;
+	
 	/* current pokemon */
 	private Pokemon p1Pokemon;
 	private Pokemon aiPokemon;
@@ -308,7 +309,8 @@ public class GameEngine {
 			}
 			//user select phase
 			else{
-				
+				selectFaint = true;
+				SelectPokemonView();
 			}
 		} else{
 			 this.winner = (player.getPlayerId() == "AI") ? p1.getPlayerName() : ai.getPlayerName();
@@ -406,7 +408,11 @@ public class GameEngine {
 		if (listener != null) {
 			listener.updated();
 		}
-		AttackPhase();
+		if(!selectFaint){
+			AttackPhase();
+		} else {
+			selectFaint = false;
+		}
 		/*
 		 * while (true) { System.out.
 		 * println("\nSelect the number associated with the pokemon you want to switch out for"

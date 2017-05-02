@@ -1461,6 +1461,57 @@ public class Main extends Application implements Listener {
 				break;
 			}
 		}
+		
+		for (int i = 0; i < ge.getP1().getPokeParty().size(); ++i) {
+			boolean alive = true;
+			if (ge.getP1().getPokeParty().get(i).isFainted()) {
+				alive = false;
+			}
+			switch (i) {
+			case 0:
+				if (alive) {
+					firstUserPokeballImageView.setImage(alivePokeball);
+				} else {
+					firstUserPokeballImageView.setImage(faintedPokeball);
+				}
+				break;
+			case 1:
+				if (alive) {
+					secondUserPokeballImageView.setImage(alivePokeball);
+				} else {
+					secondUserPokeballImageView.setImage(faintedPokeball);
+				}
+				break;
+			case 2:
+				if (alive) {
+					thirdUserPokeballImageView.setImage(alivePokeball);
+				} else {
+					thirdUserPokeballImageView.setImage(faintedPokeball);
+				}
+				break;
+			case 3:
+				if (alive) {
+					fourthUserPokeballImageView.setImage(alivePokeball);
+				} else {
+					fourthUserPokeballImageView.setImage(faintedPokeball);
+				}
+				break;
+			case 4:
+				if (alive) {
+					fifthUserPokeballImageView.setImage(alivePokeball);
+				} else {
+					fifthUserPokeballImageView.setImage(faintedPokeball);
+				}
+				break;
+			case 5:
+				if (alive) {
+					sixthUserPokeballImageView.setImage(alivePokeball);
+				} else {
+					sixthUserPokeballImageView.setImage(faintedPokeball);
+				}
+				break;
+			}
+		}
 	}
 
 	private void updateHealthbars() {
