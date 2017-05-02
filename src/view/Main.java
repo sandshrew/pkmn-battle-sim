@@ -1463,7 +1463,8 @@ public class Main extends Application implements Listener {
 
 	private void updateHealthbars() {
 
-		userHealthbar.setProgress(((float) this.ge.getP1Pokemon().getHp()) / (this.ge.getP1Pokemon().getTotalHP()));
+		userHealthbar.setProgress((((this.ge.getP1Pokemon().getHp() <= 0) ? 0.0
+				: (float) (this.ge.getP1Pokemon().getHp()) / this.ge.getP1Pokemon().getTotalHP())));
 		if (userHealthbar.getProgress() <= 0.3) {
 			userHealthbar.setStyle("-fx-accent: red;");
 		} else if (userHealthbar.getProgress() <= 0.7) {
@@ -1471,7 +1472,8 @@ public class Main extends Application implements Listener {
 		} else {
 			userHealthbar.setStyle("-fx-accent: green;");
 		}
-		rivalHealthbar.setProgress(((float) this.ge.getAIPokemon().getHp()) / this.ge.getAIPokemon().getTotalHP());
+		rivalHealthbar.setProgress((((this.ge.getAIPokemon().getHp() <= 0) ? 0.0
+				: (float) (this.ge.getAIPokemon().getHp()) / this.ge.getAIPokemon().getTotalHP())));
 		if (rivalHealthbar.getProgress() <= 0.3) {
 			rivalHealthbar.setStyle("-fx-accent: red;");
 		} else if (rivalHealthbar.getProgress() <= 0.7) {
@@ -1482,8 +1484,10 @@ public class Main extends Application implements Listener {
 	}
 
 	private void updateHpFractions() {
-		this.userHpFractionLabel.setText(this.ge.getP1Pokemon().getHp() + "/" + this.ge.getP1Pokemon().getTotalHP());
-		this.rivalHpFractionLabel.setText(this.ge.getAIPokemon().getHp() + "/" + this.ge.getAIPokemon().getTotalHP());
+		this.userHpFractionLabel.setText(((this.ge.getP1Pokemon().getHp() <= 0) ? "0" : this.ge.getP1Pokemon().getHp())
+				+ "/" + this.ge.getP1Pokemon().getTotalHP());
+		this.rivalHpFractionLabel.setText(((this.ge.getAIPokemon().getHp() <= 0) ? "0" : this.ge.getAIPokemon().getHp())
+				+ "/" + this.ge.getAIPokemon().getTotalHP());
 	}
 
 	private void updateStateText() {
