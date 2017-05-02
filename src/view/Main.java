@@ -1027,10 +1027,8 @@ public class Main extends Application implements Listener {
 
 			@Override
 			public void handle(MouseEvent event) {
-				if (textBoxIndex >= 0 && (ge.outputStrings != null)) {
-					textBoxIndex = textBoxIndex + 2;
-					updateStateText();
-				}
+
+				updateStateText();
 			}
 		});
 
@@ -1411,56 +1409,56 @@ public class Main extends Application implements Listener {
 		// }
 		// }
 		//
-		// for (int i = 0; i < model.getRivalTeam().size(); ++i){
-		// boolean alive = true;
-		// if (!model.getRivalTeam().get(i).isAlive()){
-		// alive = false;
-		// }
-		// switch (i) {
-		// case 0:
-		// if (alive) {
-		// firstRivalPokeballImageView.setImage(alivePokeball);
-		// } else {
-		// firstRivalPokeballImageView.setImage(faintedPokeball);
-		// }
-		// break;
-		// case 1:
-		// if (alive) {
-		// secondRivalPokeballImageView.setImage(alivePokeball);
-		// } else {
-		// secondRivalPokeballImageView.setImage(faintedPokeball);
-		// }
-		// break;
-		// case 2:
-		// if (alive) {
-		// thirdRivalPokeballImageView.setImage(alivePokeball);
-		// } else {
-		// thirdRivalPokeballImageView.setImage(faintedPokeball);
-		// }
-		// break;
-		// case 3:
-		// if (alive) {
-		// fourthRivalPokeballImageView.setImage(alivePokeball);
-		// } else {
-		// fourthRivalPokeballImageView.setImage(faintedPokeball);
-		// }
-		// break;
-		// case 4:
-		// if (alive) {
-		// fifthRivalPokeballImageView.setImage(alivePokeball);
-		// } else {
-		// fifthRivalPokeballImageView.setImage(faintedPokeball);
-		// }
-		// break;
-		// case 5:
-		// if (alive) {
-		// sixthRivalPokeballImageView.setImage(alivePokeball);
-		// } else {
-		// sixthRivalPokeballImageView.setImage(faintedPokeball);
-		// }
-		// break;
-		// }
-		// }
+		for (int i = 0; i < ge.getAI().getPokeParty().size(); ++i) {
+			boolean alive = true;
+			if (ge.getAI().getPokeParty().get(i).isFainted()) {
+				alive = false;
+			}
+			switch (i) {
+			case 0:
+				if (alive) {
+					firstRivalPokeballImageView.setImage(alivePokeball);
+				} else {
+					firstRivalPokeballImageView.setImage(faintedPokeball);
+				}
+				break;
+			case 1:
+				if (alive) {
+					secondRivalPokeballImageView.setImage(alivePokeball);
+				} else {
+					secondRivalPokeballImageView.setImage(faintedPokeball);
+				}
+				break;
+			case 2:
+				if (alive) {
+					thirdRivalPokeballImageView.setImage(alivePokeball);
+				} else {
+					thirdRivalPokeballImageView.setImage(faintedPokeball);
+				}
+				break;
+			case 3:
+				if (alive) {
+					fourthRivalPokeballImageView.setImage(alivePokeball);
+				} else {
+					fourthRivalPokeballImageView.setImage(faintedPokeball);
+				}
+				break;
+			case 4:
+				if (alive) {
+					fifthRivalPokeballImageView.setImage(alivePokeball);
+				} else {
+					fifthRivalPokeballImageView.setImage(faintedPokeball);
+				}
+				break;
+			case 5:
+				if (alive) {
+					sixthRivalPokeballImageView.setImage(alivePokeball);
+				} else {
+					sixthRivalPokeballImageView.setImage(faintedPokeball);
+				}
+				break;
+			}
+		}
 	}
 
 	private void updateHealthbars() {
@@ -1493,7 +1491,6 @@ public class Main extends Application implements Listener {
 	}
 
 	private void updateStateText() {
-		System.out.println("Okay");
 	}
 
 	private void updateMoveButtons() {
@@ -1529,8 +1526,9 @@ public class Main extends Application implements Listener {
 		StringBuilder stringBuilder = new StringBuilder();
 		for (int i = 0; i < ge.outputStrings.size(); i++) {
 			stringBuilder.append(this.ge.outputStrings.get(i) + "\n");
-			this.textBoxIndex++;
+			System.out.println(this.ge.outputStrings.get(i));
 		}
+		System.out.println();
 
 		this.currentStateLabel.setText(stringBuilder.toString());
 		this.updateHealthbars();
@@ -1555,11 +1553,26 @@ public class Main extends Application implements Listener {
 	public void gameOver() {
 		// TODO Auto-generated method stub
 		this.currentStateLabel.setText("Winner is " + this.ge.getWinner() + "!");
+		if (this.ge.getWinner().equals(this.ge.getP1().getPlayerName())) {
+			rivalPkmnImageView.setImage(null);
+			sixthRivalPokeballImageView.setImage(faintedPokeball);
+		}
 	}
 
 	@Override
 	public void faintedPhase() {
 		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void updateAIImage() {
+		rivalPkmnImageView
+				.setImage(new Image(getClass().getResourceAsStream("/res/" + ge.getAIPokemon().getID() + "front.png")));
+		rivalPkmnNameLabel.setText(ge.getAIPokemon().getName());
+		this.updateHealthbars();
+		this.updateHpFractions();
+		this.updatePokeballs();
 
 	}
 

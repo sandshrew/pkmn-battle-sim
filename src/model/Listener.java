@@ -7,4 +7,5 @@ public interface Listener {
 	void faintedPhase();
 	void gameOver();
 	void switchPhase();
+	void updateAIImage();
 }
