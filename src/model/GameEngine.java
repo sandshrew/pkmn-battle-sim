@@ -391,6 +391,9 @@ public class GameEngine {
 				availablePoke.add(p1.getPokeParty().indexOf(pokemon) + 1 + " " + pokemon.getName());
 			}
 		}
+		while(availablePoke.size() < 5){
+			availablePoke.add("");
+		}
 		if (listener != null) {
 			listener.switchPhase();
 		}
